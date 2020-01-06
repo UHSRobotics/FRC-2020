@@ -10,14 +10,17 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.RobotContainer;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
-public class FlywheelSubsystem extends SubsystemBase {
+public class SpinSubsystem extends SubsystemBase {
     /**
      * Creates a new ExampleSubsystem.
      */
-    public FlywheelSubsystem() {
+    public SpinSubsystem() {
 
     }
 
@@ -26,8 +29,8 @@ public class FlywheelSubsystem extends SubsystemBase {
 
     }
 
-    public void spin(){
-        
+    public void spin(int pow) {
+        RobotContainer.flyWheel.set(ControlMode.PercentOutput, pow);
     }
 
 }

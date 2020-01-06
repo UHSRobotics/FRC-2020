@@ -10,7 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSubsystem;
-import frc.robot.subsystems.FlywheelSubsystem;
+import frc.robot.subsystems.SpinSubsystem;;
 
 /**
  * An example command that uses an example subsystem.
@@ -18,19 +18,26 @@ import frc.robot.subsystems.FlywheelSubsystem;
 public class SpinCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final ColorSubsystem colorSubsystem;
-  private final FlywheelSubsystem flywheelSubsystem;
+  private final SpinSubsystem spinSubsystem;
+  private int stage; // stage 2 or 3
+  private int colorTarget; // target color to check
+  private int colorChange;
+  private int prevColor;
+  private int currColor;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public SpinCommand(ColorSubsystem sC, FlywheelSubsystem sF) {
+  public SpinCommand(ColorSubsystem sC, SpinSubsystem sF) {
     colorSubsystem = sC;
-    flywheelSubsystem = sF;
+    spinSubsystem = sF;
+    colorChange = 0;
+    currColor = colorSubsystem.getColor();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(colorSubsystem);
-    addRequirements(flywheelSubsystem);
+    addRequirements(spinSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -41,11 +48,21 @@ public class SpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    for (int i = 0; i < 4; i++) {
-      if (colorSubsystem.matchColor(i)) {
-        System.out.println(i);
+    if (stage == 3) {
+      while (!colorSubsystem.matchColor(colorTarget)) {
+        spinSubsystem.spin(1);
+      }
+    } else {
+      while (colorChange < 26) {
+        prevColor = currColor;
+        currColor = colorSubsystem.getColor();
+        if (currColor - prevColor == 1 || currColor - prevColor == 3) {
+          colorChange++;
+        }
+        spinSubsystem.spin(1);
       }
     }
+
   }
 
   // Called once the command ends or is interrupted.
