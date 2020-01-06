@@ -9,16 +9,25 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
-  /**
-   * Creates a new ExampleSubsystem.
-   */
-  public ExampleSubsystem() {
+import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.Constants;
 
-  }
+public class FlywheelSubsystem extends SubsystemBase {
+    /**
+     * Creates a new ExampleSubsystem.
+     */
+    public FlywheelSubsystem() {
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    }
+
+    @Override
+    public void periodic() {
+
+    }
+
+    public void spin(){
+        
+    }
+
 }

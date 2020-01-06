@@ -25,9 +25,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   // Color tests
   public static ColorSensorV3 cs;
@@ -42,8 +39,8 @@ public class RobotContainer {
   }
 
   public void init() {
-    Port placeholder = null;
-    cs = new ColorSensorV3(placeholder);
+    // check port number
+    cs = new ColorSensorV3(Port.kOnboard);
   }
 
   /**
