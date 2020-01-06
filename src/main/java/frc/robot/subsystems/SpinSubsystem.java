@@ -30,7 +30,7 @@ public class SpinSubsystem extends SubsystemBase {
     }
 
     public void spin(int pow) {
-        RobotContainer.flyWheel.set(ControlMode.PercentOutput, pow);
+        RobotContainer.spinner.set(ControlMode.PercentOutput, pow);
     }
 
 }

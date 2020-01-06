@@ -29,7 +29,7 @@ public class RobotContainer {
 
   // Color tests
   public static ColorSensorV3 cs;
-  public static TalonSRX flyWheel;
+  public static TalonSRX spinner;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -41,9 +41,9 @@ public class RobotContainer {
   }
 
   public void init() {
-    // check port number
+    // check port number please
     cs = new ColorSensorV3(Port.kOnboard);
-    flyWheel = new TalonSRX(15);
+    spinner = new TalonSRX(-1);
   }
 
   /**
@@ -63,6 +63,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //no clue what this is
-    return m_autoCommand;
+    return null;
   }
 }
