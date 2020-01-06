@@ -43,9 +43,9 @@ public class ColorSubsystem extends SubsystemBase {
     }
   }
 
-  public int getColor()  {
-    for  (int  i  = 0 ;  i  < 4 ; i++) {
-      if  (matchColor(i) ) {
+  public int getColor() {
+    for (int i = 0; i < 4; i++) {
+      if (matchColor(i)) {
         return i;
       }
     }

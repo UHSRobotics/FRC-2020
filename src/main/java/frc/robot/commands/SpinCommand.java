@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.OI;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.SpinSubsystem;;
 
@@ -33,8 +34,6 @@ public class SpinCommand extends CommandBase {
   public SpinCommand(ColorSubsystem sC, SpinSubsystem sF) {
     colorSubsystem = sC;
     spinSubsystem = sF;
-    colorChange = 0;
-    currColor = colorSubsystem.getColor();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(colorSubsystem);
     addRequirements(spinSubsystem);
@@ -43,26 +42,35 @@ public class SpinCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    colorChange = 0;
+    colorTarget = OI.getTargetColor();
+    currColor = colorSubsystem.getColor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (stage == 3) {
-      while (!colorSubsystem.matchColor(colorTarget)) {
-        spinSubsystem.spin(1);
-      }
-    } else {
-      while (colorChange < 26) {
-        prevColor = currColor;
-        currColor = colorSubsystem.getColor();
-        if (currColor - prevColor == 1 || currColor - prevColor == 3) {
-          colorChange++;
+    boolean doSpinner = OI.doSpinner();
+    if (doSpinner) {
+      if (stage == 3) {
+        while (!colorSubsystem.matchColor(colorTarget)) {
+          spinSubsystem.spin(1);
         }
-        spinSubsystem.spin(1);
+        doSpinner = false;
+
+      } else {
+        while (colorChange < 26) {
+          prevColor = currColor;
+          currColor = colorSubsystem.getColor();
+          if (currColor - prevColor == 1 || currColor - prevColor == 3) {
+            colorChange++;
+          }
+          spinSubsystem.spin(1);
+        }
+        doSpinner = false;
+
       }
     }
-
   }
 
   // Called once the command ends or is interrupted.
