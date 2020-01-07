@@ -9,11 +9,15 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.RobotContainer;
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
 public class ColorSubsystem extends SubsystemBase {
+  private final ColorSensorV3 colorSensor = new ColorSensorV3(Port.kOnboard);
+
   /**
    * Creates a new ExampleSubsystem.
    */
@@ -27,7 +31,7 @@ public class ColorSubsystem extends SubsystemBase {
 
   // use this when OI is figured out
   public boolean matchColor(int target) {
-    Color c = RobotContainer.cs.getColor();
+    Color c = colorSensor.getColor();
     // 0-1-2-3=blue-green-red-yellow
     switch (target) {
     case 0:

@@ -1,7 +1,7 @@
+//none of this works. Placeholder while I figure out new OI in robotcontainer
 package frc.robot;
 
 public class OI {
-    // placeholder while I figure out how the new controller works
     public static boolean doSpinner() {
         return false;
     }
