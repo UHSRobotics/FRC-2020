@@ -9,8 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.RobotContainer;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -18,10 +16,9 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
 public class SpinSubsystem extends SubsystemBase {
-    private final TalonSRX m_flyWheel = new TalonSRX(15);
+    private final TalonSRX m_spinner = new TalonSRX(15);
     
     public SpinSubsystem() {
-
     }
 
     @Override
@@ -30,7 +27,7 @@ public class SpinSubsystem extends SubsystemBase {
     }
 
     public void spin(int pow) {
-        RobotContainer.flyWheel.set(ControlMode.PercentOutput, pow);
+        m_spinner.set(ControlMode.PercentOutput, pow);
     }
 
 }

@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.SpinSubsystem;;
@@ -33,8 +32,6 @@ public class SpinCommand extends CommandBase {
   public SpinCommand(ColorSubsystem sC, SpinSubsystem sF) {
     m_colorSubsystem = sC;
     m_spinSubsystem = sF;
-    colorChange = 0;
-    currColor = m_colorSubsystem.getColor();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_colorSubsystem);
     addRequirements(m_spinSubsystem);
@@ -43,26 +40,37 @@ public class SpinCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    colorChange = 0;
+    //TODO: fix this
+    colorTarget = OI.getTargetColor();
+    currColor = m_colorSubsystem.getColor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (stage == 3) {
-      while (!m_colorSubsystem.matchColor(colorTarget)) {
-        m_spinSubsystem.spin(1);
-      }
-    } else {
-      while (colorChange < 26) {
-        prevColor = currColor;
-        currColor = m_colorSubsystem.getColor();
-        if (currColor - prevColor == 1 || currColor - prevColor == 3) {
-          colorChange++;
+    //TODO: fix this
+    boolean doSpinner = OI.doSpinner();
+    if (doSpinner) {
+      if (stage == 3) {
+        while (!m_colorSubsystem.matchColor(colorTarget)) {
+          m_spinSubsystem.spin(1);
         }
-        m_spinSubsystem.spin(1);
+        doSpinner = false;
+
+      } else {
+        while (colorChange < 26) {
+          prevColor = currColor;
+          currColor = m_colorSubsystem.getColor();
+          if (currColor - prevColor == 1 || currColor - prevColor == 3) {
+            colorChange++;
+          }
+          m_spinSubsystem.spin(1);
+        }
+        doSpinner = false;
+
       }
     }
-
   }
 
   // Called once the command ends or is interrupted.

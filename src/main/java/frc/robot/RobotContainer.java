@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import frc.robot.Constants.OIConstants;
 
 import frc.robot.commands.*;
@@ -35,9 +33,6 @@ public class RobotContainer {
 
   // placeholder command for autonomous
   private final Command m_autoCommand = new AutonPlaceholder();
-
-  // Color tests
-  public static TalonSRX flyWheel;
 
   // Main Controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -68,7 +63,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    // no clue what this is
     return m_autoCommand;
   }
 }

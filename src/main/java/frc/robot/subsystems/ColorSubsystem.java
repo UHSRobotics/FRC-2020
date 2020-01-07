@@ -9,8 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.RobotContainer;
-
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C.Port;
@@ -46,9 +44,9 @@ public class ColorSubsystem extends SubsystemBase {
     }
   }
 
-  public int getColor()  {
-    for  (int  i  = 0 ;  i  < 4 ; i++) {
-      if  (matchColor(i) ) {
+  public int getColor() {
+    for (int i = 0; i < 4; i++) {
+      if (matchColor(i)) {
         return i;
       }
     }
