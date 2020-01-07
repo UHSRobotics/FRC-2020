@@ -16,18 +16,11 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
 public class SpinSubsystem extends SubsystemBase {
+    //TODO: fix this
     private final TalonSRX m_spinner = new TalonSRX(15);
-    
-    public SpinSubsystem() {
-    }
 
-    @Override
-    public void periodic() {
-
-    }
-
-    public void spin(int pow) {
+    public void spin(double pow) {
+        pow=pow/10.0;
         m_spinner.set(ControlMode.PercentOutput, pow);
     }
-
 }

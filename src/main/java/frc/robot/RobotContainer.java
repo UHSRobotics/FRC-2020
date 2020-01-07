@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -52,8 +53,16 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
     new JoystickButton(m_driverController, Button.kA.value)
-      .whenPressed(new SpinCommand(m_colorSubsystem,m_spinSubsystem));
+        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
+    new JoystickButton(m_driverController, Button.kB.value)
+        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
+    new JoystickButton(m_driverController, Button.kX.value)
+        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
   }
 
   /**

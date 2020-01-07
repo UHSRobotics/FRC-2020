@@ -18,20 +18,19 @@ public class SpinCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final ColorSubsystem m_colorSubsystem;
   private final SpinSubsystem m_spinSubsystem;
-  private int stage; // stage 2 or 3
-  private int colorTarget; // target color to check
-  private int colorChange;
+  private int state; // stage 2 or 3
+  private static int colorChange = 0;
   private int prevColor;
   private int currColor;
+  private boolean done;
 
   /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
+   * @param state -1-0-1-2-3=rotation-blue-green-red-yellow
    */
-  public SpinCommand(ColorSubsystem sC, SpinSubsystem sF) {
+  public SpinCommand(ColorSubsystem sC, SpinSubsystem sF, int state) {
     m_colorSubsystem = sC;
     m_spinSubsystem = sF;
+    this.state = state;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_colorSubsystem);
     addRequirements(m_spinSubsystem);
@@ -40,37 +39,32 @@ public class SpinCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    colorChange = 0;
-    //TODO: fix this
-    colorTarget = OI.getTargetColor();
+    done = false;
     currColor = m_colorSubsystem.getColor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO: fix this
-    boolean doSpinner = OI.doSpinner();
-    if (doSpinner) {
-      if (stage == 3) {
-        while (!m_colorSubsystem.matchColor(colorTarget)) {
-          m_spinSubsystem.spin(1);
-        }
-        doSpinner = false;
-
-      } else {
-        while (colorChange < 26) {
-          prevColor = currColor;
-          currColor = m_colorSubsystem.getColor();
-          if (currColor - prevColor == 1 || currColor - prevColor == 3) {
-            colorChange++;
-          }
-          m_spinSubsystem.spin(1);
-        }
-        doSpinner = false;
-
+    if (state > -1) {
+      while (!m_colorSubsystem.matchColor(state)) {
+        m_spinSubsystem.spin(10);
       }
+      done = true;
+    } else {
+      while (Math.abs(colorChange) < 26) {
+        prevColor = currColor;
+        currColor = m_colorSubsystem.getColor();
+        if (currColor - prevColor == 1 || currColor - prevColor == 3) {
+          colorChange++;
+        } else if (currColor - prevColor == -1 || currColor - prevColor == -3) {
+          colorChange--;
+        }
+        m_spinSubsystem.spin(10);
+      }
+      done = true;
     }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -81,6 +75,6 @@ public class SpinCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return done;
   }
 }
