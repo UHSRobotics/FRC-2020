@@ -28,27 +28,23 @@ public class ColorSubsystem extends SubsystemBase {
 
   // use this when OI is figured out
   public boolean matchColor(int target) {
-    Color c = m_colorSensor.getColor();
-    // 0-1-2-3=blue-green-red-yellow
-    switch (target) {
-    case 0:
-      return c.blue > 255 - Constants.colorRange && c.green > 255 - Constants.colorRange;
-    case 1:
-      return c.green > 255 - Constants.colorRange;
-    case 2:
-      return c.red > 255 - Constants.colorRange;
-    case 3:
-      return c.red > 255 - Constants.colorRange && c.green > 255 - Constants.colorRange;
-    default:
-      return false;
-    }
+    return target == getColor();
   }
 
   public int getColor() {
-    for (int i = 0; i < 4; i++) {
-      if (matchColor(i)) {
-        return i;
-      }
+    // 0-1-2-3=blue-green-red-yellow
+    Color c = m_colorSensor.getColor();
+    if (c.blue > 255 - Constants.colorRange && c.green > 255 - Constants.colorRange && c.red < Constants.colorRange) {
+      return 0;
+    }
+    if (c.green > 255 - Constants.colorRange && c.red < Constants.colorRange && c.blue < Constants.colorRange) {
+      return 1;
+    }
+    if (c.red > 255 - Constants.colorRange && c.green < Constants.colorRange && c.blue < Constants.colorRange) {
+      return 2;
+    }
+    if (c.red > 255 - Constants.colorRange && c.green > 255 - Constants.colorRange && c.blue < Constants.colorRange) {
+      return 3;
     }
     return -1;
   }
