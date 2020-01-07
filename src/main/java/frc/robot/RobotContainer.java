@@ -9,13 +9,17 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.I2C.Port;
+import frc.robot.Constants.OIConstants;
+
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+
+import static edu.wpi.first.wpilibj.XboxController.Button;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -26,10 +30,17 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
+  private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
+
+  // placeholder command for autonomous
+  private final Command m_autoCommand = new AutonPlaceholder();
 
   // Color tests
-  public static ColorSensorV3 cs;
   public static TalonSRX flyWheel;
+
+  // Main Controller
+  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -37,13 +48,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    this.init();
-  }
-
-  public void init() {
-    // check port number
-    cs = new ColorSensorV3(Port.kOnboard);
-    flyWheel = new TalonSRX(15);
   }
 
   /**
@@ -53,6 +57,8 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whenPressed(new SpinCommand(m_colorSubsystem,m_spinSubsystem));
   }
 
   /**
@@ -62,7 +68,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    //no clue what this is
+    // no clue what this is
     return m_autoCommand;
   }
 }

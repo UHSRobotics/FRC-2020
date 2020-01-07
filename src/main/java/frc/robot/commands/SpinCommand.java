@@ -17,8 +17,8 @@ import frc.robot.subsystems.SpinSubsystem;;
  */
 public class SpinCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final ColorSubsystem colorSubsystem;
-  private final SpinSubsystem spinSubsystem;
+  private final ColorSubsystem m_colorSubsystem;
+  private final SpinSubsystem m_spinSubsystem;
   private int stage; // stage 2 or 3
   private int colorTarget; // target color to check
   private int colorChange;
@@ -31,13 +31,13 @@ public class SpinCommand extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   public SpinCommand(ColorSubsystem sC, SpinSubsystem sF) {
-    colorSubsystem = sC;
-    spinSubsystem = sF;
+    m_colorSubsystem = sC;
+    m_spinSubsystem = sF;
     colorChange = 0;
-    currColor = colorSubsystem.getColor();
+    currColor = m_colorSubsystem.getColor();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(colorSubsystem);
-    addRequirements(spinSubsystem);
+    addRequirements(m_colorSubsystem);
+    addRequirements(m_spinSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -49,17 +49,17 @@ public class SpinCommand extends CommandBase {
   @Override
   public void execute() {
     if (stage == 3) {
-      while (!colorSubsystem.matchColor(colorTarget)) {
-        spinSubsystem.spin(1);
+      while (!m_colorSubsystem.matchColor(colorTarget)) {
+        m_spinSubsystem.spin(1);
       }
     } else {
       while (colorChange < 26) {
         prevColor = currColor;
-        currColor = colorSubsystem.getColor();
+        currColor = m_colorSubsystem.getColor();
         if (currColor - prevColor == 1 || currColor - prevColor == 3) {
           colorChange++;
         }
-        spinSubsystem.spin(1);
+        m_spinSubsystem.spin(1);
       }
     }
 

@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
 public class SpinSubsystem extends SubsystemBase {
-    /**
-     * Creates a new ExampleSubsystem.
-     */
+    private final TalonSRX m_flyWheel = new TalonSRX(15);
+    
     public SpinSubsystem() {
 
     }

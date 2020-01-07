@@ -19,4 +19,8 @@ package frc.robot;
  */
 public final class Constants {
     public static int colorRange = 50;
+
+    public static final class OIConstants {
+        public static final int kDriverControllerPort = 1;
+    }
 }
