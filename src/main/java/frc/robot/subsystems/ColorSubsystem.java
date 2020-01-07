@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
 public class ColorSubsystem extends SubsystemBase {
-    private final ColorSensorV3 m_colorSensor = new ColorSensorV3(Port.kOnboard);;
+  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(Port.kOnboard);;
 
   public ColorSubsystem() {
 
