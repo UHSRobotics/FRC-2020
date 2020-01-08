@@ -5,6 +5,8 @@ Team 7721's FRC Code for infinite recharge.
 # Useful links
 
 * [Raspberry Pi stuffs](#setting-up-the-raspberry-pi)
+* [Chamelon Vision stuffs](#setting-up-chamelon-vision)
+* [Pixy Cam stuffs](#setting-up-pixy-cam)
 
 ⠀
 
@@ -69,7 +71,7 @@ Getting tools like pathweaver, smartdashboard, shuffleboard, etc.
 
 ### Setting up the raspberry pi
 
-#### [Installing Raspbian Buster Lite on your raspberry pi](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
+#### [Guide for Installing Raspbian Buster Lite on your raspberry pi](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
 After installation, put an empty file with no file extension named `ssh` into the root of the `boot` to enable ssh for headless setup.
 
@@ -77,7 +79,7 @@ Power on the raspberry pi, then connect it to your computer through an ethernet 
 
 ssh into the raspberrypi by running the command `ssh pi@raspberrypi`, then `yes`, then enter the default password `raspberry`
 
-#### [Setting WiFi up via the command line](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
+#### [Guide to Settings WiFi up via the command line](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
 
 For school Wifi, open the `wpa-supplicant` configuration file in nano (a code editor) by running:
 
@@ -85,7 +87,7 @@ For school Wifi, open the `wpa-supplicant` configuration file in nano (a code ed
 
 Put this in there:
 
-``` json
+``` js
 network={
         ssid="YRDSB-S"
         scan_ssid=1
@@ -96,3 +98,11 @@ network={
         phase1="peaplabel=1"
 }
 ```
+
+### Setting up chamelon vision
+
+#### [Guide for setting up chamelon vision](https://chameleon-vision.readthedocs.io/en/latest/installation/coprocessor-setup.html)
+
+### Setting up pixy cam
+
+#### [Guide for setting up pixy cam](https://docs.pixycam.com/wiki/doku.php?id=wiki:v2:hooking_up_pixy_to_a_raspberry_pi)
