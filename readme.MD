@@ -1,6 +1,6 @@
 # FRC 2020
 
-Team 7721's FRC Code for infinite recharge.
+T![Infinite Recharge](https://i.imgur.com/sd8N6p1.jpg)Team 7721's FRC Code for infinite recharge.
 
 # Useful links
 
