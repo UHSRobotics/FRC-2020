@@ -5,7 +5,7 @@ Team 7721's FRC Code for infinite recharge.
 ![Infinite Recharge](https://i.imgur.com/sd8N6p1.jpg)
 
 # Reade this
-## When in doubt, **Actually** read the guides
+When in doubt, **Actually** read the guides and this readme.
 
 * [Raspberry Pi stuffs](#setting-up-the-raspberry-pi)
 * [chameleon Vision stuffs](#setting-up-chameleon-vision)
@@ -49,7 +49,7 @@ Or
 3. Install CTRE Phoenix Framework: [Installation Guide](https://phoenix-documentation.readthedocs.io/en/latest/ch05_PrepWorkstation.html#option-1-windows-installer-strongly-recommended)
    * Needed for using motor controllers in your program
    * The name is something like "CTRE Phoenix Framework Installer 5.17.3.1 (.zip)"
-4. Adding the CTRE Phoenix Library to your **new** project: [Guide](https://phoenix-documentation.readthedocs.io/en/latest/ch05a_CppJava.html)
+4. Adding the CTRE Phoenix Library to your **new** project: [Guide](https://phoenix-documentation.readthedocs.io/en/latest/ch05a_CppJava.html#frc-c-java-add-phoenix)
    * If you are not creating a new project, and is cloning this one instead, there's no need to do this as it's already done.
 
 ### Tools
