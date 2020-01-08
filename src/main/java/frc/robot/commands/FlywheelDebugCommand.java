@@ -11,15 +11,15 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 
 /**
  * A command to drive the robot with joystick input (passed in as {@link DoubleSupplier}s). Written
  * explicitly for pedagogical purposes - actual code should inline a command this simple with {@link
  * edu.wpi.first.wpilibj2.command.RunCommand}.
  */
-public class DefaultDrive extends CommandBase {
-  private final DriveSubsystem m_drive;
+public class FlywheelDebugCommand extends CommandBase {
+  private final FlywheelSubsystem m_drive;
   private final DoubleSupplier m_lforward;
   private final DoubleSupplier m_rforward;
 
@@ -30,7 +30,7 @@ public class DefaultDrive extends CommandBase {
    * @param forward The control input for driving forwards/backwards
    * @param rotation The control input for turning
    */
-  public DefaultDrive(DriveSubsystem subsystem, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
+  public FlywheelDebugCommand(FlywheelSubsystem subsystem, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
     m_drive = subsystem;
     m_lforward = leftSpeed;
     m_rforward = rightSpeed;

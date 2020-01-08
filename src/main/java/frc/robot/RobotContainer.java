@@ -29,7 +29,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final FlywheelSubsystem m_robotDrive = new FlywheelSubsystem();
   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
@@ -46,7 +46,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_robotDrive.setDefaultCommand(
-        new DefaultDrive(
+        new FlywheelDebugCommand(
             m_robotDrive,
             () -> m_driverController.getY(GenericHID.Hand.kLeft),
             () -> m_driverController.getY(GenericHID.Hand.kRight)));

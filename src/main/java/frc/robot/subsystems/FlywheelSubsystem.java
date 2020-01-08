@@ -18,8 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-public class DriveSubsystem extends SubsystemBase {
-  //TODO: change to talon
+public class FlywheelSubsystem extends SubsystemBase {
   // The motors on the left side of the drive.
   private final VictorSPX m_leftMotor = new VictorSPX(0);
 
