@@ -18,7 +18,7 @@ public class SpinCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final ColorSubsystem m_colorSubsystem;
   private final SpinSubsystem m_spinSubsystem;
-  private int state; // stage 2 or 3
+  private int state;
   private static int colorChange = 0;
   private int prevColor;
   private int currColor;
@@ -48,7 +48,7 @@ public class SpinCommand extends CommandBase {
   public void execute() {
     if (state > -1) {
       while (!m_colorSubsystem.matchColor(state)) {
-        m_spinSubsystem.spin(10);
+        m_spinSubsystem.spin(0.1);
       }
       done = true;
     } else {
@@ -60,7 +60,7 @@ public class SpinCommand extends CommandBase {
         } else if (currColor - prevColor == -1 || currColor - prevColor == -3) {
           colorChange--;
         }
-        m_spinSubsystem.spin(10);
+        m_spinSubsystem.spin(0.1);
       }
       done = true;
     }
