@@ -5,6 +5,7 @@ Team 7721's FRC Code for infinite recharge.
 ![Infinite Recharge](https://i.imgur.com/sd8N6p1.jpg)
 
 # Reade this
+## When in doubt, **Actually** read the guides
 
 * [Raspberry Pi stuffs](#setting-up-the-raspberry-pi)
 * [chameleon Vision stuffs](#setting-up-chameleon-vision)
