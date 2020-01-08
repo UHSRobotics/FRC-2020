@@ -133,8 +133,6 @@ sudo ./update.sh
 
 **[Guide to make stuffs (in this case, chameleon vision) run on boot](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/)**
 
-To open the webs
-
 To connect to the web dashboard of chameleon vision, put `http://raspberrypi:5800/` in your browser.
 Make sure your computer and the raspberrypi are under the same network.
 
