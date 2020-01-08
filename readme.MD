@@ -4,7 +4,7 @@ Team 7721's FRC Code for infinite recharge.
 
 ![Infinite Recharge](https://i.imgur.com/sd8N6p1.jpg)
 
-# Useful links
+# Reade this
 
 * [Raspberry Pi stuffs](#setting-up-the-raspberry-pi)
 * [chameleon Vision stuffs](#setting-up-chameleon-vision)
@@ -16,7 +16,7 @@ Team 7721's FRC Code for infinite recharge.
 
 ⠀
 
-* [I havn't done anything, How do I get started?](#the-basics)
+* [I havn't done anything at all, How do I get started?](#the-basics)
 * [I want to use shuffle board/smart dashboard, where do I get it?](#tools)
 
 ---
@@ -73,7 +73,7 @@ Getting tools like pathweaver, smartdashboard, shuffleboard, etc.
 
 ### Setting up the raspberry pi
 
-#### [Guide for Installing Raspbian Buster Lite on your raspberry pi](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
+**[Guide for Installing Raspbian Buster Lite on your raspberry pi](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)**
 
 After installation, put an empty file with no file extension named `ssh` into the root of the `boot` to enable ssh for headless setup.
 
@@ -81,7 +81,7 @@ Power on the raspberry pi, then connect it to your computer through an ethernet 
 
 ssh into the raspberrypi by running the command `ssh pi@raspberrypi`, then `yes`, then enter the default password `raspberry`
 
-#### [Guide to Settings WiFi up via the command line](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
+**[Guide to Settings WiFi up via the command line](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)**
 
 For school Wifi, open the `wpa-supplicant` configuration file in nano (a code editor) by running:
 
@@ -103,9 +103,11 @@ network={
 
 ### Setting up chameleon vision
 
-#### [Official guide for setting up chameleon vision](https://chameleon-vision.readthedocs.io/en/latest/installation/coprocessor-setup.html)
+**[Official guide for setting up chameleon vision](https://chameleon-vision.readthedocs.io/en/latest/installation/coprocessor-setup.html)**
 
 **The raspberry pi must be connected to the internet through ethernet during install/update**
+
+Run these commands on the raspberry pi, not your own computer, to do stuffs:
 
 To install:
 
@@ -128,6 +130,15 @@ wget https://git.io/JeDUL -O update.sh
 chmod +x update.sh
 sudo ./update.sh
 ```
+
+**[Guide to make stuffs (in this case, chameleon vision) run on boot](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/)**
+
+To open the webs
+
+To connect to the web dashboard of chameleon vision, put `http://raspberrypi:5800/` in your browser.
+Make sure your computer and the raspberrypi are under the same network.
+
+**School wifi blocks a lot of ports and won't work, connect the raspberry pi directly to your laptop through ethernet or the roborio wifi to test chameleon vision**
 
 ### Setting up pixy cam
 
