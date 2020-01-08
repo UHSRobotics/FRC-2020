@@ -5,6 +5,7 @@ Team 7721's FRC Code for infinite recharge.
 # Useful stuffs
 
 * [I havn't done anything, How do I get started?](#the-basics)
+* [I want to use shuffle board/smart dashboard, where do I get it?](#tools)
 
 ---
 
@@ -37,3 +38,19 @@ Or
    * The name is something like "CTRE Phoenix Framework Installer 5.17.3.1 (.zip)"
 4. Adding the CTRE Phoenix Library to your **new** project: [Guide](https://phoenix-documentation.readthedocs.io/en/latest/ch05a_CppJava.html)
    * If you are not creating a new project, and is cloning this one instead, there's no need to do this as it's already done.
+
+### Tools
+
+Getting tools like pathweaver, smartdashboard, shuffleboard, etc.
+
+1. Press f1 in vscode
+   * If you are on a laptop and F1 does some other random stuff, try holding down the "FN" key while pressing F1
+2. Search for "WPILIB: Start Tools" by typing this in the bar that just appeared.
+3. You'll probably get prompted that you don't have any, proceed with the option that downloads you them.
+4. Wait......
+5. After installation, try to run "WPILIB: Start Tools" again and start any random tool, if prompted "A Java Exception has Occured"
+   1. install JDK 13[\(The Basics, 1,i)](#the-basics)
+   2. Search for and open "advanced system settings" on your laptop
+   3. Open "Enviromental Variables" in "advanced system settings"
+   4. Find/Create a variable called "JAVA_PATH" in "System Variables", setting the value to the path to your jdk 13
+      * Looks something like this: "C:\Program Files\Java\jdk-13.0.1"
