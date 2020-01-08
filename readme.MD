@@ -87,7 +87,7 @@ For school Wifi, open the `wpa-supplicant` configuration file in nano (a code ed
 
 `sudo nano /etc/wpa_supplicant/wpa_supplicant.conf`
 
-Put this in there:
+and put this in there, replacing the [student#] and [student password] with actual student number and password:
 
 ``` js
 network={
@@ -103,7 +103,31 @@ network={
 
 ### Setting up chameleon vision
 
-#### [Guide for setting up chameleon vision](https://chameleon-vision.readthedocs.io/en/latest/installation/coprocessor-setup.html)
+#### [Official guide for setting up chameleon vision](https://chameleon-vision.readthedocs.io/en/latest/installation/coprocessor-setup.html)
+
+**The raspberry pi must be connected to the internet through ethernet during install/update**
+
+To install:
+
+```
+wget https://git.io/JeDUk -O install.sh
+chmod +x install.sh
+sudo ./install.sh
+```
+
+To run:
+
+```
+sudo java -jar chameleon-vision.jar
+```
+
+To update:
+
+```
+wget https://git.io/JeDUL -O update.sh
+chmod +x update.sh
+sudo ./update.sh
+```
 
 ### Setting up pixy cam
 
