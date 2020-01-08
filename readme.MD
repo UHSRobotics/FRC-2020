@@ -5,7 +5,7 @@ Team 7721's FRC Code for infinite recharge.
 # Useful links
 
 * [Raspberry Pi stuffs](#setting-up-the-raspberry-pi)
-* [Chamelon Vision stuffs](#setting-up-chamelon-vision)
+* [chameleon Vision stuffs](#setting-up-chameleon-vision)
 * [Pixy Cam stuffs](#setting-up-pixy-cam)
 
 ⠀
@@ -99,9 +99,9 @@ network={
 }
 ```
 
-### Setting up chamelon vision
+### Setting up chameleon vision
 
-#### [Guide for setting up chamelon vision](https://chameleon-vision.readthedocs.io/en/latest/installation/coprocessor-setup.html)
+#### [Guide for setting up chameleon vision](https://chameleon-vision.readthedocs.io/en/latest/installation/coprocessor-setup.html)
 
 ### Setting up pixy cam
 
