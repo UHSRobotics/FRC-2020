@@ -43,6 +43,6 @@ public class ColorSubsystem extends SubsystemBase {
       System.out.println("yellow");
       return 3;
     }
-    return -100;
+    return -64;
   }
 }

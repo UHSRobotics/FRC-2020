@@ -46,9 +46,12 @@ public class SpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // debug purposes.
+    boolean disableSpin = true;
     if (state > -1) {
       while (!m_colorSubsystem.matchColor(state)) {
-        m_spinSubsystem.spin(0.1);
+        if (!disableSpin)
+          m_spinSubsystem.spin(0.1);
       }
       done = true;
     } else {
@@ -60,7 +63,8 @@ public class SpinCommand extends CommandBase {
         } else if (currColor - prevColor == -1 || currColor - prevColor == -3) {
           colorChange--;
         }
-        m_spinSubsystem.spin(0.1);
+        if (!disableSpin)
+          m_spinSubsystem.spin(0.1);
       }
       done = true;
     }
