@@ -39,7 +39,7 @@ public class FlywheelDebugCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.tankDrive(m_lforward.getAsDouble(), m_rforward.getAsDouble());
+    m_drive.setSpeed(m_lforward.getAsDouble(), m_rforward.getAsDouble());
     System.out.println("Left: "+ m_lforward.getAsDouble() + " right: " + m_rforward.getAsDouble());
   }
 }

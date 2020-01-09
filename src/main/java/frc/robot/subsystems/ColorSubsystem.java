@@ -24,8 +24,10 @@ public class ColorSubsystem extends SubsystemBase {
     return target == getColor();
   }
 
+   /**
+    * @return colorCode 0-1-2-3=blue-green-red-yellow
+    */
   public int getColor() {
-    // 0-1-2-3=blue-green-red-yellow
     Color c = m_colorSensor.getColor();
     if (c.blue > 255 - Constants.colorRange && c.green > 255 - Constants.colorRange && c.red < Constants.colorRange) {
       System.out.println("blue");
