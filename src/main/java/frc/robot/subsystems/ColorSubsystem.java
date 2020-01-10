@@ -32,23 +32,25 @@ public class ColorSubsystem extends SubsystemBase {
    * @return colorCode 0-1-2-3=blue-green-red-yellow
    */
   public int getColor() {
-    int r = m_colorSensor.getRed();
-    int g = m_colorSensor.getGreen();
-    int b = m_colorSensor.getBlue();
-    System.out.println(r + " " + g + " " + b);
-    if (b > 255 - Constants.colorRange && g > 255 - Constants.colorRange && r < Constants.colorRange) {
+    Color c = m_colorSensor.getColor();
+    System.out.println(c.red * 255 + " " + c.green * 255 + " " + c.blue * 255);
+    if (c.blue * 255 > 255 - Constants.colorRange && c.green * 255 > 255 - Constants.colorRange
+        && c.red * 255 < Constants.colorRange) {
       System.out.println("blue");
       return 0;
     }
-    if (g > 255 - Constants.colorRange && r < Constants.colorRange && b < Constants.colorRange) {
+    if (c.green * 255 > 255 - Constants.colorRange && c.red * 255 < Constants.colorRange
+        && c.blue * 255 < Constants.colorRange) {
       System.out.println("green");
       return 1;
     }
-    if (r > 255 - Constants.colorRange && g < Constants.colorRange && b < Constants.colorRange) {
+    if (c.red * 255 > 255 - Constants.colorRange && c.green * 255 < Constants.colorRange
+        && c.blue * 255 < Constants.colorRange) {
       System.out.println("red");
       return 2;
     }
-    if (r > 255 - Constants.colorRange && g > 255 - Constants.colorRange && b < Constants.colorRange) {
+    if (c.red * 255 > 255 - Constants.colorRange && c.green * 255 > 255 - Constants.colorRange
+        && c.blue * 255 < Constants.colorRange) {
       System.out.println("yellow");
       return 3;
     }
