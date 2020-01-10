@@ -6,8 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.GenericHID;
 
 /**
@@ -22,16 +20,20 @@ public class DualShockController extends GenericHID {
    * Represents a digital button on an XboxController.
    */
   public enum Button {
+    kRect(1),
+    kCross(2),
+    kDisk(3),
+    kTrig(4),
     kBumperLeft(5),
     kBumperRight(6),
-    kStickLeft(9),
-    kStickRight(10),
-    kA(1),
-    kB(2),
-    kX(3),
-    kY(4),
-    kBack(7),
-    kStart(8);
+    kTriggerLeft(7),
+    kTriggerRight(8),
+    kShare(9),
+    kOption(10),
+    kStickLeft(11),
+    kStickRight(12),
+    kPad(14);
+
 
     @SuppressWarnings({"MemberName", "PMD.SingularField"})
     public final int value;
@@ -49,8 +51,6 @@ public class DualShockController extends GenericHID {
    */
   public DualShockController(final int port) {
     super(port);
-
-    HAL.report(tResourceType.kResourceType_XboxController, port + 1);
   }
 
   /**
@@ -64,7 +64,7 @@ public class DualShockController extends GenericHID {
     if (hand.equals(Hand.kLeft)) {
       return getRawAxis(0);
     } else {
-      return getRawAxis(4);
+      return getRawAxis(2);
     }
   }
 
@@ -91,9 +91,9 @@ public class DualShockController extends GenericHID {
    */
   public double getTriggerAxis(Hand hand) {
     if (hand.equals(Hand.kLeft)) {
-      return getRawAxis(2);
-    } else {
       return getRawAxis(3);
+    } else {
+      return getRawAxis(4);
     }
   }
 
@@ -186,8 +186,8 @@ public class DualShockController extends GenericHID {
    *
    * @return The state of the button.
    */
-  public boolean getAButton() {
-    return getRawButton(Button.kA.value);
+  public boolean getRectButton() {
+    return getRawButton(Button.kRect.value);
   }
 
   /**
@@ -195,8 +195,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was pressed since the last check.
    */
-  public boolean getAButtonPressed() {
-    return getRawButtonPressed(Button.kA.value);
+  public boolean getRectButtonPressed() {
+    return getRawButtonPressed(Button.kRect.value);
   }
 
   /**
@@ -204,8 +204,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was released since the last check.
    */
-  public boolean getAButtonReleased() {
-    return getRawButtonReleased(Button.kA.value);
+  public boolean getRectButtonReleased() {
+    return getRawButtonReleased(Button.kRect.value);
   }
 
   /**
@@ -213,8 +213,8 @@ public class DualShockController extends GenericHID {
    *
    * @return The state of the button.
    */
-  public boolean getBButton() {
-    return getRawButton(Button.kB.value);
+  public boolean getCrossButton() {
+    return getRawButton(Button.kCross.value);
   }
 
   /**
@@ -222,8 +222,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was pressed since the last check.
    */
-  public boolean getBButtonPressed() {
-    return getRawButtonPressed(Button.kB.value);
+  public boolean getCrossButtonPressed() {
+    return getRawButtonPressed(Button.kCross.value);
   }
 
   /**
@@ -231,8 +231,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was released since the last check.
    */
-  public boolean getBButtonReleased() {
-    return getRawButtonReleased(Button.kB.value);
+  public boolean getCrossButtonReleased() {
+    return getRawButtonReleased(Button.kCross.value);
   }
 
   /**
@@ -240,8 +240,8 @@ public class DualShockController extends GenericHID {
    *
    * @return The state of the button.
    */
-  public boolean getXButton() {
-    return getRawButton(Button.kX.value);
+  public boolean getDiskButton() {
+    return getRawButton(Button.kDisk.value);
   }
 
   /**
@@ -249,8 +249,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was pressed since the last check.
    */
-  public boolean getXButtonPressed() {
-    return getRawButtonPressed(Button.kX.value);
+  public boolean getDiskButtonPressed() {
+    return getRawButtonPressed(Button.kDisk.value);
   }
 
   /**
@@ -258,8 +258,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was released since the last check.
    */
-  public boolean getXButtonReleased() {
-    return getRawButtonReleased(Button.kX.value);
+  public boolean getDiskButtonReleased() {
+    return getRawButtonReleased(Button.kDisk.value);
   }
 
   /**
@@ -267,8 +267,8 @@ public class DualShockController extends GenericHID {
    *
    * @return The state of the button.
    */
-  public boolean getYButton() {
-    return getRawButton(Button.kY.value);
+  public boolean getTrigButton() {
+    return getRawButton(Button.kTrig.value);
   }
 
   /**
@@ -276,8 +276,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was pressed since the last check.
    */
-  public boolean getYButtonPressed() {
-    return getRawButtonPressed(Button.kY.value);
+  public boolean getTrigButtonPressed() {
+    return getRawButtonPressed(Button.kTrig.value);
   }
 
   /**
@@ -285,8 +285,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was released since the last check.
    */
-  public boolean getYButtonReleased() {
-    return getRawButtonReleased(Button.kY.value);
+  public boolean getTrigButtonReleased() {
+    return getRawButtonReleased(Button.kTrig.value);
   }
 
   /**
@@ -294,8 +294,8 @@ public class DualShockController extends GenericHID {
    *
    * @return The state of the button.
    */
-  public boolean getBackButton() {
-    return getRawButton(Button.kBack.value);
+  public boolean getShareButton() {
+    return getRawButton(Button.kShare.value);
   }
 
   /**
@@ -303,8 +303,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was pressed since the last check.
    */
-  public boolean getBackButtonPressed() {
-    return getRawButtonPressed(Button.kBack.value);
+  public boolean getShareButtonPressed() {
+    return getRawButtonPressed(Button.kShare.value);
   }
 
   /**
@@ -312,8 +312,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was released since the last check.
    */
-  public boolean getBackButtonReleased() {
-    return getRawButtonReleased(Button.kBack.value);
+  public boolean getShareButtonReleased() {
+    return getRawButtonReleased(Button.kShare.value);
   }
 
   /**
@@ -321,8 +321,8 @@ public class DualShockController extends GenericHID {
    *
    * @return The state of the button.
    */
-  public boolean getStartButton() {
-    return getRawButton(Button.kStart.value);
+  public boolean getOptionButton() {
+    return getRawButton(Button.kOption.value);
   }
 
   /**
@@ -330,8 +330,8 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was pressed since the last check.
    */
-  public boolean getStartButtonPressed() {
-    return getRawButtonPressed(Button.kStart.value);
+  public boolean getOptionButtonPressed() {
+    return getRawButtonPressed(Button.kOption.value);
   }
 
   /**
@@ -339,7 +339,7 @@ public class DualShockController extends GenericHID {
    *
    * @return Whether the button was released since the last check.
    */
-  public boolean getStartButtonReleased() {
-    return getRawButtonReleased(Button.kStart.value);
+  public boolean getOptionButtonReleased() {
+    return getRawButtonReleased(Button.kOption.value);
   }
 }

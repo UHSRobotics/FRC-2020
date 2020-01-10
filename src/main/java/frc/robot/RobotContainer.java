@@ -11,7 +11,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-import static edu.wpi.first.wpilibj.XboxController.Button;
+import static frc.robot.DualShockController.Button;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -30,7 +30,7 @@ public class RobotContainer {
   private final Command m_autoCommand = new AutonPlaceholder();
 
   // Main Controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  DualShockController m_driverController = new DualShockController(OIConstants.kDriverControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -54,13 +54,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(m_driverController, Button.kRect.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
-    new JoystickButton(m_driverController, Button.kB.value)
+    new JoystickButton(m_driverController, Button.kCross.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
-    new JoystickButton(m_driverController, Button.kX.value)
+    new JoystickButton(m_driverController, Button.kDisk.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
-    new JoystickButton(m_driverController, Button.kY.value)
+    new JoystickButton(m_driverController, Button.kTrig.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
   }
 
