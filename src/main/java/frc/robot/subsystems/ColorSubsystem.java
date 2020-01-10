@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
@@ -21,9 +22,9 @@ public class ColorSubsystem extends SubsystemBase {
   // use this when OI is figured out
   public boolean matchColor(int target) {
     if (target == getColor()) {
-      System.out.println("Pass");
+      // System.out.println("Pass");
     } else {
-      System.out.println("Not pass");
+      // System.out.println("Not pass");
     }
     return target == getColor();
   }
@@ -33,25 +34,29 @@ public class ColorSubsystem extends SubsystemBase {
    */
   public int getColor() {
     Color c = m_colorSensor.getColor();
-    System.out.println(c.red * 255 + " " + c.green * 255 + " " + c.blue * 255);
+    SmartDashboard.putNumber("Color Red", c.red * 255);
+    SmartDashboard.putNumber("Color Green", c.green * 255);
+    SmartDashboard.putNumber("Color Blue", c.blue * 255);
     if (c.blue * 255 > 255 - Constants.colorRange && c.green * 255 > 255 - Constants.colorRange
         && c.red * 255 < Constants.colorRange) {
-      System.out.println("blue");
+      SmartDashboard.putString("Color Detected", "Blue");
       return 0;
     }
     if (c.green * 255 > 255 - Constants.colorRange && c.red * 255 < Constants.colorRange
         && c.blue * 255 < Constants.colorRange) {
-      System.out.println("green");
+      SmartDashboard.putString("Color Detected", "Green");
+
       return 1;
     }
     if (c.red * 255 > 255 - Constants.colorRange && c.green * 255 < Constants.colorRange
         && c.blue * 255 < Constants.colorRange) {
-      System.out.println("red");
+      SmartDashboard.putString("Color Detected", "Red");
+
       return 2;
     }
     if (c.red * 255 > 255 - Constants.colorRange && c.green * 255 > 255 - Constants.colorRange
         && c.blue * 255 < Constants.colorRange) {
-      System.out.println("yellow");
+      SmartDashboard.putString("Color Detected", "Yellow");
       return 3;
     }
     return -64;
