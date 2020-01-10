@@ -10,17 +10,41 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "0,0": {
+          "3,2": {
             "size": [
-              2,
-              3
+              1,
+              1
             ],
             "content": {
-              "_type": "Subsystem Layout",
-              "_title": "Subsystem Layout",
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Spinner Speed",
+              "_title": "Spinner Speed"
+            }
+          },
+          "2,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Spinner Target",
+              "_title": "Spinner Target"
+            }
+          },
+          "0,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Color Sensor",
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 3,
               "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
+              "_children": {
+                "0,0": {
                   "_type": "Number Bar",
                   "_source0": "network_table:///SmartDashboard/Color Red",
                   "_title": "Color Red",
@@ -30,7 +54,7 @@
                   "Visuals/Num tick marks": 5,
                   "Visuals/Show text": true
                 },
-                {
+                "1,0": {
                   "_type": "Number Bar",
                   "_source0": "network_table:///SmartDashboard/Color Green",
                   "_title": "Color Green",
@@ -40,7 +64,7 @@
                   "Visuals/Num tick marks": 5,
                   "Visuals/Show text": true
                 },
-                {
+                "2,0": {
                   "_type": "Number Bar",
                   "_source0": "network_table:///SmartDashboard/Color Blue",
                   "_title": "Color Blue",
@@ -49,8 +73,24 @@
                   "Range/Center": 0.0,
                   "Visuals/Num tick marks": 5,
                   "Visuals/Show text": true
+                },
+                "1,1": {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Color Detected",
+                  "_title": "Color Detected"
                 }
-              ]
+              }
+            }
+          },
+          "1,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Spinner Color Change",
+              "_title": "Spinner Color Change"
             }
           }
         }

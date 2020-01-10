@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.SpinSubsystem;
@@ -41,6 +42,27 @@ public class SpinCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    switch (state) {
+    case -1:
+      SmartDashboard.putString("Spinner Target", "Rotation");
+      break;
+    case 0:
+      SmartDashboard.putString("Spinner Target", "Blue");
+      break;
+    case 1:
+      SmartDashboard.putString("Spinner Target", "Green");
+      break;
+    case 2:
+      SmartDashboard.putString("Spinner Target", "Red");
+      break;
+    case 3:
+      SmartDashboard.putString("Spinner Target", "Yellow");
+      break;
+    default:
+      SmartDashboard.putString("Spinner Target", "Unknown");
+    }
+
     done = false;
     currColor = m_colorSubsystem.getColor();
     spinnerDelay = 0;
@@ -52,27 +74,34 @@ public class SpinCommand extends CommandBase {
     // debug purposes.
     boolean disableSpin = true;
     if (state > -1) {
-      while (!m_colorSubsystem.matchColor(state)) {
+      if (!m_colorSubsystem.matchColor(state)) {
+        spinnerDelay=0;
         if (!disableSpin)
           m_spinSubsystem.spin(0.1);
+      }else{
+        spinnerDelay++;
       }
-      spinnerDelay = ColorConstants.waitCycle+1;
     } else {
-      while (Math.abs(colorChange) < 26) {
-        prevColor = currColor;
+      if (Math.abs(colorChange) < 26) {
+        if (currColor > -5) {
+          prevColor = currColor;
+        }
         currColor = m_colorSubsystem.getColor();
-        if (currColor - prevColor == 1 || currColor - prevColor == 3) {
+        if (currColor - prevColor == 1 || currColor - prevColor == -3) {
           System.out.print("change increase current: " + colorChange);
           colorChange++;
-        } else if (currColor - prevColor == -1 || currColor - prevColor == -3) {
+        } else if (currColor - prevColor == -1 || currColor - prevColor == 3) {
           colorChange--;
         }
+        SmartDashboard.putNumber("Spinner Color Change", colorChange);
+
         if (!disableSpin)
           m_spinSubsystem.spin(0.1);
+      }else{
+        done = true;
       }
-      spinnerDelay++;
     }
-    if(spinnerDelay > ColorConstants.waitCycle){
+    if (spinnerDelay > ColorConstants.waitCycle) {
       done = true;
     }
   }
