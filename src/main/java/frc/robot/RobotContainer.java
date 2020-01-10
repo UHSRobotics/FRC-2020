@@ -55,11 +55,11 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
     new JoystickButton(m_driverController, Button.kRect.value)
-        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
-    new JoystickButton(m_driverController, Button.kCross.value)
-        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
-    new JoystickButton(m_driverController, Button.kDisk.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
+    new JoystickButton(m_driverController, Button.kCross.value)
+        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
+    new JoystickButton(m_driverController, Button.kDisk.value)
+        .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
     new JoystickButton(m_driverController, Button.kTrig.value)
         .whenHeld(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
   }

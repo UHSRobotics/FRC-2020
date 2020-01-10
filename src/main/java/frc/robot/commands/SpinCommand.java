@@ -9,7 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSubsystem;
-import frc.robot.subsystems.SpinSubsystem;;
+import frc.robot.subsystems.SpinSubsystem;
+import static frc.robot.Constants.ColorConstants;
 
 /**
  * An example command that uses an example subsystem.
@@ -19,10 +20,11 @@ public class SpinCommand extends CommandBase {
   private final ColorSubsystem m_colorSubsystem;
   private final SpinSubsystem m_spinSubsystem;
   private int state;
-  private static int colorChange = 0;
   private int prevColor;
   private int currColor;
+  private int spinnerDelay;
   private boolean done;
+  private static int colorChange = 0;
 
   /**
    * @param state -1-0-1-2-3=rotation-blue-green-red-yellow
@@ -41,6 +43,7 @@ public class SpinCommand extends CommandBase {
   public void initialize() {
     done = false;
     currColor = m_colorSubsystem.getColor();
+    spinnerDelay = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -53,7 +56,7 @@ public class SpinCommand extends CommandBase {
         if (!disableSpin)
           m_spinSubsystem.spin(0.1);
       }
-      done = true;
+      spinnerDelay = ColorConstants.waitCycle+1;
     } else {
       while (Math.abs(colorChange) < 26) {
         prevColor = currColor;
@@ -67,19 +70,23 @@ public class SpinCommand extends CommandBase {
         if (!disableSpin)
           m_spinSubsystem.spin(0.1);
       }
+      spinnerDelay++;
+    }
+    if(spinnerDelay > ColorConstants.waitCycle){
       done = true;
     }
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // m_spinSubsystem.spin(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return done;
+    // return false;
   }
 }

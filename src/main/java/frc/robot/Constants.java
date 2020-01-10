@@ -18,7 +18,13 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int colorRange = 50;
+    public static final class ColorConstants {
+        public static final int waitCycle = 5;
+        public static final int colorRange = 30;
+        public static final int[][] colorTarget  = {{30,100,120},{40,150,65},{140,80,30},{80,145,30}};//colorCode 0-1-2-3=blue-green-red-yellow
+    }
+
+
     public static final double joystickDeadzone = 0.2;
 
     public static final class OIConstants {
