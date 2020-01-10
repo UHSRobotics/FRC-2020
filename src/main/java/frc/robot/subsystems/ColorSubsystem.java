@@ -16,19 +16,24 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
 public class ColorSubsystem extends SubsystemBase {
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(Port.kOnboard);
+  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(Port.kMXP);
 
   // use this when OI is figured out
   public boolean matchColor(int target) {
-    System.out.println("correct color");
+    if (target == getColor()) {
+      System.out.println("Pass");
+    } else {
+      System.out.println("Not pass");
+    }
     return target == getColor();
   }
 
-   /**
-    * @return colorCode 0-1-2-3=blue-green-red-yellow
-    */
+  /**
+   * @return colorCode 0-1-2-3=blue-green-red-yellow
+   */
   public int getColor() {
     Color c = m_colorSensor.getColor();
+    System.out.println(c.blue + "" + c.green + "" + c.red);
     if (c.blue > 255 - Constants.colorRange && c.green > 255 - Constants.colorRange && c.red < Constants.colorRange) {
       System.out.println("blue");
       return 0;
