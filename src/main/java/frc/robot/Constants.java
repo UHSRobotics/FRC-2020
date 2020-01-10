@@ -18,7 +18,9 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static int colorRange = 50;
+    public static final int colorRange = 50;
+    public static final double joystickDeadzone = 0.2;
+
     public static final class OIConstants {
         public static final int kDriverControllerPort = 1;
     }
