@@ -4,21 +4,27 @@ Team 7721's FRC Code for infinite recharge.
 
 ![Infinite Recharge](https://i.imgur.com/sd8N6p1.jpg)
 
-# Reade this
+# Read this
+
 When in doubt, **Actually** read the guides and this readme.
+
+# Frequently used
+
+## Setups
+
+* [I havn't done anything at all, How do I get started?](#the-basics)
+* [How do I install shuffleboard / pathweaver?](#tools)
+
+⠀
 
 * [Raspberry Pi stuffs](#setting-up-the-raspberry-pi)
 * [chameleon Vision stuffs](#setting-up-chameleon-vision)
 * [Pixy Cam stuffs](#setting-up-pixy-cam)
 
-⠀
+## Other
 
-* [I have nothing to do](https://trello.com/b/l4WCfzfA/uhs-robotics-2019-2020)
-
-⠀
-
-* [I havn't done anything at all, How do I get started?](#the-basics)
-* [I want to use shuffle board/smart dashboard, where do I get it?](#tools)
+* [Trello Board](https://trello.com/b/l4WCfzfA/uhs-robotics-2019-2020)
+* [Lessons learned/Solutions to niche problems](#lessons-learned)
 
 ---
 
@@ -69,6 +75,18 @@ Getting tools like pathweaver, smartdashboard, shuffleboard, etc.
       * Looks something like this: `C:\Program Files\Java\jdk-13.0.1`
 
 ---
+
+## Lessons learned
+
+### Don't put `println()` in `execute()`/`periodic()`
+
+Printing out too much stuff too fast causes (around 30 characters per 20ms cycle) will cause driver station (version 20) to use up 30%+ cpu (on a plugged in i5-8265U) and gets extremely laggy, then die completly.
+
+It will also cause driver station to show [red|green] for "communication, and thinking that the roborio has been emergency stopped.
+
+Use smart dashboard/network tables for debugging instead of println().
+
+### Disable all network adapters except ethernet when imaging the radio
 
 ## Vision
 
