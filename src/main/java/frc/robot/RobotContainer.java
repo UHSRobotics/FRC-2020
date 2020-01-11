@@ -40,8 +40,8 @@ public class RobotContainer {
     m_flywheelSubsystem.setDefaultCommand(
         new FlywheelDebugCommand(
             m_flywheelSubsystem,
-            () -> m_driverController.getY(GenericHID.Hand.kLeft),
-            () -> m_driverController.getY(GenericHID.Hand.kRight)));
+            () -> m_driverController.getY(Hand.kLeft),
+            () -> m_driverController.getY(Hand.kRight)));
 
   }
 

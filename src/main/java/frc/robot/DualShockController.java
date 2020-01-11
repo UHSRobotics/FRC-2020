@@ -9,15 +9,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 
 /**
- * Handle input from Xbox 360 or Xbox One controllers connected to the Driver Station.
- *
- * <p>This class handles Xbox input that comes from the Driver Station. Each time a value is
- * requested the most recent value is returned. There is a single class instance for each controller
- * and the mapping of ports to hardware buttons depends on the code in the Driver Station.
+ * Handle input from a Dualshock controller connected to the Driver Station.
  */
 public class DualShockController extends GenericHID {
   /**
-   * Represents a digital button on an XboxController.
+   * Represents a digital button on a DualShockController.
    */
   public enum Button {
     kRect(1),
@@ -182,162 +178,162 @@ public class DualShockController extends GenericHID {
   }
 
   /**
-   * Read the value of the A button on the controller.
+   * Read the value of the square button on the controller.
    *
-   * @return The state of the button.
+   * @return The state of the square button.
    */
   public boolean getRectButton() {
     return getRawButton(Button.kRect.value);
   }
 
   /**
-   * Whether the A button was pressed since the last check.
+   * Whether the square button was pressed since the last check.
    *
-   * @return Whether the button was pressed since the last check.
+   * @return Whether the square button was pressed since the last check.
    */
   public boolean getRectButtonPressed() {
     return getRawButtonPressed(Button.kRect.value);
   }
 
   /**
-   * Whether the A button was released since the last check.
+   * Whether the square button was released since the last check.
    *
-   * @return Whether the button was released since the last check.
+   * @return Whether the square button was released since the last check.
    */
   public boolean getRectButtonReleased() {
     return getRawButtonReleased(Button.kRect.value);
   }
 
   /**
-   * Read the value of the B button on the controller.
+   * Read the value of the cross button on the controller.
    *
-   * @return The state of the button.
+   * @return The state of the cross button.
    */
   public boolean getCrossButton() {
     return getRawButton(Button.kCross.value);
   }
 
   /**
-   * Whether the B button was pressed since the last check.
+   * Whether the cross button was pressed since the last check.
    *
-   * @return Whether the button was pressed since the last check.
+   * @return Whether the cross button was pressed since the last check.
    */
   public boolean getCrossButtonPressed() {
     return getRawButtonPressed(Button.kCross.value);
   }
 
   /**
-   * Whether the B button was released since the last check.
+   * Whether the cross button was released since the last check.
    *
-   * @return Whether the button was released since the last check.
+   * @return Whether the cross button was released since the last check.
    */
   public boolean getCrossButtonReleased() {
     return getRawButtonReleased(Button.kCross.value);
   }
 
   /**
-   * Read the value of the X button on the controller.
+   * Read the value of the circle button on the controller.
    *
-   * @return The state of the button.
+   * @return The state of the circle button.
    */
   public boolean getDiskButton() {
     return getRawButton(Button.kDisk.value);
   }
 
   /**
-   * Whether the X button was pressed since the last check.
+   * Whether the circle button was pressed since the last check.
    *
-   * @return Whether the button was pressed since the last check.
+   * @return Whether the circle button was pressed since the last check.
    */
   public boolean getDiskButtonPressed() {
     return getRawButtonPressed(Button.kDisk.value);
   }
 
   /**
-   * Whether the X button was released since the last check.
+   * Whether the circle button was released since the last check.
    *
-   * @return Whether the button was released since the last check.
+   * @return Whether the circle button was released since the last check.
    */
   public boolean getDiskButtonReleased() {
     return getRawButtonReleased(Button.kDisk.value);
   }
 
   /**
-   * Read the value of the Y button on the controller.
+   * Read the value of the triangle button on the controller.
    *
-   * @return The state of the button.
+   * @return The state of the triangle button.
    */
   public boolean getTrigButton() {
     return getRawButton(Button.kTrig.value);
   }
 
   /**
-   * Whether the Y button was pressed since the last check.
+   * Whether the triangle button was pressed since the last check.
    *
-   * @return Whether the button was pressed since the last check.
+   * @return Whether the triangle button was pressed since the last check.
    */
   public boolean getTrigButtonPressed() {
     return getRawButtonPressed(Button.kTrig.value);
   }
 
   /**
-   * Whether the Y button was released since the last check.
+   * Whether the triangle button was released since the last check.
    *
-   * @return Whether the button was released since the last check.
+   * @return Whether the triangle button was released since the last check.
    */
   public boolean getTrigButtonReleased() {
     return getRawButtonReleased(Button.kTrig.value);
   }
 
   /**
-   * Read the value of the back button on the controller.
+   * Read the value of the share button on the controller.
    *
-   * @return The state of the button.
+   * @return The state of the share button.
    */
   public boolean getShareButton() {
     return getRawButton(Button.kShare.value);
   }
 
   /**
-   * Whether the back button was pressed since the last check.
+   * Whether the share button was pressed since the last check.
    *
-   * @return Whether the button was pressed since the last check.
+   * @return Whether the share button was pressed since the last check.
    */
   public boolean getShareButtonPressed() {
     return getRawButtonPressed(Button.kShare.value);
   }
 
   /**
-   * Whether the back button was released since the last check.
+   * Whether the share button was released since the last check.
    *
-   * @return Whether the button was released since the last check.
+   * @return Whether the share button was released since the last check.
    */
   public boolean getShareButtonReleased() {
     return getRawButtonReleased(Button.kShare.value);
   }
 
   /**
-   * Read the value of the start button on the controller.
+   * Read the value of the option button on the controller.
    *
-   * @return The state of the button.
+   * @return The state of the option button.
    */
   public boolean getOptionButton() {
     return getRawButton(Button.kOption.value);
   }
 
   /**
-   * Whether the start button was pressed since the last check.
+   * Whether the option button was pressed since the last check.
    *
-   * @return Whether the button was pressed since the last check.
+   * @return Whether the option button was pressed since the last check.
    */
   public boolean getOptionButtonPressed() {
     return getRawButtonPressed(Button.kOption.value);
   }
 
   /**
-   * Whether the start button was released since the last check.
+   * Whether the option button was released since the last check.
    *
-   * @return Whether the button was released since the last check.
+   * @return Whether the option button was released since the last check.
    */
   public boolean getOptionButtonReleased() {
     return getRawButtonReleased(Button.kOption.value);

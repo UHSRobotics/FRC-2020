@@ -33,7 +33,7 @@ public class ColorSubsystem extends SubsystemBase {
   }
 
   /**
-   * @return colorCode 0-1-2-3=blue-green-red-yellow
+   * @return 0-1-2-3=blue-green-red-yellow
    */
   public int getColor() {
     c = m_colorSensor.getColor();
