@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -41,9 +42,10 @@ public class RobotContainer {
    */
   public RobotContainer() {
     configureButtonBindings();
-    // m_flywheelSubsystem.setDefaultCommand(new FlywheelDebugCommand(m_flywheelSubsystem,
-    //     () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
-
+    // m_flywheelSubsystem.setDefaultCommand(new
+    // FlywheelDebugCommand(m_flywheelSubsystem,
+    // () -> m_driverController.getY(Hand.kLeft), () ->
+    // m_driverController.getY(Hand.kRight)));
 
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getY(Hand.kLeft),
         () -> m_driverController.getX(Hand.kRight)));
@@ -68,6 +70,17 @@ public class RobotContainer {
      * JoystickButton(m_driverController, Button.kTrig.value) .whenPressed(new
      * SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
      */
+
+    /*
+     * new JoystickButton(m_testController, 1).whenPressed(() -> {
+     * System.out.println("Rumbled controller");
+     * m_testController.setRumble(RumbleType.kLeftRumble, 1);
+     * m_testController.setRumble(RumbleType.kRightRumble, 1); }); new
+     * JoystickButton(m_testController, 1).whenReleased(() -> {
+     * System.out.println("Stopped Rumbling");
+     * m_testController.setRumble(RumbleType.kLeftRumble, 0);
+     * m_testController.setRumble(RumbleType.kRightRumble, 0); });
+     */ 
   }
 
   /**
