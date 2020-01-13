@@ -22,9 +22,13 @@ import static frc.robot.DualShockController.Button;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
-  private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
-  private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
+  /*
+   * private final FlywheelSubsystem m_flywheelSubsystem = new
+   * FlywheelSubsystem(); private final ColorSubsystem m_colorSubsystem = new
+   * ColorSubsystem(); private final SpinSubsystem m_spinSubsystem = new
+   * SpinSubsystem();
+   */
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
   private final Command m_autoCommand = new AutonPlaceholder();
@@ -37,12 +41,12 @@ public class RobotContainer {
    */
   public RobotContainer() {
     configureButtonBindings();
-    m_flywheelSubsystem.setDefaultCommand(
-        new FlywheelDebugCommand(
-            m_flywheelSubsystem,
-            () -> m_driverController.getY(Hand.kLeft),
-            () -> m_driverController.getY(Hand.kRight)));
+    // m_flywheelSubsystem.setDefaultCommand(new FlywheelDebugCommand(m_flywheelSubsystem,
+    //     () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
 
+
+    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getY(Hand.kLeft),
+        () -> m_driverController.getX(Hand.kRight)));
   }
 
   /**
@@ -52,20 +56,23 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kBumperLeft.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
-    new JoystickButton(m_driverController, Button.kRect.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
-    new JoystickButton(m_driverController, Button.kCross.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
-    new JoystickButton(m_driverController, Button.kDisk.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
-    new JoystickButton(m_driverController, Button.kTrig.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
+    /*
+     * new JoystickButton(m_driverController, Button.kBumperLeft.value)
+     * .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1)); new
+     * JoystickButton(m_driverController, Button.kRect.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 0)); new
+     * JoystickButton(m_driverController, Button.kCross.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 1)); new
+     * JoystickButton(m_driverController, Button.kDisk.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 2)); new
+     * JoystickButton(m_driverController, Button.kTrig.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
+     */
   }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
+   * 
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
