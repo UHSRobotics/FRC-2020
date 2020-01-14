@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import edu.wpi.first.wpilibj.GenericHID;
 
 /**
@@ -16,22 +17,10 @@ public class DualShockController extends GenericHID {
    * Represents a digital button on a DualShockController.
    */
   public enum Button {
-    kRect(1),
-    kCross(2),
-    kDisk(3),
-    kTrig(4),
-    kBumperLeft(5),
-    kBumperRight(6),
-    kTriggerLeft(7),
-    kTriggerRight(8),
-    kShare(9),
-    kOption(10),
-    kStickLeft(11),
-    kStickRight(12),
-    kPad(14);
+    kRect(1), kCross(2), kDisk(3), kTrig(4), kBumperLeft(5), kBumperRight(6), kTriggerLeft(7), kTriggerRight(8),
+    kShare(9), kOption(10), kStickLeft(11), kStickRight(12), kPad(14);
 
-
-    @SuppressWarnings({"MemberName", "PMD.SingularField"})
+    @SuppressWarnings({ "MemberName", "PMD.SingularField" })
     public final int value;
 
     Button(int value) {
@@ -39,15 +28,57 @@ public class DualShockController extends GenericHID {
     }
   }
 
+  private double[] controllerMapping;
+  private boolean mappingInitialized = false;
+
   /**
-   * Construct an instance of a joystick. The joystick index is the USB port on the drivers
-   * station.
+   * Construct an instance of a joystick. The joystick index is the USB port on
+   * the drivers station.
    *
    * @param port The port on the Driver Station that the joystick is plugged into.
    */
   public DualShockController(final int port) {
     super(port);
   }
+
+  public void initMapping(int curvature) {
+    controllerMapping = new double[Constants.controllerPrecision + 5];
+    double tempX, w2, w1 = Math.exp(curvature * (-0.1));
+    for (int i = 0; i < controllerMapping.length; i++) {
+      tempX = (i - (Constants.controllerPrecision / 2.0)) / (Constants.controllerPrecision / 2.0);
+      w2 = w1 + Math.exp(10.0 * (Math.abs(tempX) - 1)) * (1 - w1);
+      controllerMapping[i] = tempX * w2;
+    }
+    mappingInitialized = true;
+  }
+
+  private double getMappedOutput(double input) {
+    if (!mappingInitialized)
+      return input;
+    return controllerMapping[(int) Math
+        .round(input * (Constants.controllerPrecision / 2) + (Constants.controllerPrecision / 2))];
+  }
+
+  public double getXMapped(Hand hand) {
+    if (hand.equals(Hand.kLeft)) {
+      return getMappedOutput(getRawAxis(0));
+    } else {
+      return getMappedOutput(getRawAxis(2));
+    }
+  }
+
+  public double getYMapped(Hand hand) {
+    if (hand.equals(Hand.kLeft)) {
+      return getMappedOutput(getRawAxis(1));
+    } else {
+      return getMappedOutput(getRawAxis(5));
+    }
+  }
+
+  /********************************
+   * Stuff copied from XboxController
+   ******************************** 
+   */
 
   /**
    * Get the X axis value of the controller.

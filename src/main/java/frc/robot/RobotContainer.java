@@ -42,13 +42,14 @@ public class RobotContainer {
    */
   public RobotContainer() {
     configureButtonBindings();
+    m_driverController.initMapping(3);
     // m_flywheelSubsystem.setDefaultCommand(new
     // FlywheelDebugCommand(m_flywheelSubsystem,
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
 
-    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getY(Hand.kLeft),
-        () -> m_driverController.getX(Hand.kRight)));
+    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft),
+        () -> m_driverController.getXMapped(Hand.kRight)*0.75));
   }
 
   /**
@@ -81,8 +82,8 @@ public class RobotContainer {
      * m_testController.setRumble(RumbleType.kLeftRumble, 0);
      * m_testController.setRumble(RumbleType.kRightRumble, 0); });
      */
-    new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new ArcadeDrive(m_driveSubsystem,
-        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
+    new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
+        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getYMapped(Hand.kRight)));
   }
 
   /**
