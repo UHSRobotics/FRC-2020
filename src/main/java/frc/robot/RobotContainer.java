@@ -80,7 +80,9 @@ public class RobotContainer {
      * System.out.println("Stopped Rumbling");
      * m_testController.setRumble(RumbleType.kLeftRumble, 0);
      * m_testController.setRumble(RumbleType.kRightRumble, 0); });
-     */ 
+     */
+    new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new ArcadeDrive(m_driveSubsystem,
+        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
   }
 
   /**

@@ -28,11 +28,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void tankDrive(double l, double r) {
-    if (l < Constants.joystickDeadzone && l > -Constants.joystickDeadzone)
-      l = 0;
-    if (r < Constants.joystickDeadzone && r > -Constants.joystickDeadzone)
-      r = 0;
-
     m_leftFrontMotor.set(ControlMode.PercentOutput, l);
     m_leftBackMotor.set(ControlMode.PercentOutput, l);
     m_rightFrontMotor.set(ControlMode.PercentOutput, -r);
