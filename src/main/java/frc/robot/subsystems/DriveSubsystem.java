@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-  private final VictorSPX m_leftFrontMotor = new VictorSPX(0);
-  private final VictorSPX m_rightFrontMotor = new VictorSPX(1);
+  private final VictorSPX m_leftFrontMotor = new VictorSPX(1);
+  private final VictorSPX m_rightFrontMotor = new VictorSPX(3);
   private final VictorSPX m_leftBackMotor = new VictorSPX(2);
-  private final VictorSPX m_rightBackMotor = new VictorSPX(3);
+  private final VictorSPX m_rightBackMotor = new VictorSPX(0);
 
   public DriveSubsystem() {
     m_leftFrontMotor.setNeutralMode(NeutralMode.Coast);
@@ -28,16 +28,20 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void tankDrive(double l, double r) {
-    m_leftFrontMotor.set(ControlMode.PercentOutput, l);
-    m_leftBackMotor.set(ControlMode.PercentOutput, l);
-    m_rightFrontMotor.set(ControlMode.PercentOutput, -r);
-    m_rightBackMotor.set(ControlMode.PercentOutput, -r);
+    // l*=0.5;
+    // r*=0.5;
+    m_leftFrontMotor.set(ControlMode.PercentOutput, -l);
+    m_leftBackMotor.set(ControlMode.PercentOutput, -l);
+    m_rightFrontMotor.set(ControlMode.PercentOutput, r);
+    m_rightBackMotor.set(ControlMode.PercentOutput,r);
   }
 
   public void arcadeDrive(double pow, double turn) {
-    m_leftFrontMotor.set(ControlMode.PercentOutput, pow+turn);
-    m_leftBackMotor.set(ControlMode.PercentOutput, pow+turn);
-    m_rightFrontMotor.set(ControlMode.PercentOutput, pow-turn);
-    m_rightBackMotor.set(ControlMode.PercentOutput, pow-turn);
+    // pow*=0.5;
+    // turn*=0.5;
+    m_leftFrontMotor.set(ControlMode.PercentOutput, -pow+turn);
+    m_leftBackMotor.set(ControlMode.PercentOutput, -pow+turn);
+    m_rightFrontMotor.set(ControlMode.PercentOutput, pow+turn);
+    m_rightBackMotor.set(ControlMode.PercentOutput, pow+turn);
   }
 }
