@@ -41,6 +41,7 @@ public class DualShockController extends GenericHID {
     super(port);
   }
 
+  //TODO: test these
   public void initMapping(int curvature) {
     controllerMapping = new double[Constants.controllerPrecision + 5];
     double tempX, w2, w1 = Math.exp(curvature * (-0.1));
@@ -59,19 +60,25 @@ public class DualShockController extends GenericHID {
         .round(input * (Constants.controllerPrecision / 2) + (Constants.controllerPrecision / 2))];
   }
 
+  private double getDeadzonedOutput(double input) {
+    //https://www.desmos.com/calculator/oubwvzj81f
+    return Math.abs(input) < Constants.joystickDeadzone ? 0
+        : (input-Math.signum(input)*Constants.joystickDeadzone)/ (1 - Constants.joystickDeadzone);
+  }
+
   public double getXMapped(Hand hand) {
     if (hand.equals(Hand.kLeft)) {
-      return getMappedOutput(getRawAxis(0));
+      return getMappedOutput(getDeadzonedOutput(getRawAxis(0)));
     } else {
-      return getMappedOutput(getRawAxis(2));
+      return getMappedOutput(getDeadzonedOutput(getRawAxis(2)));
     }
   }
 
   public double getYMapped(Hand hand) {
     if (hand.equals(Hand.kLeft)) {
-      return getMappedOutput(getRawAxis(1));
+      return getMappedOutput(getDeadzonedOutput(getRawAxis(1)));
     } else {
-      return getMappedOutput(getRawAxis(5));
+      return getMappedOutput(getDeadzonedOutput(getRawAxis(5)));
     }
   }
 
@@ -89,9 +96,9 @@ public class DualShockController extends GenericHID {
   @Override
   public double getX(Hand hand) {
     if (hand.equals(Hand.kLeft)) {
-      return getRawAxis(0);
+      return getDeadzonedOutput(getRawAxis(0));
     } else {
-      return getRawAxis(2);
+      return getDeadzonedOutput(getRawAxis(2));
     }
   }
 
@@ -104,9 +111,9 @@ public class DualShockController extends GenericHID {
   @Override
   public double getY(Hand hand) {
     if (hand.equals(Hand.kLeft)) {
-      return getRawAxis(1);
+      return getDeadzonedOutput(getRawAxis(1));
     } else {
-      return getRawAxis(5);
+      return getDeadzonedOutput(getRawAxis(5));
     }
   }
 
@@ -118,9 +125,9 @@ public class DualShockController extends GenericHID {
    */
   public double getTriggerAxis(Hand hand) {
     if (hand.equals(Hand.kLeft)) {
-      return getRawAxis(3);
+      return getDeadzonedOutput(getRawAxis(3));
     } else {
-      return getRawAxis(4);
+      return getDeadzonedOutput(getRawAxis(4));
     }
   }
 
