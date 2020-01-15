@@ -41,11 +41,16 @@ public class DualShockController extends GenericHID {
     super(port);
   }
 
-  //TODO: test these
-  public void initMapping(int curvature) {
+  /**
+   * @param curvature >0, recommanded below 5, larger number = more curve. The
+   *                  controller curve follows this function
+   *                  https://www.desmos.com/calculator/p2q98lfjet
+   */
+  public void initMapping(double curvature) {
     controllerMapping = new double[Constants.controllerPrecision + 5];
     double tempX, w2, w1 = Math.exp(curvature * (-0.1));
     for (int i = 0; i < controllerMapping.length; i++) {
+      // mapping i (probally 0 to 1000) to -1 to 1
       tempX = (i - (Constants.controllerPrecision / 2.0)) / (Constants.controllerPrecision / 2.0);
       w2 = w1 + Math.exp(10.0 * (Math.abs(tempX) - 1)) * (1 - w1);
       controllerMapping[i] = tempX * w2;
@@ -53,6 +58,12 @@ public class DualShockController extends GenericHID {
     mappingInitialized = true;
   }
 
+  /**
+   * if controller mapping not initialized, the input is returned
+   * 
+   * @param input , -1<=input<=1, it's recommanded to do deadzone first
+   * @return controller input on a curve
+   */
   private double getMappedOutput(double input) {
     if (!mappingInitialized)
       return input;
@@ -60,10 +71,15 @@ public class DualShockController extends GenericHID {
         .round(input * (Constants.controllerPrecision / 2) + (Constants.controllerPrecision / 2))];
   }
 
+  /**
+   * @param input , just dump the output of getRawAxis(#) directly in here,
+   *              -1<=input<=1
+   * @return controller input adjusted to deadzone
+   */
   private double getDeadzonedOutput(double input) {
-    //https://www.desmos.com/calculator/oubwvzj81f
+    // https://www.desmos.com/calculator/oubwvzj81f
     return Math.abs(input) < Constants.joystickDeadzone ? 0
-        : (input-Math.signum(input)*Constants.joystickDeadzone)/ (1 - Constants.joystickDeadzone);
+        : (input - Math.signum(input) * Constants.joystickDeadzone) / (1 - Constants.joystickDeadzone);
   }
 
   public double getXMapped(Hand hand) {
@@ -82,10 +98,9 @@ public class DualShockController extends GenericHID {
     }
   }
 
-  /********************************
-   * Stuff copied from XboxController
-   ******************************** 
-   */
+  // ******************************************
+  // * Stuff copied from XboxController Below *
+  // ******************************************
 
   /**
    * Get the X axis value of the controller.

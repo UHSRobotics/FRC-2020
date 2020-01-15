@@ -22,13 +22,11 @@ import static frc.robot.DualShockController.Button;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  /*
-   * private final FlywheelSubsystem m_flywheelSubsystem = new
-   * FlywheelSubsystem(); private final ColorSubsystem m_colorSubsystem = new
-   * ColorSubsystem(); private final SpinSubsystem m_spinSubsystem = new
-   * SpinSubsystem();
-   */
+  // private final FlywheelSubsystem m_flywheelSubsystem = new
+  // FlywheelSubsystem(); private final ColorSubsystem m_colorSubsystem = new
+  // ColorSubsystem(); private final SpinSubsystem m_spinSubsystem = new
+  // SpinSubsystem();
+
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
@@ -41,15 +39,15 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
-    m_driverController.initMapping(3);
     // m_flywheelSubsystem.setDefaultCommand(new
     // FlywheelDebugCommand(m_flywheelSubsystem,
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
 
-    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft),
-        () -> m_driverController.getXMapped(Hand.kRight)*0.75));
+    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
+        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight) * 0.75));
   }
 
   /**
@@ -59,29 +57,17 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /*
-     * new JoystickButton(m_driverController, Button.kBumperLeft.value)
-     * .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1)); new
-     * JoystickButton(m_driverController, Button.kRect.value) .whenPressed(new
-     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 0)); new
-     * JoystickButton(m_driverController, Button.kCross.value) .whenPressed(new
-     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 1)); new
-     * JoystickButton(m_driverController, Button.kDisk.value) .whenPressed(new
-     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 2)); new
-     * JoystickButton(m_driverController, Button.kTrig.value) .whenPressed(new
-     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
-     */
+    // new JoystickButton(m_driverController, Button.kBumperLeft.value)
+    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
+    // new JoystickButton(m_driverController, Button.kRect.value)
+    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
+    // new JoystickButton(m_driverController, Button.kCross.value)
+    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
+    // new JoystickButton(m_driverController, Button.kDisk.value)
+    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
+    // new JoystickButton(m_driverController, Button.kTrig.value)
+    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
 
-    /*
-     * new JoystickButton(m_testController, 1).whenPressed(() -> {
-     * System.out.println("Rumbled controller");
-     * m_testController.setRumble(RumbleType.kLeftRumble, 1);
-     * m_testController.setRumble(RumbleType.kRightRumble, 1); }); new
-     * JoystickButton(m_testController, 1).whenReleased(() -> {
-     * System.out.println("Stopped Rumbling");
-     * m_testController.setRumble(RumbleType.kLeftRumble, 0);
-     * m_testController.setRumble(RumbleType.kRightRumble, 0); });
-     */
     new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
         () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getYMapped(Hand.kRight)));
   }
