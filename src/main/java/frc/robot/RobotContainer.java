@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Constants.OIConstants;
@@ -28,6 +29,8 @@ public class RobotContainer {
   // SpinSubsystem();
 
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+
+  private final SingleSolenoidTestSubsystem m_singleSolenoidSubsystem = new SingleSolenoidTestSubsystem();
 
   // placeholder command for autonomous
   private final Command m_autoCommand = new AutonPlaceholder();
@@ -70,6 +73,12 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
         () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getYMapped(Hand.kRight)));
+
+    new JoystickButton(m_driverController, Button.kTrig.value)
+        .whenPressed(new InstantCommand(m_singleSolenoidSubsystem::solenoidOn, m_singleSolenoidSubsystem));
+
+    new JoystickButton(m_driverController, Button.kTrig.value)
+        .whenPressed(new InstantCommand(m_singleSolenoidSubsystem::solenoidOff, m_singleSolenoidSubsystem));
   }
 
   /**
