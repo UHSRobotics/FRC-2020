@@ -22,12 +22,11 @@ import static frc.robot.DualShockController.Button;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // private final FlywheelSubsystem m_flywheelSubsystem = new
-  // FlywheelSubsystem(); private final ColorSubsystem m_colorSubsystem = new
-  // ColorSubsystem(); private final SpinSubsystem m_spinSubsystem = new
-  // SpinSubsystem();
+  private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
+  // private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
+  // private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
   private final Command m_autoCommand = new AutonPlaceholder();
@@ -41,13 +40,12 @@ public class RobotContainer {
   public RobotContainer() {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
-    // m_flywheelSubsystem.setDefaultCommand(new
-    // FlywheelDebugCommand(m_flywheelSubsystem,
-    // () -> m_driverController.getY(Hand.kLeft), () ->
-    // m_driverController.getY(Hand.kRight)));
+    m_flywheelSubsystem.setDefaultCommand(new FlywheelDebugCommand(m_flywheelSubsystem,
+        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
 
-    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
-        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight) * 0.75));
+    // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
+    // () -> m_driverController.getYMapped(Hand.kLeft), () ->
+    // m_driverController.getXMapped(Hand.kRight) * 0.75));
   }
 
   /**
@@ -68,8 +66,10 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
 
-    new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
-        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getYMapped(Hand.kRight)));
+    // new JoystickButton(m_driverController,
+    // Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
+    // () -> m_driverController.getYMapped(Hand.kLeft), () ->
+    // m_driverController.getYMapped(Hand.kRight)));
   }
 
   /**

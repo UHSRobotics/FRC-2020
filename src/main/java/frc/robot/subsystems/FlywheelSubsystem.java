@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class FlywheelSubsystem extends SubsystemBase {
-  private final VictorSPX m_leftMotor = new VictorSPX(0);
-  private final VictorSPX m_rightMotor = new VictorSPX(1);
+  private final VictorSPX m_leftMotor = new VictorSPX(1);
+  private final VictorSPX m_rightMotor = new VictorSPX(0);
 
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
