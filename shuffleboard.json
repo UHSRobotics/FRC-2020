@@ -92,6 +92,17 @@
               "_source0": "network_table:///SmartDashboard/Spinner Color Change",
               "_title": "Spinner Color Change"
             }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Controller axis ",
+              "_title": "Controller axis "
+            }
           }
         }
       }
@@ -154,6 +165,19 @@
               "_type": "Subsystem Layout",
               "_source0": "network_table:///LiveWindow/Ungrouped",
               "_title": "Ungrouped",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "8,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/DriveSubsystem",
+              "_title": "DriveSubsystem",
               "Layout/Label position": "BOTTOM",
               "_children": []
             }
