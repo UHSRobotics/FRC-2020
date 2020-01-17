@@ -23,6 +23,7 @@ import static frc.robot.DualShockController.Button;
  */
 public class RobotContainer {
   private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
+  private final FlywheelSingleSubsystem m_flywheelSingleSubsystem = new FlywheelSingleSubsystem();
   // private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   // private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
@@ -42,6 +43,8 @@ public class RobotContainer {
     configureButtonBindings();
     m_flywheelSubsystem.setDefaultCommand(new FlywheelDebugCommand(m_flywheelSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
+    m_flywheelSingleSubsystem.setDefaultCommand(new FwheelDebugSingleCommand(m_flywheelSingleSubsystem,
+        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButtonPressed()));
 
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
