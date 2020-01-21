@@ -22,7 +22,7 @@ import static frc.robot.DualShockController.Button;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
+  // private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
   private final FlywheelSingleSubsystem m_flywheelSingleSubsystem = new FlywheelSingleSubsystem();
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
