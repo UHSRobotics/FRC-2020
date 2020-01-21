@@ -38,6 +38,13 @@ public final class Constants {
     }
 
     public static final class VisionControlConstants {
+        // Amount of angle tolerated to be considered "aligned"
         public static final int angleDeadzone = 5;
+        public static final int distanceDeadzone = 5;
+        // Proportional control for vision adjust
+        public static final double KpRot = -0.1;
+        public static final double KpDist = -0.1;
+        // Minimum force when driving
+        public static final double minForce = 0.05;
     }
 }

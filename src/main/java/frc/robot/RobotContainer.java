@@ -24,6 +24,8 @@ import static frc.robot.DualShockController.Button;
 public class RobotContainer {
   private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
   private final FlywheelSingleSubsystem m_flywheelSingleSubsystem = new FlywheelSingleSubsystem();
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+
   // private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   // private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
@@ -41,8 +43,10 @@ public class RobotContainer {
   public RobotContainer() {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
-    // m_flywheelSubsystem.setDefaultCommand(new FlywheelDebugCommand(m_flywheelSubsystem,
-    //     () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
+    // m_flywheelSubsystem.setDefaultCommand(new
+    // FlywheelDebugCommand(m_flywheelSubsystem,
+    // () -> m_driverController.getY(Hand.kLeft), () ->
+    // m_driverController.getY(Hand.kRight)));
     m_flywheelSingleSubsystem.setDefaultCommand(new FwheelDebugSingleCommand(m_flywheelSingleSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButtonPressed()));
 
@@ -58,9 +62,9 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+        .whenPressed(new VisionDriveTest(m_driveSubsystem));
 
-  
-    
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
     // new JoystickButton(m_driverController, Button.kRect.value)
