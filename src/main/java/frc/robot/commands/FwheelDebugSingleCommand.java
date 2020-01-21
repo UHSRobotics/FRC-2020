@@ -24,6 +24,8 @@ public class FwheelDebugSingleCommand extends CommandBase {
   private final FlywheelSingleSubsystem m_drive;
   private final DoubleSupplier m_forward;
   private final BooleanSupplier m_FullPow;
+  // debug
+  private final double speedMultiplier = 0.1;
 
   /**
    * Creates a new DefaultDrive.
@@ -41,12 +43,13 @@ public class FwheelDebugSingleCommand extends CommandBase {
 
   @Override
   public void execute() {
+
     if (m_forward.getAsDouble() != 0) {
-      m_drive.setSpeed(m_forward.getAsDouble());
-      System.out.println("pow: " + m_forward);
+      m_drive.setSpeed(m_forward.getAsDouble() * speedMultiplier);
+      System.out.println("pow: " + m_forward.getAsDouble() * speedMultiplier);
     } else {
       if (m_FullPow.getAsBoolean()) {
-        m_drive.setSpeed(1);
+        m_drive.setSpeed(1 * speedMultiplier);
       }
     }
   }
