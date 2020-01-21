@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class VisionDriveTest extends CommandBase {
+public class VisionDrive extends CommandBase {
 
     private NetworkTable table;
 
@@ -19,11 +19,12 @@ public class VisionDriveTest extends CommandBase {
     private NetworkTableEntry hAngleEntry;
     private NetworkTableEntry vAngleEntry;
 
-    public VisionDriveTest(DriveSubsystem driveSubsystem) {
+    public VisionDrive(DriveSubsystem driveSubsystem) {
         m_driveSubsystem = driveSubsystem;
-        table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("cam1");
+        table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
         hAngleEntry = table.getEntry("yaw");
         vAngleEntry = table.getEntry("pitch");
+        addRequirements(driveSubsystem);
     }
 
     @Override

@@ -63,8 +63,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-        .whenPressed(new VisionDriveTest(m_driveSubsystem));
+    new JoystickButton(m_driverController, Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
 
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
