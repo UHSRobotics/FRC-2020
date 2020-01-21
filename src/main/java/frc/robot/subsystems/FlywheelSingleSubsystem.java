@@ -36,11 +36,11 @@ public class FlywheelSingleSubsystem extends SubsystemBase {
     if (0 <= speed && speed <= 2) {
       speedMultiplier = speed;
       if (updateNT) {
-        System.out.println("Putted Speed Multiplier NT entry");
+        System.out.println("Putted Single Speed Multiplier NT entry");
         speedEntry.setDouble(speedMultiplier);
       }
     } else {
-      System.out.println("Putted Speed Multiplier NT entry");
+      System.out.println("Putted Single Speed Multiplier NT entry");
       speedEntry.setDouble(speedMultiplier);
     }
   }
@@ -48,8 +48,8 @@ public class FlywheelSingleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.add("Speed Multiplier", 1).getEntry();
-      System.out.println("Added Speed Multiplier NT entry");
+      speedEntry = tab.add("Single Speed Multiplier", 1).getEntry();
+      System.out.println("Added Single Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);
   }
