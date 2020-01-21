@@ -34,6 +34,10 @@ public final class Constants {
 
     public static final class OIConstants {
         public static final int kDriverControllerPort = 0;
-        public static final double kDriverControllerCurvature=3;
+        public static final double kDriverControllerCurvature = 3;
+    }
+
+    public static final class VisionControlConstants {
+        public static final int angleDeadzone = 5;
     }
 }

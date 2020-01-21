@@ -41,8 +41,8 @@ public class RobotContainer {
   public RobotContainer() {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
-    m_flywheelSubsystem.setDefaultCommand(new FlywheelDebugCommand(m_flywheelSubsystem,
-        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
+    // m_flywheelSubsystem.setDefaultCommand(new FlywheelDebugCommand(m_flywheelSubsystem,
+    //     () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getY(Hand.kRight)));
     m_flywheelSingleSubsystem.setDefaultCommand(new FwheelDebugSingleCommand(m_flywheelSingleSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButtonPressed()));
 
@@ -58,6 +58,9 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+  
+    
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
     // new JoystickButton(m_driverController, Button.kRect.value)
