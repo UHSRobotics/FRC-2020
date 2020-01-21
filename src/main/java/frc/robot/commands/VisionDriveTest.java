@@ -14,6 +14,8 @@ public class VisionDriveTest extends CommandBase {
     private NetworkTable table;
 
     private final DriveSubsystem m_driveSubsystem;
+    // debug
+    private final double speedMultiplier = 0.2;
     private NetworkTableEntry hAngleEntry;
     private NetworkTableEntry vAngleEntry;
 
@@ -41,7 +43,7 @@ public class VisionDriveTest extends CommandBase {
             distanceChange = VisionControlConstants.KpDist * vAngle - VisionControlConstants.minForce;
         }
 
-        m_driveSubsystem.arcadeDrive(distanceChange, rotationChange);
+        m_driveSubsystem.arcadeDrive(distanceChange * speedMultiplier, rotationChange);
 
     }
 
