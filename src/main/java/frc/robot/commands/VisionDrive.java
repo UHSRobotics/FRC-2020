@@ -5,6 +5,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -45,6 +46,8 @@ public class VisionDrive extends CommandBase {
         }
 
         m_driveSubsystem.arcadeDrive(distanceChange * speedMultiplier, rotationChange);
+        SmartDashboard.putString("Vision Info",
+                "Speed: " + distanceChange * speedMultiplier + " Rotation: " + rotationChange);
 
     }
 
