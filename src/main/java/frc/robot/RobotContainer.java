@@ -24,13 +24,16 @@ import static frc.robot.DualShockController.Button;
  */
 public class RobotContainer {
   // private final FlywheelSubsystem m_flywheelSubsystem = new
-  // FlywheelSubsystem(); private final ColorSubsystem m_colorSubsystem = new
-  // ColorSubsystem(); private final SpinSubsystem m_spinSubsystem = new
-  // SpinSubsystem();
-
+  // FlywheelSubsystem();
+  private final FlywheelSingleSubsystem m_flywheelSingleSubsystem = new FlywheelSingleSubsystem();
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   private final SolenoidTestSubsystem m_solenoidTestSubsystem = new SolenoidTestSubsystem();
+  // private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
+  // private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
+
+  // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+
 
   // placeholder command for autonomous
   private final Command m_autoCommand = new AutonPlaceholder();
@@ -48,9 +51,12 @@ public class RobotContainer {
     // FlywheelDebugCommand(m_flywheelSubsystem,
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
+    m_flywheelSingleSubsystem.setDefaultCommand(new FwheelDebugSingleCommand(m_flywheelSingleSubsystem,
+        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButtonPressed()));
 
-    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
-        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight) * 0.75));
+    // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
+    // () -> m_driverController.getYMapped(Hand.kLeft), () ->
+    // m_driverController.getXMapped(Hand.kRight) * 0.75));
   }
 
   /**
@@ -60,6 +66,8 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(m_driverController, Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
+
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
     // new JoystickButton(m_driverController, Button.kRect.value)

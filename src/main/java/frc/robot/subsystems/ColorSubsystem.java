@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.util.Color;
 import static frc.robot.Constants.ColorConstants;
 
@@ -21,6 +23,12 @@ public class ColorSubsystem extends SubsystemBase {
   private double[] color = new double[3];
   private Color c;
   private int min, output, error;
+
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Spinner");
+  private NetworkTableEntry redEntry;
+  private NetworkTableEntry blueEntry;
+  private NetworkTableEntry greenEntry;
+  private NetworkTableEntry colorEntry;
 
   // use this when OI is figured out
   public boolean matchColor(int target) {
@@ -36,15 +44,32 @@ public class ColorSubsystem extends SubsystemBase {
    * @return 0-1-2-3=blue-green-red-yellow
    */
   public int getColor() {
+    if (redEntry == null) {
+      redEntry = tab.add("R", 1).getEntry();
+      System.out.println("Added red NT entry");
+    }
+    if (blueEntry == null) {
+      blueEntry = tab.add("B", 1).getEntry();
+      System.out.println("Added blue NT entry");
+    }
+    if (greenEntry == null) {
+      greenEntry = tab.add("G", 1).getEntry();
+      System.out.println("Added green NT entry");
+    }
+    if (colorEntry == null) {
+      colorEntry = tab.add("Color detected", 1).getEntry();
+      System.out.println("Added color NT entry");
+    }
+
     c = m_colorSensor.getColor();
 
     color[0] = c.red * 255;
     color[1] = c.green * 255;
     color[2] = c.blue * 255;
 
-    SmartDashboard.putNumber("Color Red", c.red * 255);
-    SmartDashboard.putNumber("Color Green", c.green * 255);
-    SmartDashboard.putNumber("Color Blue", c.blue * 255);
+    redEntry.setDouble(c.red * 255);
+    greenEntry.setDouble(c.green * 255);
+    blueEntry.setDouble(c.blue * 255);
 
     min = 256;
     output = -64;
@@ -54,7 +79,7 @@ public class ColorSubsystem extends SubsystemBase {
       for (int j = 0; j < 3; j++) {
         error += Math.abs(color[j] - ColorConstants.colorTarget[i][j]);
       }
-      if (error < min && error<ColorConstants.colorRange) {
+      if (error < min && error < ColorConstants.colorRange) {
         min = error;
         output = i;
       }
@@ -62,19 +87,19 @@ public class ColorSubsystem extends SubsystemBase {
 
     switch (output) {
     case 0:
-      SmartDashboard.putString("Color Detected", "Blue");
+      colorEntry.setString("Blue");
       break;
     case 1:
-      SmartDashboard.putString("Color Detected", "Green");
+      colorEntry.setString("Green");
       break;
     case 2:
-      SmartDashboard.putString("Color Detected", "Red");
+      colorEntry.setString("Red");
       break;
     case 3:
-      SmartDashboard.putString("Color Detected", "Yellow");
+      colorEntry.setString("Yellow");
       break;
     default:
-      SmartDashboard.putString("Color Detected", "Unknown");
+      colorEntry.setString("Unknown");
     }
 
     return output;
