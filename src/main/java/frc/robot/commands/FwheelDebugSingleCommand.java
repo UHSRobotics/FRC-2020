@@ -21,11 +21,9 @@ import frc.robot.subsystems.FlywheelSubsystem;
  * {@link edu.wpi.first.wpilibj2.command.RunCommand}.
  */
 public class FwheelDebugSingleCommand extends CommandBase {
-  private final FlywheelSingleSubsystem m_drive;
+  private final FlywheelSingleSubsystem m_flywheel;
   private final DoubleSupplier m_forward;
   private final BooleanSupplier m_FullPow;
-  // debug
-  private final double speedMultiplier = 0.1;
 
   /**
    * Creates a new DefaultDrive.
@@ -35,21 +33,20 @@ public class FwheelDebugSingleCommand extends CommandBase {
    * @param rotation  The control input for turning
    */
   public FwheelDebugSingleCommand(FlywheelSingleSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow) {
-    m_drive = subsystem;
+    m_flywheel = subsystem;
     m_forward = speed;
     m_FullPow = fullPow;
-    addRequirements(m_drive);
+    addRequirements(m_flywheel);
   }
 
   @Override
   public void execute() {
 
     if (m_forward.getAsDouble() != 0) {
-      m_drive.setSpeed(m_forward.getAsDouble() * speedMultiplier);
-      System.out.println("pow: " + m_forward.getAsDouble() * speedMultiplier);
+      m_flywheel.setSpeed(m_forward.getAsDouble());
     } else {
       if (m_FullPow.getAsBoolean()) {
-        m_drive.setSpeed(1 * speedMultiplier);
+        m_flywheel.setSpeed(1);
       }
     }
   }

@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class FlywheelSingleSubsystem extends SubsystemBase {
   private final VictorSPX m_motor = new VictorSPX(0);
 
-  private final ShuffleboardTab tab = Shuffleboard.getTab("Bruh");
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
   private double speedMultiplier = 1;
 
