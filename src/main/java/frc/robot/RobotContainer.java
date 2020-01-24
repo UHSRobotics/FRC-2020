@@ -52,7 +52,7 @@ public class RobotContainer {
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
     m_flywheelSingleSubsystem.setDefaultCommand(new FwheelDebugSingleCommand(m_flywheelSingleSubsystem,
-        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButtonPressed()));
+        () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
 
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->

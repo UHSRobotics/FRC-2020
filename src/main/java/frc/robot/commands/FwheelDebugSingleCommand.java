@@ -22,8 +22,8 @@ import frc.robot.subsystems.FlywheelSubsystem;
  */
 public class FwheelDebugSingleCommand extends CommandBase {
   private final FlywheelSingleSubsystem m_flywheel;
-  private final DoubleSupplier m_forward;
-  private final BooleanSupplier m_FullPow;
+  private final DoubleSupplier m_speed;
+  private final BooleanSupplier m_fullPow;
 
   /**
    * Creates a new DefaultDrive.
@@ -34,19 +34,21 @@ public class FwheelDebugSingleCommand extends CommandBase {
    */
   public FwheelDebugSingleCommand(FlywheelSingleSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow) {
     m_flywheel = subsystem;
-    m_forward = speed;
-    m_FullPow = fullPow;
+    m_speed = speed;
+    m_fullPow = fullPow;
     addRequirements(m_flywheel);
   }
 
   @Override
   public void execute() {
 
-    if (m_forward.getAsDouble() != 0) {
-      m_flywheel.setSpeed(m_forward.getAsDouble());
+    if (m_speed.getAsDouble() != 0) {
+      m_flywheel.setSpeed(m_speed.getAsDouble());
     } else {
-      if (m_FullPow.getAsBoolean()) {
+      if (m_fullPow.getAsBoolean()) {
         m_flywheel.setSpeed(1);
+      }else{
+        m_flywheel.setSpeed(0);
       }
     }
   }
