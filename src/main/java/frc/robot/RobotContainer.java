@@ -30,7 +30,7 @@ public class RobotContainer {
 
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
-  private final SingleSolenoidTestSubsystem m_singleSolenoidSubsystem = new SingleSolenoidTestSubsystem();
+  private final SolenoidTestSubsystem m_solenoidTestSubsystem = new SolenoidTestSubsystem();
 
   // placeholder command for autonomous
   private final Command m_autoCommand = new AutonPlaceholder();
@@ -75,10 +75,13 @@ public class RobotContainer {
         () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getYMapped(Hand.kRight)));
 
     new JoystickButton(m_driverController, Button.kTrig.value)
-        .whenPressed(new InstantCommand(m_singleSolenoidSubsystem::solenoidOn, m_singleSolenoidSubsystem));
+        .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidFoward, m_solenoidTestSubsystem));
 
-    new JoystickButton(m_driverController, Button.kTrig.value)
-        .whenPressed(new InstantCommand(m_singleSolenoidSubsystem::solenoidOff, m_singleSolenoidSubsystem));
+    new JoystickButton(m_driverController, Button.kCross.value)
+        .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidBack, m_solenoidTestSubsystem));
+        
+    new JoystickButton(m_driverController, Button.kRect.value)
+        .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidOff, m_solenoidTestSubsystem));
   }
 
   /**

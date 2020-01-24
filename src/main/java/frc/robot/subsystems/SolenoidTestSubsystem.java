@@ -12,17 +12,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 public class SolenoidTestSubsystem extends SubsystemBase {
-  private final DoubleSolenoid exampleDouble = new DoubleSolenoid(1, 2);
+  private final DoubleSolenoid exampleDouble = new DoubleSolenoid(0, 1);
 
   public void solenoidOff() {
     exampleDouble.set(kOff);
+    System.out.println("Solenoid Off");
   }
 
   public void solenoidFoward() {
     exampleDouble.set(kForward);
+    System.out.println("Solenoid Foward");
   }
 
   public void solenoidBack() {
     exampleDouble.set(kReverse);
+    System.out.println("Solenoid Back");
+
   }
 }
