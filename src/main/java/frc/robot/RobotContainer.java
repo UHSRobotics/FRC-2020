@@ -23,17 +23,17 @@ import static frc.robot.DualShockController.Button;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // private final FlywheelSubsystem m_flywheelSubsystem = new
-  // FlywheelSubsystem();
+  // private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
   private final FlywheelSingleSubsystem m_flywheelSingleSubsystem = new FlywheelSingleSubsystem();
+
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
-  private final SolenoidTestSubsystem m_solenoidTestSubsystem = new SolenoidTestSubsystem();
+  // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
+  // SolenoidTestSubsystem();
   // private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   // private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
   // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-
 
   // placeholder command for autonomous
   private final Command m_autoCommand = new AutonPlaceholder();
@@ -66,7 +66,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
+    // new JoystickButton(m_driverController, Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
 
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
@@ -79,17 +79,15 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
 
-    new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
-        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getYMapped(Hand.kRight)));
+    // new JoystickButton(m_driverController, Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
+    //     () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getYMapped(Hand.kRight)));
 
-    new JoystickButton(m_driverController, Button.kTrig.value)
-        .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidFoward, m_solenoidTestSubsystem));
-
-    new JoystickButton(m_driverController, Button.kCross.value)
-        .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidBack, m_solenoidTestSubsystem));
-        
-    new JoystickButton(m_driverController, Button.kRect.value)
-        .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidOff, m_solenoidTestSubsystem));
+    // new JoystickButton(m_driverController, Button.kTrig.value)
+    //     .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidForward, m_solenoidTestSubsystem));
+    // new JoystickButton(m_driverController, Button.kCross.value)
+    //     .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidBack, m_solenoidTestSubsystem));
+    // new JoystickButton(m_driverController, Button.kRect.value)
+    //     .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidOff, m_solenoidTestSubsystem));
   }
 
   /**

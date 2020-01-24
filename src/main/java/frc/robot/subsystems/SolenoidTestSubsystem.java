@@ -19,7 +19,7 @@ public class SolenoidTestSubsystem extends SubsystemBase {
     System.out.println("Solenoid Off");
   }
 
-  public void solenoidFoward() {
+  public void solenoidForward() {
     exampleDouble.set(kForward);
     System.out.println("Solenoid Foward");
   }
