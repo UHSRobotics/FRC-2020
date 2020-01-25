@@ -25,10 +25,11 @@ public class FlywheelSingleSubsystem extends SubsystemBase {
 
   public FlywheelSingleSubsystem() {
     m_motor.setNeutralMode(NeutralMode.Coast);
+    m_motor.setInverted(true);
   }
 
   public void setSpeed(double p) {
-    p *= -1*speedMultiplier;
+    p *= speedMultiplier;
     m_motor.set(ControlMode.PercentOutput, p);
   }
 
