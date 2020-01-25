@@ -15,9 +15,11 @@ public class SingleSolenoidTestSubsystem extends SubsystemBase {
 
   public void solenoidOff() {
     exampleDouble.set(false);
+    System.out.println("Solenoid Off");
   }
 
   public void solenoidOn() {
     exampleDouble.set(true);
+    System.out.println("Solenoid On");
   }
 }
