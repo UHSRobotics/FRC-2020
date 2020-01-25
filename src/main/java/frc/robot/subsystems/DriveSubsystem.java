@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -18,38 +19,44 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-  private final VictorSPX m_leftFrontMotor = new VictorSPX(1);
-  private final VictorSPX m_rightFrontMotor = new VictorSPX(3);
-  private final VictorSPX m_leftBackMotor = new VictorSPX(2);
-  private final VictorSPX m_rightBackMotor = new VictorSPX(0);
+  private final VictorSPX m_leftMotor = new VictorSPX(1);
+  private final VictorSPX m_rightMotor = new VictorSPX(3);
+  private final VictorSPX m_leftFollowMotor = new VictorSPX(2);
+  private final VictorSPX m_rightFollowMotor = new VictorSPX(0);
 
   private final ShuffleboardTab tab = Shuffleboard.getTab("Drive");
   private NetworkTableEntry speedEntry;
   private double speedMultiplier = 1;
 
   public DriveSubsystem() {
-    m_leftFrontMotor.setNeutralMode(NeutralMode.Coast);
-    m_rightFrontMotor.setNeutralMode(NeutralMode.Coast);
-    m_leftBackMotor.setNeutralMode(NeutralMode.Coast);
-    m_rightBackMotor.setNeutralMode(NeutralMode.Coast);
+    //sets all the motors to coast
+    m_leftMotor.setNeutralMode(NeutralMode.Coast);
+    m_leftFollowMotor.setNeutralMode(NeutralMode.Coast);
+    m_rightMotor.setNeutralMode(NeutralMode.Coast);
+    m_rightFollowMotor.setNeutralMode(NeutralMode.Coast);
+    //Makes one of the motors follow the other
+    m_leftFollowMotor.follow(m_leftMotor);
+    m_rightFollowMotor.follow(m_rightMotor);
+    //invert one of the sides (arbitrarily chosen)
+    m_leftMotor.setInverted(true);
+    m_rightMotor.setInverted(false);
+    //and then make the follow motor follow the invert
+    m_leftFollowMotor.setInverted(InvertType.FollowMaster);
+    m_rightFollowMotor.setInverted(InvertType.FollowMaster);
   }
 
   public void tankDrive(double l, double r) {
     l *= speedMultiplier;
     r *= speedMultiplier;
-    m_leftFrontMotor.set(ControlMode.PercentOutput, -l);
-    m_leftBackMotor.set(ControlMode.PercentOutput, -l);
-    m_rightFrontMotor.set(ControlMode.PercentOutput, r);
-    m_rightBackMotor.set(ControlMode.PercentOutput, r);
+    m_leftMotor.set(ControlMode.PercentOutput, l);
+    m_rightMotor.set(ControlMode.PercentOutput, r);
   }
 
   public void arcadeDrive(double pow, double turn) {
     pow *= speedMultiplier;
     turn *= speedMultiplier;
-    m_leftFrontMotor.set(ControlMode.PercentOutput, -pow + turn);
-    m_leftBackMotor.set(ControlMode.PercentOutput, -pow + turn);
-    m_rightFrontMotor.set(ControlMode.PercentOutput, pow + turn);
-    m_rightBackMotor.set(ControlMode.PercentOutput, pow + turn);
+    m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
+    m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
