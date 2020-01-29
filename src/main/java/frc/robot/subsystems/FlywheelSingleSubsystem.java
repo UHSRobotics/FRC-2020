@@ -49,7 +49,7 @@ public class FlywheelSingleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.add("Single Speed Multiplier", 1).getEntry();
+      speedEntry = tab.addPersistent("Single Speed Multiplier", 1).getEntry();
       System.out.println("Added Single Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);
