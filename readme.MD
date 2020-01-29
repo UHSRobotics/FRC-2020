@@ -76,7 +76,7 @@ Getting tools like pathweaver, smartdashboard, shuffleboard, etc.
    1. install JDK 13[\(The Basics, 1,i)](#the-basics)
    2. Search for and open "advanced system settings" on your laptop
    3. Open "Enviromental Variables" in "advanced system settings"
-   4. Find/Create a variable called `JAVA_PATH` in "System Variables", setting the value to the path to your jdk 13
+   4. Find/Create a variable called `JAVA_HOME` in "System Variables", setting the value to the path to your jdk 13
       * Looks something like this: `C:\Program Files\Java\jdk-13.0.1`
 
 ---
