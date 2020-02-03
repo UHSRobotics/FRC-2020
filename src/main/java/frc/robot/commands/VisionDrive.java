@@ -67,6 +67,6 @@ public class VisionDrive extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return m_visionPIDLeft.atSetpoint() && m_visionPIDRight.atSetpoint();
     }
 }
