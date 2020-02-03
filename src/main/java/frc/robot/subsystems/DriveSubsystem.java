@@ -29,18 +29,18 @@ public class DriveSubsystem extends SubsystemBase {
   private double speedMultiplier = 1;
 
   public DriveSubsystem() {
-    //sets all the motors to coast
+    // sets all the motors to coast
     m_leftMotor.setNeutralMode(NeutralMode.Coast);
     m_leftFollowMotor.setNeutralMode(NeutralMode.Coast);
     m_rightMotor.setNeutralMode(NeutralMode.Coast);
     m_rightFollowMotor.setNeutralMode(NeutralMode.Coast);
-    //Makes one of the motors follow the other
+    // Makes one of the motors follow the other
     m_leftFollowMotor.follow(m_leftMotor);
     m_rightFollowMotor.follow(m_rightMotor);
-    //invert one of the sides (arbitrarily chosen)
+    // invert one of the sides (arbitrarily chosen)
     m_leftMotor.setInverted(true);
     m_rightMotor.setInverted(false);
-    //and then make the follow motor follow the invert
+    // and then make the follow motor follow the invert
     m_leftFollowMotor.setInverted(InvertType.FollowMaster);
     m_rightFollowMotor.setInverted(InvertType.FollowMaster);
   }
@@ -62,7 +62,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void setSpeedMultiplier(double speed, boolean updateNT) {
     if (0 <= speed && speed <= 2) {
       speedMultiplier = speed;
-      if(updateNT){
+      if (updateNT) {
         System.out.println("Putted Speed Multiplier NT entry");
         speedEntry.setDouble(speedMultiplier);
       }
@@ -74,7 +74,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(speedEntry==null){
+    if (speedEntry == null) {
       speedEntry = tab.addPersistent("Speed Multiplier", 1).getEntry();
       System.out.println("Added Speed Multiplier NT entry");
     }
