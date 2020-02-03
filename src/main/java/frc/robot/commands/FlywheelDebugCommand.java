@@ -19,7 +19,7 @@ import frc.robot.subsystems.FlywheelSubsystem;
  * edu.wpi.first.wpilibj2.command.RunCommand}.
  */
 public class FlywheelDebugCommand extends CommandBase {
-  private final FlywheelSubsystem m_drive;
+  private final FlywheelSubsystem m_flywheel;
   private final DoubleSupplier m_lforward;
   private final DoubleSupplier m_rforward;
 
@@ -31,15 +31,15 @@ public class FlywheelDebugCommand extends CommandBase {
    * @param rotation The control input for turning
    */
   public FlywheelDebugCommand(FlywheelSubsystem subsystem, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
-    m_drive = subsystem;
+    m_flywheel = subsystem;
     m_lforward = leftSpeed;
     m_rforward = rightSpeed;
-    addRequirements(m_drive);
+    addRequirements(m_flywheel);
   }
 
   @Override
   public void execute() {
-    m_drive.setSpeed(m_lforward.getAsDouble(), m_rforward.getAsDouble());
+    m_flywheel.setSpeed(m_lforward.getAsDouble(), m_rforward.getAsDouble());
     // System.out.println("Left: "+ m_lforward.getAsDouble() + " right: " + m_rforward.getAsDouble());
   }
 }

@@ -15,7 +15,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class FlywheelSubsystem extends SubsystemBase {
   private final VictorSPX m_leftMotor = new VictorSPX(1);
@@ -53,7 +52,7 @@ public class FlywheelSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if(speedEntry==null){
-      speedEntry = tab.add("Speed Multiplier", 1).getEntry();
+      speedEntry = tab.addPersistent("Speed Multiplier", 1).getEntry();
       System.out.println("Added Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);

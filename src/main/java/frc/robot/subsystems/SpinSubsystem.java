@@ -16,7 +16,7 @@ public class SpinSubsystem extends SubsystemBase {
 
     public void spin(double pow) {
         if(spinnerEntry==null){
-            spinnerEntry = tab.add("Spinner Speed", 1).getEntry();
+            spinnerEntry = tab.addPersistent("Spinner Speed", 1).getEntry();
             System.out.println("Added spinner NT entry");
         }
         spinnerEntry.setDouble(pow);

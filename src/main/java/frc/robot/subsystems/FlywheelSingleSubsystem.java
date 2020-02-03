@@ -17,14 +17,15 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class FlywheelSingleSubsystem extends SubsystemBase {
-  private final VictorSPX m_motor = new VictorSPX(0);
+  private final VictorSPX m_motor = new VictorSPX(2);
 
-  private final ShuffleboardTab tab = Shuffleboard.getTab("Bruh");
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
   private double speedMultiplier = 1;
 
   public FlywheelSingleSubsystem() {
     m_motor.setNeutralMode(NeutralMode.Coast);
+    m_motor.setInverted(true);
   }
 
   public void setSpeed(double p) {
@@ -48,7 +49,7 @@ public class FlywheelSingleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.add("Single Speed Multiplier", 1).getEntry();
+      speedEntry = tab.addPersistent("Single Speed Multiplier", 1).getEntry();
       System.out.println("Added Single Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);
