@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class VisionPIDDistance extends PIDSubsystem {
@@ -12,7 +13,8 @@ public class VisionPIDDistance extends PIDSubsystem {
     private final Encoder m_rightEncoder;
 
     public VisionPIDDistance() {
-        super(new PIDController(0, 1, 0.001, 2), 0);
+        super(new PIDController(VisionControlConstants.KpDist, VisionControlConstants.KiDist,
+                VisionControlConstants.KdDist), 0);
         m_driveSubsystem = new DriveSubsystem();
         m_leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
         m_rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);

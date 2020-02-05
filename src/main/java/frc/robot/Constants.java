@@ -42,8 +42,8 @@ public final class Constants {
         public static final int angleDeadzone = 5;
         public static final int distanceDeadzone = 5;
         // Proportional control for vision adjust. Use PID later
-        public static final double KpRot = -0.1;
-        public static final double KpDist = -0.1;
+        public static final double KpRot = 0.1;
+        public static final double KpDist = 0.1;
         public static final double KiRot = .0001;
         public static final double KiDist = .0001;
         public static final double KdRot = 2.5;
