@@ -30,7 +30,7 @@ public class VisionDrive extends CommandBase {
         m_rotationPID = rotationPID;
         m_distancePID = distancePID;
         table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
-        hAngleEntry = table.getEntry("yaw");
+        hAngleEntry = table.getEntry("targetyaw");
         vAngleEntry = table.getEntry("pitch");
         addRequirements(m_rotationPID);
         addRequirements(m_distancePID);
@@ -55,7 +55,7 @@ public class VisionDrive extends CommandBase {
         m_rotationPID.setGoal(rotDeficit);
         // TODO: Calculate where to shoot
         m_distancePID.setGoal(distDeficit);
-        SmartDashboard.putString("Vision Info", "Speed: " + distDeficit * speedMultiplier + " Rotation: " + rotDeficit);
+        SmartDashboard.putString("Vision Info", "Speed: " + distDeficit + " Rotation: " + rotDeficit);
 
     }
 
