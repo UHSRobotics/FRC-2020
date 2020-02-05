@@ -1,16 +1,11 @@
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.VisionControlConstants;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.pidcontroller.VisionPIDRotation;
 import frc.robot.subsystems.pidcontroller.VisionProfiledPIDDistance;
 import frc.robot.subsystems.pidcontroller.VisionProfiledPIDRotation;
 
