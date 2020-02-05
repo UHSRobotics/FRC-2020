@@ -7,32 +7,29 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.pidcontroller.VisionPIDLeft;
-import frc.robot.subsystems.pidcontroller.VisionPIDRight;
+import frc.robot.subsystems.pidcontroller.VisionPID;
 
 public class VisionDrive extends CommandBase {
 
     private NetworkTable table;
 
+    private final DriveSubsystem m_driveSubsystem;
     // debug
     private final double speedMultiplier = 0.2;
     private NetworkTableEntry hAngleEntry;
     private NetworkTableEntry vAngleEntry;
 
-    private final VisionPIDLeft m_visionPIDLeft;
-    private final VisionPIDRight m_visionPIDRight;
+    private final VisionPID m_visionPID;
 
-    public VisionDrive(VisionPIDLeft visionPIDLeft, VisionPIDRight visionPIDRight) {
-        m_visionPIDLeft = visionPIDLeft;
-        m_visionPIDRight = visionPIDRight;
+    public VisionDrive(DriveSubsystem driveSubsystem, VisionPID visionPID) {
+        m_driveSubsystem = driveSubsystem;
+        m_visionPID = visionPID;
         table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
         hAngleEntry = table.getEntry("yaw");
         vAngleEntry = table.getEntry("pitch");
-        addRequirements(visionPIDLeft);
-        addRequirements(visionPIDRight);
+        addRequirements(driveSubsystem);
     }
 
     @Override
@@ -42,18 +39,17 @@ public class VisionDrive extends CommandBase {
         double hAngle = hAngleEntry.getDouble(0); // horizontal rotation
         double vAngle = vAngleEntry.getDouble(0); // distance
         if (hAngle > VisionControlConstants.angleDeadzone) {
-            rotationChange += VisionControlConstants.minForce;
+            rotationChange = VisionControlConstants.KpRot * hAngle + VisionControlConstants.minForce;
         } else if (hAngle < VisionControlConstants.angleDeadzone) {
-            rotationChange -= VisionControlConstants.minForce;
+            rotationChange = VisionControlConstants.KpRot * hAngle - VisionControlConstants.minForce;
         }
         if (vAngle > VisionControlConstants.distanceDeadzone) {
-            distanceChange += VisionControlConstants.minForce;
+            distanceChange = VisionControlConstants.KpDist * vAngle + VisionControlConstants.minForce;
         } else if (vAngle < VisionControlConstants.distanceDeadzone) {
-            distanceChange -= VisionControlConstants.minForce;
+            distanceChange = VisionControlConstants.KpDist * vAngle - VisionControlConstants.minForce;
         }
-
-        m_visionPIDLeft.setSetpoint(distanceChange - rotationChange);
-        m_visionPIDRight.setSetpoint(distanceChange + rotationChange);
+        
+        m_driveSubsystem.arcadeDrive(distanceChange * speedMultiplier, rotationChange);
         SmartDashboard.putString("Vision Info",
                 "Speed: " + distanceChange * speedMultiplier + " Rotation: " + rotationChange);
 
@@ -61,8 +57,7 @@ public class VisionDrive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_visionPIDLeft.setSetpoint(0);
-        m_visionPIDRight.setSetpoint(0);
+        m_driveSubsystem.arcadeDrive(0, 0);
     }
 
     @Override
