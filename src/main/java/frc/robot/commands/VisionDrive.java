@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.pidcontroller.VisionPIDRotation;
+import frc.robot.subsystems.pidcontroller.VisionProfiledPIDDistance;
+import frc.robot.subsystems.pidcontroller.VisionProfiledPIDRotation;
 
 public class VisionDrive extends CommandBase {
 
@@ -21,14 +23,17 @@ public class VisionDrive extends CommandBase {
     private NetworkTableEntry hAngleEntry;
     private NetworkTableEntry vAngleEntry;
 
-    private final VisionPIDRotation m_visionPIDRotation;
+    private final VisionProfiledPIDRotation m_rotationPID;
+    private final VisionProfiledPIDDistance m_distancePID;
 
-    public VisionDrive(VisionPIDRotation visionPIDRotation) {
-        m_visionPIDRotation = visionPIDRotation;
+    public VisionDrive(VisionProfiledPIDRotation rotationPID, VisionProfiledPIDDistance distancePID) {
+        m_rotationPID = rotationPID;
+        m_distancePID = distancePID;
         table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
         hAngleEntry = table.getEntry("yaw");
         vAngleEntry = table.getEntry("pitch");
-        addRequirements(m_visionPIDRotation);
+        addRequirements(m_rotationPID);
+        addRequirements(m_distancePID);
     }
 
     @Override
@@ -47,18 +52,22 @@ public class VisionDrive extends CommandBase {
         } else if (vAngle < VisionControlConstants.distanceDeadzone) {
             distDeficit -= VisionControlConstants.minForce;
         }
-        m_visionPIDRotation.setSetpoint(rotDeficit);
+        m_rotationPID.setGoal(rotDeficit);
+        // TODO: Calculate where to shoot
+        m_distancePID.setGoal(distDeficit);
         SmartDashboard.putString("Vision Info", "Speed: " + distDeficit * speedMultiplier + " Rotation: " + rotDeficit);
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_visionPIDRotation.setSetpoint(0);
+        m_rotationPID.setGoal(0);
+        m_distancePID.setGoal(0);
+
     }
 
     @Override
     public boolean isFinished() {
-        return m_visionPIDRotation.atSetpoint();
+        return m_rotationPID.atSetpoint() && m_distancePID.atSetpoint();
     }
 }
