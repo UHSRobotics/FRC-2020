@@ -1,9 +1,5 @@
 package frc.robot.subsystems.pidcontroller;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -36,7 +32,8 @@ public class VisionPIDRotation extends PIDSubsystem {
     }
 
     public double encoderDistToRot() {
-        //TODO: this method should be able to convert the distances in L and R encoders and convert it to rotation
+        // TODO: this method should be able to convert the distances in L and R encoders
+        // and convert it to rotation
         return -1;
     }
 }
