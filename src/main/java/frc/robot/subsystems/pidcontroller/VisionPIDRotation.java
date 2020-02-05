@@ -38,7 +38,7 @@ public class VisionPIDRotation extends PIDSubsystem {
 
     private double encoderDistToRot() {
         // TODO: this method should be able to convert the distances in L and R encoders
-        // and convert it to rotation
+        // to rotation
         return -1;
     }
 }
