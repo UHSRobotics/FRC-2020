@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.pidcontroller.VisionPID;
 
 public class VisionDrive extends CommandBase {
 
@@ -21,11 +20,8 @@ public class VisionDrive extends CommandBase {
     private NetworkTableEntry hAngleEntry;
     private NetworkTableEntry vAngleEntry;
 
-    private final VisionPID m_visionPID;
-
-    public VisionDrive(DriveSubsystem driveSubsystem, VisionPID visionPID) {
+    public VisionDrive(DriveSubsystem driveSubsystem) {
         m_driveSubsystem = driveSubsystem;
-        m_visionPID = visionPID;
         table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
         hAngleEntry = table.getEntry("yaw");
         vAngleEntry = table.getEntry("pitch");
@@ -48,7 +44,7 @@ public class VisionDrive extends CommandBase {
         } else if (vAngle < VisionControlConstants.distanceDeadzone) {
             distanceChange = VisionControlConstants.KpDist * vAngle - VisionControlConstants.minForce;
         }
-        
+
         m_driveSubsystem.arcadeDrive(distanceChange * speedMultiplier, rotationChange);
         SmartDashboard.putString("Vision Info",
                 "Speed: " + distanceChange * speedMultiplier + " Rotation: " + rotationChange);

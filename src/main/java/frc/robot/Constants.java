@@ -44,10 +44,6 @@ public final class Constants {
         // Proportional control for vision adjust. Use PID later
         public static final double KpRot = -0.1;
         public static final double KpDist = -0.1;
-        public static final double KiRot = .0001;
-        public static final double KiDist = .0001;
-        public static final double KdRot = 2.5;
-        public static final double KdDist = 2.5;
         // Minimum force when driving
         public static final double minForce = 0.05;
     }
