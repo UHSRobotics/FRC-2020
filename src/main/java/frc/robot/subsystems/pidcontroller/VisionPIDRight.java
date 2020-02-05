@@ -29,8 +29,4 @@ public class VisionPIDRight extends PIDSubsystem {
     protected double getMeasurement() {
         return m_encoder.getRate();
     }
-
-    public boolean atSetpoint(){
-        return m_controller.atSetpoint();
-    }
 }
