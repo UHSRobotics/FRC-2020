@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.pidcontroller.VisionPIDLeft;
-import frc.robot.subsystems.pidcontroller.VisionPIDRight;
+import frc.robot.subsystems.pidcontroller.VisionPIDRotation;
 
 public class VisionDrive extends CommandBase {
 
@@ -22,51 +21,44 @@ public class VisionDrive extends CommandBase {
     private NetworkTableEntry hAngleEntry;
     private NetworkTableEntry vAngleEntry;
 
-    private final VisionPIDLeft m_visionPIDLeft;
-    private final VisionPIDRight m_visionPIDRight;
+    private final VisionPIDRotation m_visionPIDRotation;
 
-    public VisionDrive(VisionPIDLeft visionPIDLeft, VisionPIDRight visionPIDRight) {
-        m_visionPIDLeft = visionPIDLeft;
-        m_visionPIDRight = visionPIDRight;
+    public VisionDrive(VisionPIDRotation visionPIDRotation) {
+        m_visionPIDRotation = visionPIDRotation;
         table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
         hAngleEntry = table.getEntry("yaw");
         vAngleEntry = table.getEntry("pitch");
-        addRequirements(visionPIDLeft);
-        addRequirements(visionPIDRight);
+        addRequirements(m_visionPIDRotation);
     }
 
     @Override
     public void execute() {
-        double rotationChange = 0;
-        double distanceChange = 0;
+        double rotDeficit = 0;
+        double distDeficit = 0;
         double hAngle = hAngleEntry.getDouble(0); // horizontal rotation
-        double vAngle = vAngleEntry.getDouble(0); // distance
+        double vAngle = vAngleEntry.getDouble(0); // vertical angle. Convert this to distance pls
         if (hAngle > VisionControlConstants.angleDeadzone) {
-            rotationChange += VisionControlConstants.minForce;
+            rotDeficit += VisionControlConstants.minForce;
         } else if (hAngle < VisionControlConstants.angleDeadzone) {
-            rotationChange -= VisionControlConstants.minForce;
+            rotDeficit -= VisionControlConstants.minForce;
         }
         if (vAngle > VisionControlConstants.distanceDeadzone) {
-            distanceChange += VisionControlConstants.minForce;
+            distDeficit += VisionControlConstants.minForce;
         } else if (vAngle < VisionControlConstants.distanceDeadzone) {
-            distanceChange -= VisionControlConstants.minForce;
+            distDeficit -= VisionControlConstants.minForce;
         }
-
-        m_visionPIDLeft.setSetpoint(distanceChange - rotationChange);
-        m_visionPIDRight.setSetpoint(distanceChange + rotationChange);
-        SmartDashboard.putString("Vision Info",
-                "Speed: " + distanceChange * speedMultiplier + " Rotation: " + rotationChange);
+        m_visionPIDRotation.setSetpoint(rotDeficit);
+        SmartDashboard.putString("Vision Info", "Speed: " + distDeficit * speedMultiplier + " Rotation: " + rotDeficit);
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_visionPIDLeft.setSetpoint(0);
-        m_visionPIDRight.setSetpoint(0);
+        m_visionPIDRotation.setSetpoint(0);
     }
 
     @Override
     public boolean isFinished() {
-        return m_visionPIDLeft.atSetpoint() && m_visionPIDRight.atSetpoint();
+        return m_visionPIDRotation.atSetpoint();
     }
 }
