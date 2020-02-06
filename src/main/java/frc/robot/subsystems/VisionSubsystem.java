@@ -12,15 +12,15 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ChameleonVisionSubsystem extends SubsystemBase {
+public class VisionSubsystem extends SubsystemBase {
   /**
-   * Creates a new ChameleonVisionSubsystem.
+   * Creates a new VisionSubsystem.
    */
   
   private double[] defaultArray;
   private NetworkTableEntry targetPose;
 
-  public ChameleonVisionSubsystem() {
+  public VisionSubsystem() {
     defaultArray = new double[3];
     defaultArray[0] = 0.0;
     defaultArray[1] = 0.0;
