@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;  
+import com.google.gson.GsonBuilder;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
 public class Json{
 /**
  * jh
@@ -28,7 +32,7 @@ public static void main(String[] args) {
         Contents.put("green", green);
         Contents.get("blue");
 
-        System.out.println(gson.toJson(Contents));
+        System.out.println();
         
 
 
@@ -37,6 +41,10 @@ public static void main(String[] args) {
         this.Contents.put(key, obj);
     }
     public void out() {
-        
+        GsonBuilder builder = new GsonBuilder(); 
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+        final ShuffleboardTab StorageJson = Shuffleboard.getTab("StorageJson");
+        StorageJson.addPersistent("Storage", gson.toJson(Contents));
     }
 }
