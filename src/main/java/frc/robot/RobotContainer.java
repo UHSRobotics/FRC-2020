@@ -4,9 +4,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 import frc.robot.Constants.OIConstants;
 
@@ -45,6 +48,9 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    final ShuffleboardTab test = Shuffleboard.getTab("Drive");
+    Color red = new Color(10, 10, 10, "red");
+    test.addPersistent("red", red);
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
     // m_flywheelSubsystem.setDefaultCommand(new
@@ -53,6 +59,7 @@ public class RobotContainer {
     // m_driverController.getY(Hand.kRight)));
     m_flywheelSingleSubsystem.setDefaultCommand(new FwheelDebugSingleCommand(m_flywheelSingleSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
+
 
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
