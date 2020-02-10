@@ -7,38 +7,34 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class VisionPIDRotation extends PIDSubsystem {
+public class DriveDistancePID extends PIDSubsystem {
     private final DriveSubsystem m_driveSubsystem;
     private final Encoder m_leftEncoder;
     private final Encoder m_rightEncoder;
 
-    public VisionPIDRotation() {
-        super(new PIDController(VisionControlConstants.KpRot, VisionControlConstants.KiRot,
-                VisionControlConstants.KdRot), 0);
+    public DriveDistancePID() {
+        super(new PIDController(VisionControlConstants.KpDist, VisionControlConstants.KiDist,
+                VisionControlConstants.KdDist), 0);
         m_driveSubsystem = new DriveSubsystem();
         m_leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
         m_rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
         m_leftEncoder.setDistancePerPulse(0.001);
         m_rightEncoder.setDistancePerPulse(0.001);
+
     }
 
     @Override
     protected void useOutput(double output, double setpoint) {
-        m_driveSubsystem.arcadeDrive(0, output);
+        m_driveSubsystem.arcadeDrive(output, 0);
     }
 
     @Override
     protected double getMeasurement() {
-        return this.encoderDistToRot();
+        return m_leftEncoder.getDistance();
     }
 
     public boolean atSetpoint() {
         return m_controller.atSetpoint();
     }
 
-    private double encoderDistToRot() {
-        // TODO: this method should be able to convert the distances in L and R encoders
-        // to rotation
-        return -1;
-    }
 }

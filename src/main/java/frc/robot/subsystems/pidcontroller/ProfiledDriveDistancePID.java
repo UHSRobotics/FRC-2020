@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class VisionProfiledPIDDistance extends ProfiledPIDSubsystem {
+public class ProfiledDriveDistancePID extends ProfiledPIDSubsystem {
     private final DriveSubsystem m_driveSubsystem;
     private final Encoder m_encoder = new Encoder(0, 1, false, EncodingType.k4X);
 
-    public VisionProfiledPIDDistance() {
+    public ProfiledDriveDistancePID() {
         super(new ProfiledPIDController(VisionControlConstants.KpDist, VisionControlConstants.KiDist,
                 VisionControlConstants.KdDist, new TrapezoidProfile.Constraints(10, 20)), 0);
         m_driveSubsystem = new DriveSubsystem();

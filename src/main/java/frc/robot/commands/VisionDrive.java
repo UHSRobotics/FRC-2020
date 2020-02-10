@@ -6,8 +6,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.VisionControlConstants;
-import frc.robot.subsystems.pidcontroller.VisionProfiledPIDDistance;
-import frc.robot.subsystems.pidcontroller.VisionProfiledPIDRotation;
+import frc.robot.subsystems.pidcontroller.ProfiledDriveDistancePID;
+import frc.robot.subsystems.pidcontroller.ProfiledDriveRotationPID;
 
 public class VisionDrive extends CommandBase {
 
@@ -18,10 +18,10 @@ public class VisionDrive extends CommandBase {
     private NetworkTableEntry hAngleEntry;
     private NetworkTableEntry vAngleEntry;
 
-    private final VisionProfiledPIDRotation m_rotationPID;
-    private final VisionProfiledPIDDistance m_distancePID;
+    private final ProfiledDriveRotationPID m_rotationPID;
+    private final ProfiledDriveDistancePID m_distancePID;
 
-    public VisionDrive(VisionProfiledPIDRotation rotationPID, VisionProfiledPIDDistance distancePID) {
+    public VisionDrive(ProfiledDriveRotationPID rotationPID, ProfiledDriveDistancePID distancePID) {
         m_rotationPID = rotationPID;
         m_distancePID = distancePID;
         table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
