@@ -54,16 +54,6 @@
                   "Visuals/Num tick marks": 5,
                   "Visuals/Show text": true
                 },
-                "1,0": {
-                  "_type": "Number Bar",
-                  "_source0": "network_table:///SmartDashboard/Color Green",
-                  "_title": "Color Green",
-                  "Range/Min": 0.0,
-                  "Range/Max": 256.0,
-                  "Range/Center": 0.0,
-                  "Visuals/Num tick marks": 5,
-                  "Visuals/Show text": true
-                },
                 "2,0": {
                   "_type": "Number Bar",
                   "_source0": "network_table:///SmartDashboard/Color Blue",
@@ -78,6 +68,16 @@
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Color Detected",
                   "_title": "Color Detected"
+                },
+                "1,0": {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///SmartDashboard/Color Green",
+                  "_title": "Color Green",
+                  "Range/Min": 0.0,
+                  "Range/Max": 256.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5,
+                  "Visuals/Show text": true
                 }
               }
             }

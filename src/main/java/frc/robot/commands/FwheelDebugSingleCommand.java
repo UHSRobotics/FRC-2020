@@ -12,7 +12,6 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.FlywheelSingleSubsystem;
-import frc.robot.subsystems.FlywheelSubsystem;
 
 /**
  * A command to drive the robot with joystick input (passed in as

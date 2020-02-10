@@ -21,7 +21,7 @@ public class SolenoidTestSubsystem extends SubsystemBase {
 
   public void solenoidForward() {
     exampleDouble.set(kForward);
-    System.out.println("Solenoid Foward");
+    System.out.println("Solenoid Forward");
   }
 
   public void solenoidBack() {

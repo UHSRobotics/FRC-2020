@@ -1,22 +1,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-
 import frc.robot.Constants.OIConstants;
-
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-
-import static frc.robot.DualShockController.Button;
+import frc.robot.commands.AutonPlaceholder;
+import frc.robot.commands.FwheelDebugSingleCommand;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FlywheelSingleSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
