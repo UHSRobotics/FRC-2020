@@ -29,16 +29,10 @@ public class DriveRotationPID extends PIDSubsystem {
 
     @Override
     protected double getMeasurement() {
-        return this.encoderDistToRot();
+        return m_leftEncoder.getDistance();
     }
 
     public boolean atSetpoint() {
         return m_controller.atSetpoint();
-    }
-
-    private double encoderDistToRot() {
-        // TODO: this method should be able to convert the distances in L and R encoders
-        // to rotation
-        return -1;
     }
 }

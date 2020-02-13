@@ -31,7 +31,11 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     if (m_reverse.getAsBoolean()) {
       m_isReverse = !m_isReverse;
+      m_turnPID.enable();
       m_turnPID.setSetpoint(180);
+    }
+    if (m_pow.getAsDouble() > Constants.joystickDeadzone || m_turn.getAsDouble() > Constants.joystickDeadzone) {
+      m_turnPID.disable();
     }
     if (!m_isReverse) {
       m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) > Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
