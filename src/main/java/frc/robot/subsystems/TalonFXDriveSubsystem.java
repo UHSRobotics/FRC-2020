@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.PIDConstants;
 
 public class TalonFXDriveSubsystem extends SubsystemBase {
     private final TalonFX m_leftMotor = new TalonFX(1);
@@ -47,11 +49,28 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_rightMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
         m_leftFollowMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
         m_rightFollowMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
+        //Integrated PID control
+        m_rightMotor.config_kP(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kP, PIDConstants.kTimeoutMs);
+        m_rightMotor.config_kI(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kI, PIDConstants.kTimeoutMs);
+        m_rightMotor.config_kD(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kD, PIDConstants.kTimeoutMs);
+        m_rightMotor.config_kF(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kF, PIDConstants.kTimeoutMs);
+        m_rightMotor.config_IntegralZone(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kIzone,
+                PIDConstants.kTimeoutMs);
+        m_rightMotor.configClosedLoopPeakOutput(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kPeakOutput,
+                PIDConstants.kTimeoutMs);
+        m_rightMotor.configAllowableClosedloopError(PIDConstants.kSlot_Velocit, 0, PIDConstants.kTimeoutMs);
+
     }
 
     public void arcadeDrive(double pow, double turn) {
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_leftMotor.set(ControlMode.PercentOutput, pow + turn);
+    }
+
+    public void pidDrive(double pos) {
+        m_rightMotor.set(ControlMode.Position, pos, DemandType.ArbitraryFeedForward, 0);
+        m_leftMotor.follow(m_rightMotor);
+
     }
 
     public void encoderTest() {
