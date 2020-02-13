@@ -7,30 +7,30 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 public class FlywheelSingleSubsystem extends SubsystemBase {
-  private final VictorSPX m_motor = new VictorSPX(2);
+  private final CANSparkMax m_motor = new CANSparkMax(2, MotorType.kBrushless);
 
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
   private double speedMultiplier = 1;
 
   public FlywheelSingleSubsystem() {
-    m_motor.setNeutralMode(NeutralMode.Coast);
+    m_motor.setIdleMode(IdleMode.kCoast);
     m_motor.setInverted(true);
   }
 
   public void setSpeed(double p) {
     p *= speedMultiplier;
-    m_motor.set(ControlMode.PercentOutput, p);
+    m_motor.set(p);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
