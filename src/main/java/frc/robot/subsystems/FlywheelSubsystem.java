@@ -15,10 +15,11 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class FlywheelSubsystem extends SubsystemBase {
-  private final VictorSPX m_leftMotor = new VictorSPX(1);
-  private final VictorSPX m_rightMotor = new VictorSPX(0);
+  private final VictorSPX m_leftMotor = new VictorSPX(Constants.FlywheelCons.leftMotor);
+  private final VictorSPX m_rightMotor = new VictorSPX(Constants.FlywheelCons.rightMotor);
 
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;

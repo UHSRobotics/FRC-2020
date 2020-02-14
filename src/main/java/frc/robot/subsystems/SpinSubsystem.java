@@ -5,12 +5,13 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class SpinSubsystem extends SubsystemBase {
-    private final TalonSRX m_spinner = new TalonSRX(2);
+    private final TalonSRX m_spinner = new TalonSRX(Constants.SpinCons.spinner);
     private final ShuffleboardTab tab = Shuffleboard.getTab("Spinner");
     private NetworkTableEntry spinnerEntry;
 

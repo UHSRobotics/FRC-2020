@@ -18,6 +18,7 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
     public static final class ColorConstants {
         public static final int waitCycle = 5;
         public static final int colorRange = 30;
@@ -46,5 +47,22 @@ public final class Constants {
         public static final double KpDist = -0.1;
         // Minimum force when driving
         public static final double minForce = 0.05;
+    }
+
+    public static final class DriveConstants {
+        public static final int leftMotor = 1;
+        public static final int rightMotor = 3;
+        public static final int leftFollowMotor = 2;
+        public static final int rightFollowMotor = 0;
+    }
+
+    public static final class FlywheelCons {
+        public static final int flySingle = 2;
+        public static final int leftMotor = 1;
+        public static final int rightMotor = 0;
+    }
+
+    public static final class SpinCons {
+        public static final int spinner = 2;
     }
 }
