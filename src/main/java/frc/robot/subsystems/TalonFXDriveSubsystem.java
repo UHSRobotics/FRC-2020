@@ -28,7 +28,8 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
     private NetworkTableEntry encoderEntry;
-    private double speedMultiplier = 0.5;
+    private double speedMultiplier = 0.2;
+    private NetworkTableEntry speedEntry;
 
     public TalonFXDriveSubsystem() {
         // set motors to coast
@@ -66,6 +67,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double pow, double turn) {
+        pow *= speedMultiplier;
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -92,11 +94,22 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
     public void setSpeedMultiplier(double speed, boolean updateNT) {
         if (0 <= speed && speed <= 2) {
             speedMultiplier = speed;
-
+            if (updateNT) {
+                System.out.println("Putted Speed Multiplier NT entry");
+                speedEntry.setDouble(speedMultiplier);
+            }
+        } else {
+            System.out.println("Putted Speed Multiplier NT entry");
+            speedEntry.setDouble(speedMultiplier);
         }
     }
 
     @Override
     public void periodic() {
+        if (speedEntry == null) {
+            speedEntry = tab.addPersistent("Speed Multiplier", 1).getEntry();
+            System.out.println("Added Speed Multiplier NT entry");
+        }
+        setSpeedMultiplier(speedEntry.getDouble(1.0), false);
     }
 }
