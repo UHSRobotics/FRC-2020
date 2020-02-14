@@ -80,6 +80,11 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_leftMotor.follow(m_rightMotor);
     }
 
+    public void disable() {
+        m_rightMotor.set(ControlMode.PercentOutput, 0);
+        m_leftMotor.set(ControlMode.PercentOutput, 0);
+    }
+
     public void encoderTest() {
         encoderEntry.setDouble(m_rightMotor.getSensorCollection().getIntegratedSensorPosition());
     }

@@ -27,6 +27,7 @@ public class PIDDrive extends CommandBase {
                 done = true;
             }
         } else {
+            m_drive.disable();
             done = false;
         }
     }
@@ -34,7 +35,7 @@ public class PIDDrive extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_drive.motionMagicDrive(0);
+        m_drive.disable();
     }
 
     // Returns true when the command should end.
