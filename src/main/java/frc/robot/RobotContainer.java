@@ -55,9 +55,10 @@ public class RobotContainer {
     m_flywheelSingleSubsystem.setDefaultCommand(new SingleFWheelCmd(m_flywheelSingleSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
 
+    //ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
-    // m_driverController.getXMapped(Hand.kRight) * 0.75));
+    // m_driverController.getXMapped(Hand.kRight) * 0.75, () -> m_driverController.getCrossButton()));
   }
 
   /**
@@ -68,11 +69,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-        .whenPressed(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft),
-            () -> m_driverController.getXMapped(Hand.kRight), () -> m_driverController.getCrossButton()));
-    new JoystickButton(m_driverController, Button.kTrig.value)
-        .whenPressed(new PIDDrive(m_driveSubsystem, () -> m_driverController.getTrigButtonPressed(), 4000 * 5));
+    // 
+    
+      
+    // new JoystickButton(m_driverController, Button.kTrig.value)
+    //     .whenPressed(new PIDDrive(m_driveSubsystem, () -> m_driverController.getTrigButtonPressed(), 4000 * 5));
+    
+    
 
     // new JoystickButton(m_driverController,
     // Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
