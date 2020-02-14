@@ -18,7 +18,7 @@ import frc.robot.subsystems.FlywheelSubsystem;
  * explicitly for pedagogical purposes - actual code should inline a command this simple with {@link
  * edu.wpi.first.wpilibj2.command.RunCommand}.
  */
-public class FlywheelDebugCommand extends CommandBase {
+public class DoubleFWheelCmd extends CommandBase {
   private final FlywheelSubsystem m_flywheel;
   private final DoubleSupplier m_lforward;
   private final DoubleSupplier m_rforward;
@@ -30,7 +30,7 @@ public class FlywheelDebugCommand extends CommandBase {
    * @param forward The control input for driving forwards/backwards
    * @param rotation The control input for turning
    */
-  public FlywheelDebugCommand(FlywheelSubsystem subsystem, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
+  public DoubleFWheelCmd(FlywheelSubsystem subsystem, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
     m_flywheel = subsystem;
     m_lforward = leftSpeed;
     m_rforward = rightSpeed;
