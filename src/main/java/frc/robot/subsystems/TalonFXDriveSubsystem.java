@@ -49,7 +49,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_rightMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
         m_leftFollowMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
         m_rightFollowMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
-        //Integrated PID control
+        // Integrated PID control
         m_rightMotor.config_kP(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kP, PIDConstants.kTimeoutMs);
         m_rightMotor.config_kI(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kI, PIDConstants.kTimeoutMs);
         m_rightMotor.config_kD(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kD, PIDConstants.kTimeoutMs);
@@ -59,6 +59,9 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_rightMotor.configClosedLoopPeakOutput(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kPeakOutput,
                 PIDConstants.kTimeoutMs);
         m_rightMotor.configAllowableClosedloopError(PIDConstants.kSlot_Velocit, 0, PIDConstants.kTimeoutMs);
+        // Configure cruise
+        m_rightMotor.configMotionCruiseVelocity(15000, PIDConstants.kTimeoutMs);
+        m_rightMotor.configMotionAcceleration(6000, PIDConstants.kTimeoutMs);
 
     }
 
@@ -71,6 +74,10 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_rightMotor.set(ControlMode.Position, pos, DemandType.ArbitraryFeedForward, 0);
         m_leftMotor.follow(m_rightMotor);
 
+    }
+
+    public void motionMagicDrive(double pos) {
+        m_rightMotor.set(ControlMode.MotionMagic, pos);
     }
 
     public void encoderTest() {

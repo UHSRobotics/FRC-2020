@@ -10,8 +10,10 @@ import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.FwheelDebugSingleCommand;
+import frc.robot.commands.PIDDrive;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FlywheelSingleSubsystem;
+import frc.robot.subsystems.TalonFXDriveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -25,7 +27,7 @@ public class RobotContainer {
   // FlywheelSubsystem();
   private final FlywheelSingleSubsystem m_flywheelSingleSubsystem = new FlywheelSingleSubsystem();
 
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
   // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
   // SolenoidTestSubsystem();
@@ -66,11 +68,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // new JoystickButton(m_driverController, Button.kBumperRight.value)
-    // .whenPressed(new ArcadeDrive(m_driveSubsystem, () ->
-    // m_driverController.getYMapped(Hand.kLeft),
-    // () -> m_driverController.getXMapped(Hand.kRight), () ->
-    // m_driverController.getCrossButton()));
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+        .whenPressed(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft),
+            () -> m_driverController.getXMapped(Hand.kRight), () -> m_driverController.getCrossButton()));
+    new JoystickButton(m_driverController, Button.kTrig.value)
+        .whenPressed(new PIDDrive(m_driveSubsystem, () -> m_driverController.getTrigButtonPressed(), 4000 * 5));
 
     // new JoystickButton(m_driverController,
     // Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
