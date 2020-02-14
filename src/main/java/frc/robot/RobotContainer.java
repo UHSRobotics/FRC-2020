@@ -9,8 +9,8 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonPlaceholder;
-import frc.robot.commands.FwheelDebugSingleCommand;
 import frc.robot.commands.PIDDrive;
+import frc.robot.commands.SingleFWheelCmd;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FlywheelSingleSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
@@ -49,10 +49,10 @@ public class RobotContainer {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
     // m_flywheelSubsystem.setDefaultCommand(new
-    // FlywheelDebugCommand(m_flywheelSubsystem,
+    // DoubleFWheelCmd(m_flywheelSubsystem,
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
-    m_flywheelSingleSubsystem.setDefaultCommand(new FwheelDebugSingleCommand(m_flywheelSingleSubsystem,
+    m_flywheelSingleSubsystem.setDefaultCommand(new SingleFWheelCmd(m_flywheelSingleSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
 
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
