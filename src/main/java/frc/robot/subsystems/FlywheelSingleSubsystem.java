@@ -18,11 +18,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class FlywheelSingleSubsystem extends SubsystemBase {
-<<<<<<< HEAD
-  private final VictorSPX m_motor = new VictorSPX(Constants.FlywheelCons.flySingle);
-=======
   private final CANSparkMax m_motor = new CANSparkMax(2, MotorType.kBrushless);
->>>>>>> ffcb214032904f448675f8563cac4b069f27fa1e
 
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
