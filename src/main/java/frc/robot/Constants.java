@@ -68,6 +68,8 @@ public final class Constants {
 
     public static final class SpinCons {
         public static final int spinner = 2;
+    }
+
     public static class Gains {
         public final double kP;
         public final double kI;
@@ -127,5 +129,4 @@ public final class Constants {
         public final static int kSlot_Velocit = SLOT_2;
         public final static int kSlot_MotProf = SLOT_3;
     }
-}
 }
