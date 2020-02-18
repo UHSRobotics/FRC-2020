@@ -9,10 +9,10 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonPlaceholder;
+import frc.robot.commands.FlywheelCmd;
 import frc.robot.commands.PIDDrive;
-import frc.robot.commands.SingleFWheelCmd;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.FlywheelSingleSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 
 /**
@@ -25,7 +25,7 @@ import frc.robot.subsystems.TalonFXDriveSubsystem;
 public class RobotContainer {
   // private final FlywheelSubsystem m_flywheelSubsystem = new
   // FlywheelSubsystem();
-  private final FlywheelSingleSubsystem m_flywheelSingleSubsystem = new FlywheelSingleSubsystem();
+  private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
 
   private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
@@ -52,13 +52,14 @@ public class RobotContainer {
     // DoubleFWheelCmd(m_flywheelSubsystem,
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
-    m_flywheelSingleSubsystem.setDefaultCommand(new SingleFWheelCmd(m_flywheelSingleSubsystem,
+    m_flywheelSubsystem.setDefaultCommand(new FlywheelCmd(m_flywheelSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
 
-    //ManualDrive
+    // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
-    // m_driverController.getXMapped(Hand.kRight) * 0.75, () -> m_driverController.getCrossButton()));
+    // m_driverController.getXMapped(Hand.kRight) * 0.75, () ->
+    // m_driverController.getCrossButton()));
   }
 
   /**
@@ -69,13 +70,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // 
-    
-      
+    //
+
     // new JoystickButton(m_driverController, Button.kTrig.value)
-    //     .whenPressed(new PIDDrive(m_driveSubsystem, () -> m_driverController.getTrigButtonPressed(), 4000 * 5));
-    
-    
+    // .whenPressed(new PIDDrive(m_driveSubsystem, () ->
+    // m_driverController.getTrigButtonPressed(), 4000 * 5));
 
     // new JoystickButton(m_driverController,
     // Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
