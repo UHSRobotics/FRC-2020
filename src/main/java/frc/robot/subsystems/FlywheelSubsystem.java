@@ -17,11 +17,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class FlywheelSubsystem extends SubsystemBase {
-  private final VictorSPX m_motor = new VictorSPX(1);
+  private final VictorSPX m_motor = new VictorSPX(2);
   private final VictorSPX m_motorFollow = new VictorSPX(3);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
-  private double speedMultiplier = 1;
+  private double speedMultiplier = 0.15;                                                    
 
   public FlywheelSubsystem() {
     m_motor.setNeutralMode(NeutralMode.Coast);
@@ -30,6 +30,7 @@ public class FlywheelSubsystem extends SubsystemBase {
 
   public void setSpeed(double p) {
     p *= speedMultiplier;
+    System.out.println(p);
     m_motor.set(ControlMode.PercentOutput, p);
   }
 
