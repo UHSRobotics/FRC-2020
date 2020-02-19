@@ -15,7 +15,7 @@ public class ArcadeDrive extends CommandBase {
   private final DoubleSupplier m_turn;
   private final BooleanSupplier m_reverse;
   private static boolean m_isReverse = false;
-  private final DriveRotationPID m_turnPID = new DriveRotationPID();
+  // private final DriveRotationPID m_turnPID = new DriveRotationPID();
 
   public ArcadeDrive(TalonFXDriveSubsystem subsystem, DoubleSupplier powerSupplier, DoubleSupplier turnSupplier,
       BooleanSupplier reverseSupplier) {
@@ -24,7 +24,7 @@ public class ArcadeDrive extends CommandBase {
     m_turn = turnSupplier;
     m_reverse = reverseSupplier;
     addRequirements(m_drive);
-    addRequirements(m_turnPID);
+    // addRequirements(m_turnPID);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,11 +32,11 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     if (m_reverse.getAsBoolean()) {
       m_isReverse = !m_isReverse;
-      m_turnPID.enable();
-      m_turnPID.setSetpoint(180);
+      // m_turnPID.enable();
+      // m_turnPID.setSetpoint(180);
     }
     if (m_pow.getAsDouble() > Constants.joystickDeadzone || m_turn.getAsDouble() > Constants.joystickDeadzone) {
-      m_turnPID.disable();
+      // m_turnPID.disable();
     }
     if (!m_isReverse) {
       m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) > Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,

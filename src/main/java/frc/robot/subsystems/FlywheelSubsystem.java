@@ -7,54 +7,51 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class FlywheelSubsystem extends SubsystemBase {
-  private final VictorSPX m_leftMotor = new VictorSPX(Constants.FlywheelCons.leftMotor);
-  private final VictorSPX m_rightMotor = new VictorSPX(Constants.FlywheelCons.rightMotor);
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+public class FlywheelSubsystem extends SubsystemBase {
+  private final VictorSPX m_motor = new VictorSPX(1);
+  private final VictorSPX m_motorFollow = new VictorSPX(3);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
   private double speedMultiplier = 1;
 
   public FlywheelSubsystem() {
-    m_leftMotor.setNeutralMode(NeutralMode.Coast);
-    m_rightMotor.setNeutralMode(NeutralMode.Coast);
+    m_motor.setNeutralMode(NeutralMode.Coast);
+    m_motorFollow.follow(m_motor);
   }
 
-  public void setSpeed(double l, double r) {
-    l = l * speedMultiplier;
-    r = r * speedMultiplier;
-    m_leftMotor.set(ControlMode.PercentOutput, l);
-    m_rightMotor.set(ControlMode.PercentOutput, -r);
+  public void setSpeed(double p) {
+    p *= speedMultiplier;
+    m_motor.set(ControlMode.PercentOutput, p);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
     if (0 <= speed && speed <= 2) {
       speedMultiplier = speed;
-      if(updateNT){
-        System.out.println("Putted Speed Multiplier NT entry");
+      if (updateNT) {
+        System.out.println("Putted Single Speed Multiplier NT entry");
         speedEntry.setDouble(speedMultiplier);
       }
     } else {
-      System.out.println("Putted Speed Multiplier NT entry");
+      System.out.println("Putted Single Speed Multiplier NT entry");
       speedEntry.setDouble(speedMultiplier);
     }
   }
 
   @Override
   public void periodic() {
-    if(speedEntry==null){
-      speedEntry = tab.addPersistent("Speed Multiplier", 1).getEntry();
-      System.out.println("Added Speed Multiplier NT entry");
+    if (speedEntry == null) {
+      speedEntry = tab.addPersistent("Single Speed Multiplier", 1).getEntry();
+      System.out.println("Added Single Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);
   }
