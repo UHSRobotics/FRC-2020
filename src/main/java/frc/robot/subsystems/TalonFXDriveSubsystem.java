@@ -82,6 +82,11 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_leftMotor.follow(m_rightMotor);
     }
 
+    public void motionMagicTurn(double angle) {
+        m_rightMotor.set(ControlMode.MotionMagic, angle);
+        m_leftMotor.set(ControlMode.MotionMagic, -angle);
+    }
+
     public void disable() {
         m_rightMotor.set(ControlMode.PercentOutput, 0);
         m_leftMotor.set(ControlMode.PercentOutput, 0);
@@ -89,6 +94,14 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
 
     public void encoderTest() {
         encoderEntry.setDouble(m_rightMotor.getSensorCollection().getIntegratedSensorPosition());
+    }
+
+    public double getEncoderLeft() {
+        return m_leftMotor.getSelectedSensorPosition();
+    }
+
+    public double getEncoderRight() {
+        return m_rightMotor.getSelectedSensorPosition();
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {
