@@ -17,6 +17,7 @@ public class VisionDrive extends CommandBase {
 
     private final TalonFXDriveSubsystem m_drive;
     private final VisionSubsystem m_data;
+    private boolean exit = false;
 
     public VisionDrive(VisionSubsystem visionSubsystem, TalonFXDriveSubsystem drive) {
         m_data = visionSubsystem;
@@ -29,7 +30,6 @@ public class VisionDrive extends CommandBase {
     public void execute() {
         boolean rotFlag = false;
         boolean distFlag = false;
-        boolean exit = false;
         if (!m_data.possibleShootingPos()) {
             SmartDashboard.putString("Vision Info", "Not possible to autonomous at current position");
         } else {
@@ -59,6 +59,11 @@ public class VisionDrive extends CommandBase {
                 m_drive.disable();
                 rotFlag = true;
             }
+            if (distFlag && rotFlag) {
+                exit = true;
+            } else {
+                exit = false;
+            }
             SmartDashboard.putString("Vision Info", "Position goal: " + dist + " Rotation: " + rot);
         }
         // double rotDeficit = 0;
@@ -73,6 +78,6 @@ public class VisionDrive extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return exit;
     }
 }
