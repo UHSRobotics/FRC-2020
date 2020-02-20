@@ -13,6 +13,7 @@ import frc.robot.commands.FlywheelCmd;
 import frc.robot.commands.PIDDrive;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
+import frc.robot.subsystems.NeoFwSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 
 /**
@@ -26,6 +27,7 @@ public class RobotContainer {
   // private final FlywheelSubsystem m_flywheelSubsystem = new
   // FlywheelSubsystem();
   private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
+  private final NeoFwSubsystem m_neoFwSubsystem = new NeoFwSubsystem();
 
   private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
@@ -54,6 +56,9 @@ public class RobotContainer {
     // m_driverController.getY(Hand.kRight)));
     m_flywheelSubsystem.setDefaultCommand(new FlywheelCmd(m_flywheelSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
+    
+    // m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
+    // () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
 
     // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
