@@ -42,6 +42,18 @@ public class VisionSubsystem extends SubsystemBase {
     return targetPose.getDoubleArray(defaultArray)[2];
   }
 
+  public double getDistanceFromTarget(){
+    return -1;
+  } 
+
+  public double getRotationDeficit(){
+    return -1;
+  }
+
+  public boolean possibleShootingPos(){
+    return false;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
