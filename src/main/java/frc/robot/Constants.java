@@ -111,4 +111,11 @@ public final class Constants {
         public final static int kSlot_Velocit = SLOT_2;
         public final static int kSlot_MotProf = SLOT_3;
     }
+
+    public static final class FlyWheelPIDConstants{
+        public static final double kP = 1;
+        public static final double kI = 0.1;
+        public static final double kD = 0.01;
+        public static final double kF = 0.01;
+    }
 }
