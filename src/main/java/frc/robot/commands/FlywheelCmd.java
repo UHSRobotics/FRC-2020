@@ -24,7 +24,7 @@ public class FlywheelCmd extends CommandBase {
   private final FlywheelSubsystem m_flywheel;
   private final NeoFwSubsystem m_neoFw;
   private final DoubleSupplier m_speed;
-  private final BooleanSupplier m_fullPow;//, m_mag;
+  private final BooleanSupplier m_fullPow;// , m_mag;
 
   /**
    * Creates a new DefaultDrive.
@@ -33,7 +33,9 @@ public class FlywheelCmd extends CommandBase {
    * @param forward   The control input for driving forwards/backwards
    * @param rotation  The control input for turning
    */
-  public FlywheelCmd(FlywheelSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow/**, BooleanSupplier mag*/) {
+  public FlywheelCmd(FlywheelSubsystem subsystem, DoubleSupplier speed,
+      BooleanSupplier fullPow/** , BooleanSupplier mag */
+  ) {
     m_flywheel = subsystem;
     m_neoFw = null;
     m_speed = speed;
@@ -42,7 +44,8 @@ public class FlywheelCmd extends CommandBase {
     addRequirements(m_flywheel);
   }
 
-  public FlywheelCmd(NeoFwSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow/**, BooleanSupplier mag*/){
+  public FlywheelCmd(NeoFwSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow/** , BooleanSupplier mag */
+  ) {
     m_neoFw = subsystem;
     m_flywheel = null;
     m_speed = speed;
@@ -55,23 +58,22 @@ public class FlywheelCmd extends CommandBase {
   public void execute() {
     // m_neoFw.readDI(m_mag.getAsBoolean());
     if (m_speed.getAsDouble() != 0) {
-      if(m_flywheel != null){
+      if (m_flywheel != null) {
         m_flywheel.setSpeed(m_speed.getAsDouble());
-      } else{
+      } else {
         m_neoFw.setSpeed(m_speed.getAsDouble());
       }
     } else {
-      if(m_flywheel != null){
+      if (m_flywheel != null) {
         if (m_fullPow.getAsBoolean()) {
           m_flywheel.setSpeed(1);
-        }else{
+        } else {
           m_flywheel.setSpeed(0);
         }
-      } else{
+      } else {
         if (m_fullPow.getAsBoolean()) {
-          m_neoFw.setSpeed(1);
-          // m_neoFw.setPIDTarget(1);
-        }else{
+          m_neoFw.setSpeed(1); // m_neoFw.setPIDTarget(1);
+        } else {
           m_neoFw.setSpeed(0);
           // m_neoFw.setPIDTarget(0);
         }

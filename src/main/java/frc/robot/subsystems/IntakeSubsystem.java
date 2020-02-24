@@ -20,7 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 public class IntakeSubsystem extends SubsystemBase {
   private final TalonFX m_motor = new TalonFX(1);
 
-  private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
   private NetworkTableEntry speedEntry;
   private double speedMultiplier = 1;
 
@@ -68,7 +68,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.addPersistent("Single Speed Multiplier", 1).getEntry();
+      speedEntry = tab.addPersistent("Intake", 1).getEntry();
       System.out.println("Added Single Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);

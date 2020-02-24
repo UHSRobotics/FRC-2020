@@ -28,7 +28,7 @@ public class NeoFwSubsystem extends SubsystemBase {
   // private final CANSparkMax m_motorInverted = new CANSparkMax(1, MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
-  private double speedMultiplier = 0.1;
+  private double speedMultiplier = 0.5;
 
   
   public NeoFwSubsystem() {
