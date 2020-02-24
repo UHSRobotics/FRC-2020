@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-  private final VictorSPX m_leftMotor = new VictorSPX(1);
-  private final VictorSPX m_rightMotor = new VictorSPX(3);
-  private final VictorSPX m_leftFollowMotor = new VictorSPX(2);
-  private final VictorSPX m_rightFollowMotor = new VictorSPX(0);
+  private final VictorSPX m_leftMotor = new VictorSPX(Constants.DriveConstants.leftMotor);
+  private final VictorSPX m_rightMotor = new VictorSPX(Constants.DriveConstants.rightMotor);
+  private final VictorSPX m_leftFollowMotor = new VictorSPX(Constants.DriveConstants.leftFollowMotor);
+  private final VictorSPX m_rightFollowMotor = new VictorSPX(Constants.DriveConstants.rightFollowMotor);
 
   private final ShuffleboardTab tab = Shuffleboard.getTab("Drive");
   private NetworkTableEntry speedEntry;

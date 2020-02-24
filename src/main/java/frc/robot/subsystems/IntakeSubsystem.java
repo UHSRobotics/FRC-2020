@@ -11,28 +11,45 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.PIDConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-public class FlywheelSubsystem extends SubsystemBase {
-  private final VictorSPX m_motor = new VictorSPX(2);
-  private final VictorSPX m_motorFollow = new VictorSPX(1);
+public class IntakeSubsystem extends SubsystemBase {
+  private final TalonFX m_motor = new TalonFX(1);
+
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
-  private double speedMultiplier = 0.25;                                                    
+  private double speedMultiplier = 1;
 
-  public FlywheelSubsystem() {
+  public IntakeSubsystem() {
+    // set motors to coast
     m_motor.setNeutralMode(NeutralMode.Coast);
-    m_motorFollow.follow(m_motor);
+
+    m_motor.setInverted(true);
+
+    // Integrated PID control
+    m_motor.config_kP(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kP, PIDConstants.kTimeoutMs);
+    m_motor.config_kI(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kI, PIDConstants.kTimeoutMs);
+    m_motor.config_kD(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kD, PIDConstants.kTimeoutMs);
+    m_motor.config_kF(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kF, PIDConstants.kTimeoutMs);
+    m_motor.config_IntegralZone(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kIzone,
+            PIDConstants.kTimeoutMs);
+    m_motor.configClosedLoopPeakOutput(PIDConstants.kSlot_Velocit, PIDConstants.kGains_Velocit.kPeakOutput,
+            PIDConstants.kTimeoutMs);
+    m_motor.configAllowableClosedloopError(PIDConstants.kSlot_Velocit, 0, PIDConstants.kTimeoutMs);
+
+    intakeOff();
   }
 
-  public void setSpeed(double p) {
-    p *= speedMultiplier;
-    System.out.println(p);
-    m_motor.set(ControlMode.PercentOutput, p);
+  public void intakeOn() {
+    m_motor.set(ControlMode.PercentOutput, 1.0);
+  }
+
+  public void intakeOff() {
+    m_motor.set(ControlMode.PercentOutput, -1.0);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
