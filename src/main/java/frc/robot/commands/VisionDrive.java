@@ -1,68 +1,83 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.VisionControlConstants;
+import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.pidcontroller.ProfiledDriveDistancePID;
 import frc.robot.subsystems.pidcontroller.ProfiledDriveRotationPID;
 
 public class VisionDrive extends CommandBase {
 
-    private NetworkTable table;
+    private final TalonFXDriveSubsystem m_drive;
+    private final VisionSubsystem m_data;
+    private boolean exit = false;
 
-    // debug
-    private final double speedMultiplier = 0.2;
-    private NetworkTableEntry hAngleEntry;
-    private NetworkTableEntry vAngleEntry;
-
-    private final ProfiledDriveRotationPID m_rotationPID;
-    private final ProfiledDriveDistancePID m_distancePID;
-
-    public VisionDrive(ProfiledDriveRotationPID rotationPID, ProfiledDriveDistancePID distancePID) {
-        m_rotationPID = rotationPID;
-        m_distancePID = distancePID;
-        table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("vision");
-        hAngleEntry = table.getEntry("targetyaw");
-        vAngleEntry = table.getEntry("pitch");
-        addRequirements(m_rotationPID);
-        addRequirements(m_distancePID);
+    public VisionDrive(VisionSubsystem visionSubsystem, TalonFXDriveSubsystem drive) {
+        m_data = visionSubsystem;
+        m_drive = drive;
+        addRequirements(m_data);
+        addRequirements(m_drive);
     }
 
     @Override
     public void execute() {
-        double rotDeficit = 0;
-        double distDeficit = 0;
-        double hAngle = hAngleEntry.getDouble(0); // horizontal rotation
-        double vAngle = vAngleEntry.getDouble(0); // vertical angle. Convert this to distance pls
-        if (hAngle > VisionControlConstants.angleDeadzone) {
-            rotDeficit += VisionControlConstants.minForce;
-        } else if (hAngle < VisionControlConstants.angleDeadzone) {
-            rotDeficit -= VisionControlConstants.minForce;
+        boolean rotFlag = false;
+        boolean distFlag = false;
+        if (!m_data.possibleShootingPos()) {
+            SmartDashboard.putString("Vision Info", "Not possible to autonomous at current position");
+        } else {
+            double dist = m_data.getDistanceFromTarget();
+            double rot = m_data.getRotationDeficit();
+            // if (rot > VisionControlConstants.angleDeadzone) {
+            // rot += VisionControlConstants.minForce;
+            // } else if (rot < VisionControlConstants.angleDeadzone) {
+            // rot -= VisionControlConstants.minForce;
+            // }
+            // if (vAngle > VisionControlConstants.distanceDeadzone) {
+            // dist += VisionControlConstants.minForce;
+            // } else if (vAngle < VisionControlConstants.distanceDeadzone) {
+            // dist -= VisionControlConstants.minForce;
+            // }
+            if (m_drive.getEncoderRight() != dist) {
+                distFlag = false;
+                m_drive.motionMagicDrive(dist);
+            } else {
+                m_drive.disable();
+                distFlag = true;
+            }
+            if (m_drive.getEncoderLeft() != rot && m_drive.getEncoderRight() != rot) {
+                rotFlag = false;
+                m_drive.motionMagicTurn(rot);
+            } else {
+                m_drive.disable();
+                rotFlag = true;
+            }
+            if (distFlag && rotFlag) {
+                exit = true;
+            } else {
+                exit = false;
+            }
+            SmartDashboard.putString("Vision Info", "Position goal: " + dist + " Rotation: " + rot);
         }
-        if (vAngle > VisionControlConstants.distanceDeadzone) {
-            distDeficit += VisionControlConstants.minForce;
-        } else if (vAngle < VisionControlConstants.distanceDeadzone) {
-            distDeficit -= VisionControlConstants.minForce;
-        }
-        m_rotationPID.setGoal(rotDeficit);
-        // TODO: Calculate where to shoot
-        m_distancePID.setGoal(distDeficit);
-        SmartDashboard.putString("Vision Info", "Speed: " + distDeficit + " Rotation: " + rotDeficit);
+        // double rotDeficit = 0;
+        // double distDeficit = 0;
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_rotationPID.setGoal(0);
-        m_distancePID.setGoal(0);
-
+        m_drive.disable();
     }
 
     @Override
     public boolean isFinished() {
-        return m_rotationPID.atSetpoint() && m_distancePID.atSetpoint();
+        return exit;
     }
 }

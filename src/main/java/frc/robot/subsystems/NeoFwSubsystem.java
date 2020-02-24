@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,32 +7,35 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
-public class FlywheelSubsystem extends SubsystemBase {
-  private final VictorSPX m_motor = new VictorSPX(2);
-  private final VictorSPX m_motorFollow = new VictorSPX(1);
+public class NeoFwSubsystem extends SubsystemBase {
+  /**
+   * Creates a new NeoFwSubsystem.
+   */
+  private CANSparkMax m_motor = new CANSparkMax(2, MotorType.kBrushless);
+  private CANSparkMax m_motorFollow = new CANSparkMax(1, MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
-  private double speedMultiplier = 0.25;                                                    
+  private double speedMultiplier = 0.25;
 
-  public FlywheelSubsystem() {
-    m_motor.setNeutralMode(NeutralMode.Coast);
+  
+  public NeoFwSubsystem() {
+    m_motor.setIdleMode(IdleMode.kCoast);
     m_motorFollow.follow(m_motor);
   }
 
   public void setSpeed(double p) {
     p *= speedMultiplier;
     System.out.println(p);
-    m_motor.set(ControlMode.PercentOutput, p);
+    m_motor.set(p);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
