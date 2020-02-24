@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
@@ -13,6 +15,7 @@ import frc.robot.commands.FlywheelCmd;
 import frc.robot.commands.PIDDrive;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 
 /**
@@ -28,6 +31,8 @@ public class RobotContainer {
   private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
 
   private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
+
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
 
   // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
   // SolenoidTestSubsystem();
@@ -52,6 +57,7 @@ public class RobotContainer {
     // DoubleFWheelCmd(m_flywheelSubsystem,
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
+
     m_flywheelSubsystem.setDefaultCommand(new FlywheelCmd(m_flywheelSubsystem,
         () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));
 
@@ -70,8 +76,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+    new JoystickButton(m_driverController, Button.kTrig.value)
+      .whileHeld(new InstantCommand(m_IntakeSubsystem::intakeOn, m_IntakeSubsystem));
     //
-
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new PIDDrive(m_driveSubsystem, () ->
     // m_driverController.getTrigButtonPressed(), 4000 * 5));
