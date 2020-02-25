@@ -14,11 +14,14 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.FlywheelCmd;
 import frc.robot.commands.PIDDrive;
+import frc.robot.commands.pidcommand.DistancePIDCommand;
+import frc.robot.commands.pidcommand.RotationPIDCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeoFwSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.WinchServoSubsystem;
 
 /**
@@ -39,6 +42,7 @@ public class RobotContainer {
 
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final WinchServoSubsystem m_servoSubsystem = new WinchServoSubsystem();
+  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
   // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
   // SolenoidTestSubsystem();
@@ -89,6 +93,10 @@ public class RobotContainer {
         .whileHeld(new InstantCommand(m_IntakeSubsystem::intakeOn, m_IntakeSubsystem));
     new JoystickButton(m_driverController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
+    new JoystickButton(m_driverController, Button.kCross.value)
+        .whenPressed(new RotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
+    new JoystickButton(m_driverController, Button.kRect.value)
+        .whenPressed(new DistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     //
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new PIDDrive(m_driveSubsystem, () ->
