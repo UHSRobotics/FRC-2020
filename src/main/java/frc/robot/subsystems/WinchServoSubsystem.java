@@ -12,12 +12,6 @@ import edu.wpi.first.wpilibj.Servo;
 
 public class WinchServoSubsystem extends SubsystemBase {
     private final Servo m_switch = new Servo(0);
-    private double speedMultiplier = 0.5;
-
-    public void setSpeed(double p) {
-        p *= speedMultiplier;
-        m_switch.set(p);
-    }
 
     public void setAngle(double deg) {
         m_switch.setAngle(deg);
