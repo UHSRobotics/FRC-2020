@@ -71,8 +71,8 @@ public class RobotContainer {
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getCrossButton()))
 
-    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, () -> m_driverController.getY(Hand.kLeft),
-        () -> m_driverController.getCrossButton()));// , () -> m_magSwitch.get()));
+    // m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, () -> m_driverController.getY(Hand.kLeft),
+    //     () -> m_driverController.getCrossButton()));// , () -> m_magSwitch.get()));
 
     // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
