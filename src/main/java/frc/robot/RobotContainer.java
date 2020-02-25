@@ -19,6 +19,7 @@ import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeoFwSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.subsystems.WinchServoSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final WinchServoSubsystem m_servoSubsystem = new WinchServoSubsystem();
 
   // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
   // SolenoidTestSubsystem();
@@ -62,10 +64,11 @@ public class RobotContainer {
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getY(Hand.kRight)));
     // m_flywheelSubsystem.setDefaultCommand(new FlywheelCmd(m_flywheelSubsystem,
-    //     () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()))
-    
-    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
-    () -> m_driverController.getY(Hand.kLeft), () -> m_driverController.getCrossButton()));//, () -> m_magSwitch.get()));
+    // () -> m_driverController.getY(Hand.kLeft), () ->
+    // m_driverController.getCrossButton()))
+
+    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, () -> m_driverController.getY(Hand.kLeft),
+        () -> m_driverController.getCrossButton()));// , () -> m_magSwitch.get()));
 
     // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
@@ -83,7 +86,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     new JoystickButton(m_driverController, Button.kTrig.value)
-      .whileHeld(new InstantCommand(m_IntakeSubsystem::intakeOn, m_IntakeSubsystem));
+        .whileHeld(new InstantCommand(m_IntakeSubsystem::intakeOn, m_IntakeSubsystem));
+    new JoystickButton(m_driverController, Button.kDisk.value)
+        .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     //
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new PIDDrive(m_driveSubsystem, () ->

@@ -12,9 +12,16 @@ import edu.wpi.first.wpilibj.Servo;
 
 public class WinchServoSubsystem extends SubsystemBase {
     private final Servo m_switch = new Servo(0);
+    private static boolean toggleOn = false;
 
-    public void setAngle(double deg) {
-        m_switch.setAngle(deg);
+    public void toggle() {
+        if (!toggleOn) {
+            m_switch.setAngle(90);
+            toggleOn=true;
+        } else {
+            m_switch.setAngle(0);
+            toggleOn=false;
+        }
     }
 
     @Override
