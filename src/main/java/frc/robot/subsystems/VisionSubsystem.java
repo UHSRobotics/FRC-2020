@@ -55,6 +55,7 @@ public class VisionSubsystem extends SubsystemBase {
     scale = 98.5/z;
     return Math.pow(scale, 3)*Math.sqrt(x*x + y*y + z*z);
   }
+  //whatever unit that chameleon vision uses (they say meter)
   public double getDistanceByAngle(){
     double x = getX(), y = getY();
     return Math.sqrt(x*x + y*y)/Math.cos(getAngle());

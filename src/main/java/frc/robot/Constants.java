@@ -51,6 +51,8 @@ public final class Constants {
         public static final double KdDist = 2.5;
         // Minimum force when driving
         public static final double minForce = 0.05;
+        //angle limits in degrees
+        public static final double innerPortAngleLimit = 33;
     }
 
     public static final class DriveConstants {
