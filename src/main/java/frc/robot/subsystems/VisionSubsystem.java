@@ -64,7 +64,7 @@ public class VisionSubsystem extends SubsystemBase {
     double x = getX(), y = getY();
     return Constants.VisionControlConstants.mToInch*Math.sqrt(x*x + y*y)/Math.cos(getAngle());
   }
-  //angle to test if possible to shoot
+  //angle to test if possible to shoot, in radian
   public double getHorizontalAngle(){
     double x = getX(), z = getZ();
     return Math.atan(x/z);
@@ -76,7 +76,8 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public boolean possibleShootingPos(){
-    return false;
+    if(Math.abs(getHorizontalAngle())>=Constants.VisionControlConstants.innerPortAngleLimit) return false;
+    return true;
   }
 
   @Override
