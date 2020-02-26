@@ -12,12 +12,13 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonPlaceholder;
+import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDDrive;
-import frc.robot.commands.pidcommand.VisionDistancePIDCommand;
-import frc.robot.commands.pidcommand.VisionRotationPIDCommand;
+import frc.robot.commands.pidcommand.*;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DropIntakeSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeoFwSubsystem;
@@ -42,6 +43,7 @@ public class RobotContainer {
   private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final DropIntakeSubsystem m_DropIntakeSubsystem = new DropIntakeSubsystem();
   private final WinchServoSubsystem m_servoSubsystem = new WinchServoSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
@@ -91,14 +93,20 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // new JoystickButton(m_driverController, Button.kTrig.value)
-    //     .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButtonPressed()));
+    new JoystickButton(m_driverController, Button.kTrig.value)
+         .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButtonPressed()));
+
     new JoystickButton(m_driverController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     new JoystickButton(m_driverController, Button.kCross.value)
         .whenPressed(new VisionRotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
     new JoystickButton(m_driverController, Button.kRect.value)
         .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
+    
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+        .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
+        () -> m_driverController.getBumperPressed(Hand.kLeft), 
+        () -> m_driverController.getBumperPressed(Hand.kRight) ));
     //
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new PIDDrive(m_driveSubsystem, () ->
