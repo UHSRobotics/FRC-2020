@@ -19,6 +19,7 @@ public class VisionSubsystem extends SubsystemBase {
   
   private double[] defaultArray;
   private NetworkTableEntry targetPose;
+  private NetworkTableEntry yaw;
 
   public VisionSubsystem() {
     defaultArray = new double[3];
@@ -28,6 +29,7 @@ public class VisionSubsystem extends SubsystemBase {
     NetworkTableInstance table  = NetworkTableInstance.getDefault();
     NetworkTable cameraTable  = table.getTable("chameleon-vision").getSubTable("USB Camera-B4.09.24.1");
     targetPose = cameraTable.getEntry("targetPose");
+    yaw = cameraTable.getEntry("yaw");
   }
 
   public double getX(){
@@ -38,19 +40,17 @@ public class VisionSubsystem extends SubsystemBase {
     return targetPose.getDoubleArray(defaultArray)[1];
   }
 
-  public double getZ(){
-    return targetPose.getDoubleArray(defaultArray)[2];
-  }
-
   public double getAngle(){
-    return targetPose.getDoubleArray(defaultArray)[3];
+    return targetPose.getDoubleArray(defaultArray)[2];
   }
   //maybe inch
   public double getDistanceFromTarget(){
-    double x = getX(), y = getY(), z = getZ();
-    double scale = 98.25/getZ();
-    return scale*Math.sqrt(x*x+y*y+z*z);
+    double x = getX(), y = getY();
+    return -1;
   } 
+  public double getYaw(){
+    return yaw.getDouble(0.0);
+  }
 
   public double getRotationDeficit(){
     return -1;
