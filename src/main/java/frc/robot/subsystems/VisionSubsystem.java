@@ -18,6 +18,7 @@ public class VisionSubsystem extends SubsystemBase {
    */
   
   private double[] defaultArray;
+  private double scale = 0;
   private NetworkTableEntry targetPose;
   private NetworkTableEntry yaw;
 
@@ -39,15 +40,26 @@ public class VisionSubsystem extends SubsystemBase {
   public double getY(){
     return targetPose.getDoubleArray(defaultArray)[1];
   }
-
+  //in radians
   public double getAngle(){
     return targetPose.getDoubleArray(defaultArray)[2];
   }
-  //maybe inch
-  public double getDistanceFromTarget(){
-    double x = getX(), y = getY();
-    return -1;
+
+  public double getZ(){
+    double x = getX(), y = getY(), a = getAngle();
+    return  Math.tan(a)*Math.sqrt(x*x+y*y);
   } 
+    //maybe inch
+  public double getDistanceFromTarget(){
+    double x = getX(), y = getY(), z = getZ();
+    scale = 98.5/z;
+    return Math.pow(scale, 3)*Math.sqrt(x*x + y*y + z*z);
+  }
+  //whatever unit that chameleon vision uses (they say meter)
+  public double getDistanceByAngle(){
+    double x = getX(), y = getY();
+    return Math.sqrt(x*x + y*y)/Math.cos(getAngle());
+  }
   public double getYaw(){
     return yaw.getDouble(0.0);
   }
