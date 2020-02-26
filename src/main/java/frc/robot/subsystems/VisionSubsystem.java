@@ -37,6 +37,8 @@ public class VisionSubsystem extends SubsystemBase {
     NetworkTable cameraTable  = table.getTable("chameleon-vision").getSubTable("USB Camera-B4.09.24.1");
     targetPose = cameraTable.getEntry("targetPose");
     yaw = cameraTable.getEntry("yaw");
+    scaleEntry = tab.addPersistent("scale", 1).getEntry();
+
   }
 
   public double getX(){
@@ -90,7 +92,7 @@ public class VisionSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    tab.addPersistent("scale", 1).getEntry();
+    setScale(scaleEntry.getDouble(1.0));
 
   }
 }
