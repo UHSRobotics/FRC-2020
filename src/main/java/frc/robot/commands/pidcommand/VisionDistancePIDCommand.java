@@ -7,8 +7,8 @@ import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-public class DistancePIDCommand extends ProfiledPIDCommand {
-    public DistancePIDCommand( TalonFXDriveSubsystem drive, VisionSubsystem data) {
+public class VisionDistancePIDCommand extends ProfiledPIDCommand {
+    public VisionDistancePIDCommand( TalonFXDriveSubsystem drive, VisionSubsystem data) {
         super(new ProfiledPIDController(VisionControlConstants.KpDist, VisionControlConstants.KpDist,
                 VisionControlConstants.KpDist, new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading

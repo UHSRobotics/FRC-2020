@@ -7,8 +7,8 @@ import frc.robot.Constants.VisionControlConstants;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-public class RotationPIDCommand extends ProfiledPIDCommand {
-    public RotationPIDCommand(TalonFXDriveSubsystem drive, VisionSubsystem data) {
+public class VisionRotationPIDCommand extends ProfiledPIDCommand {
+    public VisionRotationPIDCommand(TalonFXDriveSubsystem drive, VisionSubsystem data) {
         super(new ProfiledPIDController(VisionControlConstants.KpRot, VisionControlConstants.KiRot,
                 VisionControlConstants.KdRot, new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading

@@ -15,8 +15,8 @@ import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.FlywheelCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDDrive;
-import frc.robot.commands.pidcommand.DistancePIDCommand;
-import frc.robot.commands.pidcommand.RotationPIDCommand;
+import frc.robot.commands.pidcommand.VisionDistancePIDCommand;
+import frc.robot.commands.pidcommand.VisionRotationPIDCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -96,9 +96,9 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     new JoystickButton(m_driverController, Button.kCross.value)
-        .whenPressed(new RotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
+        .whenPressed(new VisionRotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
     new JoystickButton(m_driverController, Button.kRect.value)
-        .whenPressed(new DistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
+        .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     //
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new PIDDrive(m_driveSubsystem, () ->
