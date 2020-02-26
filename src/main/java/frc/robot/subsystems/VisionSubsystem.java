@@ -30,20 +30,26 @@ public class VisionSubsystem extends SubsystemBase {
     targetPose = cameraTable.getEntry("targetPose");
   }
 
-  public double getTargetX(){
+  public double getX(){
     return targetPose.getDoubleArray(defaultArray)[0];
   }
 
-  public double getTargetY(){
+  public double getY(){
     return targetPose.getDoubleArray(defaultArray)[1];
   }
 
-  public double getTargetAngle(){
+  public double getZ(){
     return targetPose.getDoubleArray(defaultArray)[2];
   }
 
+  public double getAngle(){
+    return targetPose.getDoubleArray(defaultArray)[3];
+  }
+  //maybe inch
   public double getDistanceFromTarget(){
-    return -1;
+    double x = getX(), y = getY(), z = getZ();
+    double scale = 98.25/getZ();
+    return scale*Math.sqrt(x*x+y*y+z*z);
   } 
 
   public double getRotationDeficit(){
