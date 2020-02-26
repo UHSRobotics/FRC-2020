@@ -18,7 +18,7 @@ public class RotationPIDCommand extends ProfiledPIDCommand {
                 // Pipe output to turn robot
                 (output, setpoint) -> drive.arcadeDrive(0, output),
                 // Require the drive
-                drive);
+                drive, data);
 
         // Set the controller to be continuous (because it is an angle controller)
         getController().enableContinuousInput(-180, 180);
