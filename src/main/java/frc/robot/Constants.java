@@ -51,15 +51,18 @@ public final class Constants {
         public static final double KdDist = 2.5;
         // Minimum force when driving
         public static final double minForce = 0.05;
-        //angle limits in degrees
+        // angle limits in degrees
         public static final double innerPortAngleLimit = 33;
         public static final double mToInch = 39.3701;
     }
 
-    public static final class LiftConstants{
-        //todo
+    public static final class LiftConstants {
+        // todo
         public static final int liftMotor = -1;
         public static final int liftFollow = -1;
+        public static final double Kp = 1;
+        public static final double Kd = 0;
+        public static final double Ki = 0;
     }
 
     public static final class DriveConstants {
@@ -139,11 +142,10 @@ public final class Constants {
         public final static int kSlot_MotProf = SLOT_3;
     }
 
-    public static final class FlyWheelPIDConstants{
+    public static final class FlyWheelPIDConstants {
         public static final double kP = -1;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
     }
 }
-

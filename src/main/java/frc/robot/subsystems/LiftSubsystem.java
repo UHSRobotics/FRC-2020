@@ -34,6 +34,7 @@ public class LiftSubsystem extends SubsystemBase {
       s*= speedMultiplier;
       m_liftMotor.set(ControlMode.PercentOutput, s);
   }
+  
   public void setSpeedMultiplier(double speed, boolean updateNT) {
     if (0 <= speed && speed <= 2) {
       speedMultiplier = speed;
