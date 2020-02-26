@@ -13,6 +13,7 @@ import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.FlywheelCmd;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDDrive;
 import frc.robot.commands.pidcommand.DistancePIDCommand;
 import frc.robot.commands.pidcommand.RotationPIDCommand;
@@ -71,8 +72,9 @@ public class RobotContainer {
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getCrossButton()))
 
-    // m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, () -> m_driverController.getY(Hand.kLeft),
-    //     () -> m_driverController.getCrossButton()));// , () -> m_magSwitch.get()));
+    // m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, () ->
+    // m_driverController.getY(Hand.kLeft),
+    // () -> m_driverController.getCrossButton()));// , () -> m_magSwitch.get()));
 
     // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
@@ -90,7 +92,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // new JoystickButton(m_driverController, Button.kTrig.value)
-    //     .whileHeld(new InstantCommand(m_IntakeSubsystem::intakeOn, m_IntakeSubsystem));
+    //     .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButtonPressed()));
     new JoystickButton(m_driverController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     // new JoystickButton(m_driverController, Button.kCross.value)
