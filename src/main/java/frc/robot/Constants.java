@@ -38,6 +38,15 @@ public final class Constants {
         public static final double kDriverControllerCurvature = 3;
     }
 
+    public static final class DrivePIDConstants {
+        public static final double KpRot = 0.1;
+        public static final double KpDist = 0.1;
+        public static final double KiRot = .0001;
+        public static final double KiDist = .0001;
+        public static final double KdRot = 2.5;
+        public static final double KdDist = 2.5;
+    }
+
     public static final class VisionControlConstants {
         // Amount of angle tolerated to be considered "aligned"
         public static final int angleDeadzone = 5;

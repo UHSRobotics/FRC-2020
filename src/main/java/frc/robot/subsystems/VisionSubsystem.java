@@ -10,8 +10,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
 
 public class VisionSubsystem extends SubsystemBase {
   /**
@@ -22,7 +25,9 @@ public class VisionSubsystem extends SubsystemBase {
   private double scale = 0;
   private NetworkTableEntry targetPose;
   private NetworkTableEntry yaw;
-
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Vision");
+  private NetworkTableEntry scaleEntry; 
+  private double m_scale=1;
   public VisionSubsystem() {
     defaultArray = new double[3];
     defaultArray[0] = 0.0;
@@ -78,9 +83,14 @@ public class VisionSubsystem extends SubsystemBase {
   public boolean possibleShootingPos(){
     return false;
   }
+  public void setScale(double scale){
+    scaleEntry.setDouble(scale);
+    m_scale = scale;
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    tab.addPersistent("scale", 1).getEntry();
+
   }
 }
