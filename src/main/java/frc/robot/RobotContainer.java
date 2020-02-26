@@ -89,14 +89,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, Button.kTrig.value)
-        .whileHeld(new InstantCommand(m_IntakeSubsystem::intakeOn, m_IntakeSubsystem));
+    // new JoystickButton(m_driverController, Button.kTrig.value)
+    //     .whileHeld(new InstantCommand(m_IntakeSubsystem::intakeOn, m_IntakeSubsystem));
     new JoystickButton(m_driverController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
-    new JoystickButton(m_driverController, Button.kCross.value)
-        .whenPressed(new RotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
-    new JoystickButton(m_driverController, Button.kRect.value)
-        .whenPressed(new DistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
+    // new JoystickButton(m_driverController, Button.kCross.value)
+    //     .whenPressed(new RotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
+    // new JoystickButton(m_driverController, Button.kRect.value)
+    //     .whenPressed(new DistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     //
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new PIDDrive(m_driveSubsystem, () ->

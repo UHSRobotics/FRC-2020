@@ -28,7 +28,7 @@ public class NeoFwSubsystem extends SubsystemBase {
   // private final CANSparkMax m_motorInverted = new CANSparkMax(1, MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
-  private double speedMultiplier = 0.5;
+  private double speedMultiplier = 0.5, targetVelocity = 0.0;
 
   
   public NeoFwSubsystem() {
@@ -66,17 +66,18 @@ public class NeoFwSubsystem extends SubsystemBase {
   // }
 
   public void setPIDTarget(double t){
-    c.setReference(t, ControlType.kVelocity);
+    targetVelocity = t;
+    c.setReference(targetVelocity, ControlType.kVelocity);
   }
 
-  public boolean atSetPoint(double t){
-    return m_motor.getEncoder().getVelocity() == t;
+  public boolean atSetPoint(){
+    return m_motor.getEncoder().getVelocity() == targetVelocity;
   }
 
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.addPersistent("Single Speed Multiplier1", 1).getEntry();
+      speedEntry = tab.addPersistent("Neo Speed Multiplier", 1).getEntry();
       System.out.println("Added Single Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);
