@@ -107,6 +107,10 @@ public class RobotContainer {
         .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
         () -> m_driverController.getBumperPressed(Hand.kLeft), 
         () -> m_driverController.getBumperPressed(Hand.kRight) ));
+    // new JoystickButton(m_driverController, Button.kCross.value)
+    //     .whenPressed(new VisionRotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
+    // new JoystickButton(m_driverController, Button.kRect.value)
+    //     .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     //
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whenPressed(new PIDDrive(m_driveSubsystem, () ->
