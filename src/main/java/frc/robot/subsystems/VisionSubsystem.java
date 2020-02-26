@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class VisionSubsystem extends SubsystemBase {
   /**
@@ -49,20 +50,26 @@ public class VisionSubsystem extends SubsystemBase {
     double x = getX(), y = getY(), a = getAngle();
     return  Math.tan(a)*Math.sqrt(x*x+y*y);
   } 
-    //maybe inch
-  public double getDistanceFromTarget(){
-    double x = getX(), y = getY(), z = getZ();
-    scale = 98.5/z;
-    return Math.pow(scale, 3)*Math.sqrt(x*x + y*y + z*z);
-  }
-  //whatever unit that chameleon vision uses (they say meter)
-  public double getDistanceByAngle(){
-    double x = getX(), y = getY();
-    return Math.sqrt(x*x + y*y)/Math.cos(getAngle());
-  }
   public double getYaw(){
     return yaw.getDouble(0.0);
   }
+  //maybe inch
+  public double getDistanceFromTarget(){
+    double x = getX(), y = getY(), z = getZ();
+    scale = 98.5/y;
+    return Math.pow(scale, 3)*Math.sqrt(x*x + y*y + z*z);
+  }
+  //inch
+  public double getDistanceByAngle(){
+    double x = getX(), y = getY();
+    return Constants.VisionControlConstants.mToInch*Math.sqrt(x*x + y*y)/Math.cos(getAngle());
+  }
+  //angle to test if possible to shoot
+  public double getHorizontalAngle(){
+    double x = getX(), z = getZ();
+    return Math.atan(x/z);
+  }
+
 
   public double getRotationDeficit(){
     return -1;

@@ -54,7 +54,7 @@ public class LiftSubsystem extends SubsystemBase {
         speedEntry = tab.addPersistent("lift", 1).getEntry();
         System.out.println("Added Single Speed Multiplier NT entry");
       }
-      setSpeedMultiplier(speedEntry.getDouble(1.0), false);
+      setSpeedMultiplier(speedEntry.getDouble(0.25), false);
     
   }
 }

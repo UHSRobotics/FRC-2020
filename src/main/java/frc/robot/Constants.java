@@ -53,6 +53,7 @@ public final class Constants {
         public static final double minForce = 0.05;
         //angle limits in degrees
         public static final double innerPortAngleLimit = 33;
+        public static final double mToInch = 39.3701;
     }
 
     public static final class LiftConstants{
