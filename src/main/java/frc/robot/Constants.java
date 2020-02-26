@@ -55,6 +55,12 @@ public final class Constants {
         public static final double innerPortAngleLimit = 33;
     }
 
+    public static final class LiftConstants{
+        //todo
+        public static final int liftMotor = -1;
+        public static final int liftFollow = -1;
+    }
+
     public static final class DriveConstants {
         public static final int leftMotor = 1;
         public static final int rightMotor = 3;

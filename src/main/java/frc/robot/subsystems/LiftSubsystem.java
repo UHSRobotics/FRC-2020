@@ -18,19 +18,43 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class LiftSubsystem extends SubsystemBase {
+    private final VictorSPX m_liftMotor = new VictorSPX(Constants.LiftConstants.liftMotor);
+    private final VictorSPX m_follow = new VictorSPX(Constants.LiftConstants.liftFollow);
+    private double speedMultiplier = 0.25;  
+    private NetworkTableEntry speedEntry; 
+    private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
                                                   
 
   public LiftSubsystem() {
+      m_follow.follow(m_liftMotor);
    
   }
 
-  public void setSpeed(double p) {
-  
+  public void setSpeed(double s) {
+      s*= speedMultiplier;
+      m_liftMotor.set(ControlMode.PercentOutput, s);
+  }
+  public void setSpeedMultiplier(double speed, boolean updateNT) {
+    if (0 <= speed && speed <= 2) {
+      speedMultiplier = speed;
+      if (updateNT) {
+        System.out.println("Putted Single Speed Multiplier NT entry");
+        speedEntry.setDouble(speedMultiplier);
+      }
+    } else {
+      System.out.println("Putted Single Speed Multiplier NT entry");
+      speedEntry.setDouble(speedMultiplier);
+    }  
   }
 
 
   @Override
   public void periodic() {
+    if (speedEntry == null) {
+        speedEntry = tab.addPersistent("lift", 1).getEntry();
+        System.out.println("Added Single Speed Multiplier NT entry");
+      }
+      setSpeedMultiplier(speedEntry.getDouble(1.0), false);
     
   }
 }
