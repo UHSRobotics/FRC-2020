@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -55,8 +56,8 @@ public class RobotContainer {
   // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
-  private final Command m_autoCommand = new AutonPlaceholder();
-
+  private final Command m_autoCommand = new DistancePIDCommand(m_driveSubsystem, 1);
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
   // Main Controller
   DualShockController m_driverController = new DualShockController(OIConstants.kDriverControllerPort);
 
@@ -83,6 +84,7 @@ public class RobotContainer {
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
     // m_driverController.getXMapped(Hand.kRight) * 0.75, () ->
     // m_driverController.getCrossButton()));
+    m_chooser.setDefaultOption("Just drive", m_autoCommand);
   }
 
   /**

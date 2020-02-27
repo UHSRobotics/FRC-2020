@@ -71,6 +71,7 @@ public class VisionSubsystem extends SubsystemBase {
     double y = getY(), x = getX();
     return Math.atan(y/x);
   }
+  
 
 
   public double getRotationDeficit(){
@@ -96,13 +97,13 @@ public class VisionSubsystem extends SubsystemBase {
     if(scaleEntry == null)
       scaleEntry = tab.addPersistent("scale", 1).getEntry();
     setScale(scaleEntry.getDouble(1.0), true);
-    if(error>5){
+    if(error>10){
       error = 0;
       System.out.println("Target not detected");
     }
     if(getY()==0.0) error++;
     if(cnt>20){
-      System.out.println(getHorizontalAngle());
+      System.out.println(getHorizontalAngle()+" " + getAngle());
       cnt=0;
     }
     cnt++;
