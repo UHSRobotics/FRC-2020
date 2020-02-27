@@ -24,6 +24,7 @@ public class NeoFwSubsystem extends SubsystemBase {
    * Creates a new NeoFwSubsystem.
    */
   private final CANSparkMax m_motor = new CANSparkMax(1, MotorType.kBrushless);
+  private final CANSparkMax m_motor2 = new CANSparkMax(2, MotorType.kBrushless);
   private final CANPIDController c = m_motor.getPIDController();
   // private final CANSparkMax m_motorInverted = new CANSparkMax(1, MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
@@ -33,6 +34,8 @@ public class NeoFwSubsystem extends SubsystemBase {
   
   public NeoFwSubsystem() {
     m_motor.setIdleMode(IdleMode.kCoast);
+    m_motor2.setIdleMode(IdleMode.kCoast);
+    m_motor2.setInverted(true);
     // m_motorInverted.setInverted(true);
     c.setP(Constants.FlyWheelPIDConstants.kP);
     c.setI(Constants.FlyWheelPIDConstants.kI);
@@ -44,6 +47,7 @@ public class NeoFwSubsystem extends SubsystemBase {
     p *= speedMultiplier;
     System.out.println(p);
     m_motor.set(p);
+    m_motor2.set(p);
     // m_motorInverted.set(p);
   }
 
