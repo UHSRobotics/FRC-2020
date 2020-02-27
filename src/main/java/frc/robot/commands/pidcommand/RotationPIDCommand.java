@@ -14,7 +14,7 @@ public class RotationPIDCommand extends ProfiledPIDCommand {
                 // Close loop on heading
                 drive::getEncoderLeft,
                 // Set reference to target
-                goal,
+                goal*360/2048,
                 // Pipe output to turn robot
                 (output, setpoint) -> drive.arcadeDrive(0, output),
                 // Require the drive

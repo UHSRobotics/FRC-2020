@@ -14,7 +14,7 @@ public class VisionRotationPIDCommand extends ProfiledPIDCommand {
                 // Close loop on heading
                 drive::getEncoderLeft,
                 // Set reference to target
-                data.getRotationDeficit(),
+                data.getRotationDeficit()*360*2048,
                 // Pipe output to turn robot
                 (output, setpoint) -> drive.arcadeDrive(0, output),
                 // Require the drive
