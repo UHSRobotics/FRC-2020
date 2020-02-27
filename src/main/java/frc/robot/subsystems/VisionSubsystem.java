@@ -28,6 +28,8 @@ public class VisionSubsystem extends SubsystemBase {
   private final ShuffleboardTab tab = Shuffleboard.getTab("Vision");
   private NetworkTableEntry scaleEntry; 
   private double m_scale=1;
+  private int error=0;
+  private int cnt = 0;
   public VisionSubsystem() {
     defaultArray = new double[3];
     defaultArray[0] = 0.0;
@@ -53,15 +55,15 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getZ(){
-    return 2.5*m_scale;
+    return 2.5-Constants.VisionControlConstants.cameraHeight;
   } 
   public double getYaw(){
     return yaw.getDouble(0.0);
   }
-  //maybe inch
+  //in meters
   public double getDistanceFromTarget(){
     double x = getX(), y = getY(), z = getZ();
-    return Math.sqrt(x*x*m_scale + y*y*m_scale + z*z*m_scale);
+    return Math.sqrt(x*x*m_scale + y*y*m_scale + z*z);
   }
 
   //angle to test if possible to shoot, in radian
@@ -76,7 +78,12 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public boolean possibleShootingPos(){
-    if(Math.abs(getHorizontalAngle())>=Constants.VisionControlConstants.innerPortAngleLimit) return false;
+    if(Math.abs(getHorizontalAngle())>=Constants.VisionControlConstants.innerPortAngleLimit){
+      // System.out.println("not possible to shoot");
+      return false;
+
+    } 
+
     return true;
   }
   public void setScale(double scale, boolean updateNT){
@@ -89,6 +96,17 @@ public class VisionSubsystem extends SubsystemBase {
     if(scaleEntry == null)
       scaleEntry = tab.addPersistent("scale", 1).getEntry();
     setScale(scaleEntry.getDouble(1.0), true);
+    if(error>5){
+      error = 0;
+      System.out.println("Target not detected");
+    }
+    if(getY()==0.0) error++;
+    if(cnt>20){
+      System.out.println(getHorizontalAngle());
+      cnt=0;
+    }
+    cnt++;
+
 
   }
 }
