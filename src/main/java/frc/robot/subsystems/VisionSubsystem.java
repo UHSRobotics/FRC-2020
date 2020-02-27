@@ -22,7 +22,7 @@ public class VisionSubsystem extends SubsystemBase {
    */
   
   private double[] defaultArray;
-  private double scale = 0;
+  // private double scale = 0;
   private NetworkTableEntry targetPose;
   private NetworkTableEntry yaw;
   private final ShuffleboardTab tab = Shuffleboard.getTab("Vision");
@@ -53,8 +53,7 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getZ(){
-    double x = getX(), y = getY(), a = getAngle();
-    return  Math.tan(a)*Math.sqrt(x*x+y*y);
+    return 2.5*m_scale;
   } 
   public double getYaw(){
     return yaw.getDouble(0.0);
@@ -62,18 +61,13 @@ public class VisionSubsystem extends SubsystemBase {
   //maybe inch
   public double getDistanceFromTarget(){
     double x = getX(), y = getY(), z = getZ();
-    scale = 98.5/y;
-    return Math.pow(scale, 3)*Math.sqrt(x*x + y*y + z*z);
+    return Math.sqrt(x*x*m_scale + y*y*m_scale + z*z*m_scale);
   }
-  //inch
-  public double getDistanceByAngle(){
-    double x = getX(), y = getY();
-    return Constants.VisionControlConstants.mToInch*Math.sqrt(x*x + y*y)/Math.cos(getAngle());
-  }
+
   //angle to test if possible to shoot, in radian
   public double getHorizontalAngle(){
-    double x = getX(), z = getZ();
-    return Math.atan(x/z);
+    double y = getY(), x = getX();
+    return Math.atan(y/x);
   }
 
 
@@ -88,7 +82,6 @@ public class VisionSubsystem extends SubsystemBase {
   public void setScale(double scale, boolean updateNT){
     m_scale = scale;
     scaleEntry.setDouble(m_scale);
-    
   }
 
   @Override

@@ -63,6 +63,8 @@ public final class Constants {
         // angle limits in degrees
         public static final double innerPortAngleLimit = 33;
         public static final double mToInch = 39.3701;
+        //to-do
+        public static final double cameraHeight = 0;
     }
 
     public static final class LiftConstants {
