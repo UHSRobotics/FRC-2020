@@ -62,8 +62,8 @@ public class VisionSubsystem extends SubsystemBase {
   }
   //in meters
   public double getDistanceFromTarget(){
-    double x = getX(), y = getY(), z = getZ();
-    return Math.sqrt(x*x*m_scale + y*y*m_scale + z*z);
+    double x = getX(), y = getY();
+    return Math.sqrt(x*x*m_scale + y*y*m_scale);
   }
 
   //angle to test if possible to shoot, in radian
@@ -94,19 +94,21 @@ public class VisionSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(scaleEntry == null)
-      scaleEntry = tab.addPersistent("scale", 1).getEntry();
-    setScale(scaleEntry.getDouble(1.0), true);
-    if(error>10){
-      error = 0;
-      System.out.println("Target not detected");
-    }
-    if(getY()==0.0) error++;
-    if(cnt>20){
-      System.out.println(getHorizontalAngle()+" " + getAngle());
-      cnt=0;
-    }
-    cnt++;
+    // if(scaleEntry == null)
+    //   scaleEntry = tab.addPersistent("scale", 1).getEntry();
+    // setScale(scaleEntry.getDouble(1.0), true);
+    // if(error>10){
+    //   error = 0; 
+    //   System.out.println("Target not detected");
+    // }
+    // if(getY()==0.0) error++;
+    // if(cnt>50){
+    //   // System.out.println("x: "+getX());
+    //   // System.out.println("y: "+getY());
+    //   System.out.println(getHorizontalAngle()+" " + getAngle());
+    //   cnt=0;
+    // }
+    // cnt++;
 
 
   }

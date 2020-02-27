@@ -8,33 +8,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.pidcommand.DistancePIDCommand;
+import frc.robot.commands.pidcommand.RotationPIDCommand;
+import frc.robot.subsystems.TalonFXDriveSubsystem;
 
-public class AutonPlaceholder extends CommandBase {
+public class AutonPlaceholder extends SequentialCommandGroup {
   /**
    * Creates a new AutonPlaceholder.
    */
-  public AutonPlaceholder() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public AutonPlaceholder(TalonFXDriveSubsystem drive) {
+    // System.out.println("Putted");
+    addCommands(new DistancePIDCommand(drive, 20), new RotationPIDCommand(drive, 10));
   }
 
   // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+  
 }
