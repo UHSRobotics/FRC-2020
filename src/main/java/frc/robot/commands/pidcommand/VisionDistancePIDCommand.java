@@ -7,18 +7,18 @@ import frc.robot.Constants.DrivePIDConstants;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-public class RotationPIDCommand extends ProfiledPIDCommand {
-    public RotationPIDCommand(TalonFXDriveSubsystem drive, double goal) {
-        super(new ProfiledPIDController(DrivePIDConstants.KpRot, DrivePIDConstants.KiRot,
-                DrivePIDConstants.KdRot, new TrapezoidProfile.Constraints(10, 20)),
+public class VisionDistancePIDCommand extends ProfiledPIDCommand {
+    public VisionDistancePIDCommand( TalonFXDriveSubsystem drive, VisionSubsystem data) {
+        super(new ProfiledPIDController(DrivePIDConstants.KpDist, DrivePIDConstants.KpDist,
+                DrivePIDConstants.KpDist, new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading
                 drive::getEncoderLeft,
                 // Set reference to target
-                goal,
+                data.getDistanceFromTarget(),
                 // Pipe output to turn robot
-                (output, setpoint) -> drive.arcadeDrive(0, output),
+                (output, setpoint) -> drive.arcadeDrive(output, 0),
                 // Require the drive
-                drive);
+                drive, data);
 
         // Set the controller to be continuous (because it is an angle controller)
         getController().enableContinuousInput(-180, 180);

@@ -391,4 +391,8 @@ public class DualShockController extends GenericHID {
   public boolean getOptionButtonReleased() {
     return getRawButtonReleased(Button.kOption.value);
   }
+
+public Object getTriggerLeftPressed() {
+	return getRawButtonPressed(Button.kTriggerLeft.value);
+}
 }

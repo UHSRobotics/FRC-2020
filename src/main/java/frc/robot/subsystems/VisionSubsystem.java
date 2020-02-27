@@ -10,8 +10,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
 
 public class VisionSubsystem extends SubsystemBase {
   /**
@@ -22,7 +25,9 @@ public class VisionSubsystem extends SubsystemBase {
   private double scale = 0;
   private NetworkTableEntry targetPose;
   private NetworkTableEntry yaw;
-
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Vision");
+  private NetworkTableEntry scaleEntry; 
+  private double m_scale=1;
   public VisionSubsystem() {
     defaultArray = new double[3];
     defaultArray[0] = 0.0;
@@ -32,6 +37,7 @@ public class VisionSubsystem extends SubsystemBase {
     NetworkTable cameraTable  = table.getTable("chameleon-vision").getSubTable("USB Camera-B4.09.24.1");
     targetPose = cameraTable.getEntry("targetPose");
     yaw = cameraTable.getEntry("yaw");
+
   }
 
   public double getX(){
@@ -79,9 +85,17 @@ public class VisionSubsystem extends SubsystemBase {
     if(Math.abs(getHorizontalAngle())>=Constants.VisionControlConstants.innerPortAngleLimit) return false;
     return true;
   }
+  public void setScale(double scale, boolean updateNT){
+    m_scale = scale;
+    scaleEntry.setDouble(m_scale);
+    
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    if(scaleEntry == null)
+      scaleEntry = tab.addPersistent("scale", 1).getEntry();
+    setScale(scaleEntry.getDouble(1.0), true);
+
   }
 }

@@ -93,6 +93,8 @@ Use smart dashboard/network tables for debugging instead of println().
 
 ### Disable all network adapters except ethernet when imaging the radio
 
+### Kill the ShuffleBoard before every deploy else it would be stuck on the last build
+
 ## Vision
 
 ### Setting up the raspberry pi
