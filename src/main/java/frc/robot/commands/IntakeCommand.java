@@ -20,6 +20,7 @@ public class IntakeCommand extends CommandBase {
     public IntakeCommand(IntakeSubsystem intake, BooleanSupplier toggle) {
         m_intake = intake;
         m_data = toggle;
+        addRequirements(m_intake);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
