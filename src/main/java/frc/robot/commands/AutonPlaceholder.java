@@ -18,8 +18,7 @@ public class AutonPlaceholder extends SequentialCommandGroup {
    * Creates a new AutonPlaceholder.
    */
   public AutonPlaceholder(TalonFXDriveSubsystem drive) {
-    // System.out.println("Putted");
-    addCommands(new DistancePIDCommand(drive, 20), new RotationPIDCommand(drive, 10));
+    addCommands(new AutoTargetCommand(1, 180, drive));
   }
 
   // Called when the command is initially scheduled.

@@ -62,8 +62,15 @@ public class VisionSubsystem extends SubsystemBase {
   }
   //in meters
   public double getDistanceFromTarget(){
-    double x = getX(), y = getY();
-    return Math.sqrt(x*x*m_scale + y*y*m_scale);
+    double x = getX(), y = getY(), dis = Math.sqrt(x*x*m_scale + y*y*m_scale);
+    double mi = Constants.VisionControlConstants.comfortMin, mx = Constants.VisionControlConstants.comfortMax;
+    if(dis>mi&&dis<mx) return 0;
+    else if(dis<mi){
+      return dis-mi;
+    }
+    else{
+      return dis-mx;
+    }
   }
 
   //angle to test if possible to shoot, in radian
@@ -78,15 +85,15 @@ public class VisionSubsystem extends SubsystemBase {
     return -1;
   }
 
-  public boolean possibleShootingPos(){
-    if(Math.abs(getHorizontalAngle())>=Constants.VisionControlConstants.innerPortAngleLimit){
-      // System.out.println("not possible to shoot");
-      return false;
+  // public boolean possibleShootingPos(){
+  //   if(Math.abs(getHorizontalAngle())>=Constants.VisionControlConstants.innerPortAngleLimit){
+  //     // System.out.println("not possible to shoot");
+  //     return false;
 
-    } 
+  //   } 
 
-    return true;
-  }
+  //   return true;
+  // }
   public void setScale(double scale, boolean updateNT){
     m_scale = scale;
     scaleEntry.setDouble(m_scale);
@@ -94,21 +101,19 @@ public class VisionSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // if(scaleEntry == null)
-    //   scaleEntry = tab.addPersistent("scale", 1).getEntry();
-    // setScale(scaleEntry.getDouble(1.0), true);
-    // if(error>10){
-    //   error = 0; 
-    //   System.out.println("Target not detected");
-    // }
-    // if(getY()==0.0) error++;
-    // if(cnt>50){
-    //   // System.out.println("x: "+getX());
-    //   // System.out.println("y: "+getY());
-    //   System.out.println(getHorizontalAngle()+" " + getAngle());
-    //   cnt=0;
-    // }
-    // cnt++;
+    if(scaleEntry == null)
+      scaleEntry = tab.addPersistent("scale", 1).getEntry();
+    setScale(scaleEntry.getDouble(1.0), true);
+    if(error>10){
+      error = 0; 
+      System.out.println("Target not detected");
+    }
+    if(getY()==0.0) error++;
+    if(cnt>50){
+      System.out.println(getHorizontalAngle()+" " + getAngle());
+      cnt=0;
+    }
+    cnt++;
 
 
   }

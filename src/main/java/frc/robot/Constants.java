@@ -65,6 +65,7 @@ public final class Constants {
         public static final double mToInch = 39.3701;
         //to-do
         public static final double cameraHeight = 0;
+        public static final double comfortMin = 0, comfortMax = 0;
     }
 
     public static final class LiftConstants {

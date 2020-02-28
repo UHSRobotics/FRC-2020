@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoTargetCommand;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCmd;
@@ -113,6 +114,8 @@ public class RobotContainer {
         .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
         () -> m_driverController.getBumperPressed(Hand.kLeft), 
         () -> m_driverController.getBumperPressed(Hand.kRight) ));
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+        .whenPressed(new AutoTargetCommand(m_visionSubsystem.getDistanceFromTarget(), m_visionSubsystem.getHorizontalAngle(), m_driveSubsystem));
     // new JoystickButton(m_driverController, Button.kCross.value)
     //     .whenPressed(new VisionRotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
     // new JoystickButton(m_driverController, Button.kRect.value)
