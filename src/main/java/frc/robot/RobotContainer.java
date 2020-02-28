@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutoTargetCommand;
+import frc.robot.commands.TargetCommand;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCmd;

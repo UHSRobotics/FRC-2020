@@ -75,7 +75,7 @@ public class NeoFwSubsystem extends SubsystemBase {
   }
 
   public boolean atSetPoint(){
-    return m_motor.getEncoder().getVelocity() == targetVelocity;
+    return m_motor.getEncoder().getVelocity() >= targetVelocity;
   }
 
   @Override

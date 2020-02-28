@@ -33,9 +33,7 @@ public class FlywheelCmd extends CommandBase {
    * @param forward   The control input for driving forwards/backwards
    * @param rotation  The control input for turning
    */
-  public FlywheelCmd(FlywheelSubsystem subsystem, DoubleSupplier speed,
-      BooleanSupplier fullPow/** , BooleanSupplier mag */
-  ) {
+  public FlywheelCmd(FlywheelSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow) {
     m_flywheel = subsystem;
     m_neoFw = null;
     m_speed = speed;
@@ -44,8 +42,7 @@ public class FlywheelCmd extends CommandBase {
     addRequirements(m_flywheel);
   }
 
-  public FlywheelCmd(NeoFwSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow/** , BooleanSupplier mag */
-  ) {
+  public FlywheelCmd(NeoFwSubsystem subsystem, DoubleSupplier speed, BooleanSupplier fullPow) {
     m_neoFw = subsystem;
     m_flywheel = null;
     m_speed = speed;
@@ -72,7 +69,8 @@ public class FlywheelCmd extends CommandBase {
         }
       } else {
         if (m_fullPow.getAsBoolean()) {
-          m_neoFw.setSpeed(1); // m_neoFw.setPIDTarget(1);
+          m_neoFw.setSpeed(1); 
+          // m_neoFw.setPIDTarget(1);
         } else {
           m_neoFw.setSpeed(0);
           // m_neoFw.setPIDTarget(0);
