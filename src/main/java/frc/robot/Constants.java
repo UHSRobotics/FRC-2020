@@ -70,8 +70,8 @@ public final class Constants {
 
     public static final class LiftConstants {
         // todo
-        public static final int liftMotor = -1;
-        public static final int liftFollow = -1;
+        public static final int liftMotor = 4;
+        public static final int liftFollow = 9;
         public static final double Kp = 1;
         public static final double Kd = 0;
         public static final double Ki = 0;

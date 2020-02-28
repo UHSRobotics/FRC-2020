@@ -21,10 +21,10 @@ import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants;
 
 public class TalonFXDriveSubsystem extends SubsystemBase {
-    private final TalonFX m_leftMotor = new TalonFX(0);
-    private final TalonFX m_rightMotor = new TalonFX(1);
-    private final TalonFX m_leftFollowMotor = new TalonFX(2);
-    private final TalonFX m_rightFollowMotor = new TalonFX(3);
+    private final TalonFX m_leftMotor = new TalonFX(7);
+    private final TalonFX m_rightMotor = new TalonFX(5);
+    private final TalonFX m_leftFollowMotor = new TalonFX(8);
+    private final TalonFX m_rightFollowMotor = new TalonFX(6);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
     private NetworkTableEntry encoderEntry;

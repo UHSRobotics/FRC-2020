@@ -37,8 +37,7 @@ import frc.robot.subsystems.WinchServoSubsystem;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // private final FlywheelSubsystem m_flywheelSubsystem = new
-  // FlywheelSubsystem();
+
   private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
   private final NeoFwSubsystem m_neoFwSubsystem = new NeoFwSubsystem();
   private final DigitalInput m_magSwitch = new DigitalInput(3);
