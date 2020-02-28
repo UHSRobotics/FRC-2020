@@ -48,7 +48,6 @@ public class NeoFwSubsystem extends SubsystemBase {
     System.out.println(p);
     m_motor.set(-p);
     m_motor2.set(-p);
-    // m_motorInverted.set(p);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
@@ -63,11 +62,6 @@ public class NeoFwSubsystem extends SubsystemBase {
       speedEntry.setDouble(speedMultiplier);
     }
   }
-
-  // public void readDI(boolean r){
-  //   if(r)
-  //     System.out.println("Detected");
-  // }
 
   public void setPIDTarget(double t){
     targetVelocity = t;

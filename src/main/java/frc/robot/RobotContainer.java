@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutoTargetCommand;
+import frc.robot.commands.TargetCommand;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCmd;
@@ -39,7 +39,7 @@ import frc.robot.subsystems.WinchServoSubsystem;
  */
 public class RobotContainer {
 
-  private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
+  // private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
   private final NeoFwSubsystem m_neoFwSubsystem = new NeoFwSubsystem();
   private final DigitalInput m_magSwitch = new DigitalInput(3);
 
@@ -78,9 +78,8 @@ public class RobotContainer {
     // () -> m_driverController.getY(Hand.kLeft), () ->
     // m_driverController.getCrossButton()))
 
-    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, () ->
-    m_driverController.getY(Hand.kLeft),
-    () -> m_driverController.getCrossButton()));// , () -> m_magSwitch.get()));
+    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
+    () -> m_driverController.getCrossButton()));
 
     // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
