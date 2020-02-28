@@ -23,14 +23,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
     private NetworkTableEntry speedEntry;
-    private double speedMultiplier = 0.25;
+    private double speedMultiplier = 1;
 
     public IntakeSubsystem() {
         // set motors to coast
         m_motor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public void intakeOn() {
+    public void intakeSwitch() {
         m_motor.set(ControlMode.PercentOutput, speedMultiplier);
     }
 
