@@ -20,8 +20,11 @@ public class HopperCommand extends CommandBase {
 
   private final HopperSubsystem m_hopper;
   private final BooleanSupplier m_actionvate; 
+  double m_delay = 0.5;
+  boolean finished;
 
-  public HopperCommand(HopperSubsystem subsystem, BooleanSupplier hopperActivition) {
+  public HopperCommand(HopperSubsystem subsystem, BooleanSupplier hopperActivition, double delay) {
+    if(delay!=0) m_delay = delay;
     m_hopper = subsystem;
     m_actionvate = hopperActivition;
     addRequirements(m_hopper);
@@ -32,9 +35,10 @@ public class HopperCommand extends CommandBase {
   public void execute() {
     if(m_actionvate.getAsBoolean()){
       m_hopper.switchON();
-      Timer.delay(0.5);
+      Timer.delay(m_delay);
       m_hopper.switchOFF();
     }
+
   }
 
   // Called once the command ends or is interrupted.
