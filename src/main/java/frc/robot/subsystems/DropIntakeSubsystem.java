@@ -36,6 +36,10 @@ public class DropIntakeSubsystem extends SubsystemBase {
     m_motor.set(ControlMode.PercentOutput, speedMultiplier*-1);
   }
 
+  public void stopIntake() {
+    m_motor.set(ControlMode.PercentOutput, 0);
+  }
+
   @Override
   public void periodic() {
     if (speedEntry == null) {
