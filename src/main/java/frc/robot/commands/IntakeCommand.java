@@ -27,13 +27,15 @@ public class IntakeCommand extends CommandBase {
     @Override
     public void execute() {
         if (m_data.getAsBoolean()) {
-            m_intake.intakeOn();
+            m_intake.intakeSwitch();
         }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        m_intake.setSpeedMultiplier(0, true);
+        m_intake.intakeSwitch();
     }
 
     // Returns true when the command should end.
