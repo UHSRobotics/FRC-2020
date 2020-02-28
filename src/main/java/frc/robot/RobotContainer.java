@@ -58,7 +58,7 @@ public class RobotContainer {
   // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
-  private final Command m_autoCommand = new DistancePIDCommand(m_driveSubsystem, 1);
+  private final Command m_simpleAutoCommand = new DistancePIDCommand(m_driveSubsystem, 1);
   private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   // Main Controller
@@ -87,7 +87,8 @@ public class RobotContainer {
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
     // m_driverController.getXMapped(Hand.kRight) * 0.75, () ->
     // m_driverController.getCrossButton()));
-    m_chooser.setDefaultOption("Just drive", m_autonPlaceholder);
+    m_chooser.setDefaultOption("target", m_autonPlaceholder);
+    m_chooser.addOption("simple drive", m_simpleAutoCommand);
     Shuffleboard.getTab("Autonomous").add(m_chooser);
 
   }
@@ -114,7 +115,7 @@ public class RobotContainer {
         .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
         () -> m_driverController.getBumperPressed(Hand.kLeft), 
         () -> m_driverController.getBumperPressed(Hand.kRight) ));
-    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
         .whenPressed(new AutoTargetCommand(m_visionSubsystem.getDistanceFromTarget(), m_visionSubsystem.getHorizontalAngle(), m_driveSubsystem));
     // new JoystickButton(m_driverController, Button.kCross.value)
     //     .whenPressed(new VisionRotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
@@ -161,6 +162,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_autonPlaceholder;
+    return m_chooser.getSelected();
   }
 }
