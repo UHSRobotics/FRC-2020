@@ -18,7 +18,7 @@ public class AutonPlaceholder extends SequentialCommandGroup {
    * Creates a new AutonPlaceholder.
    */
   public AutonPlaceholder(TalonFXDriveSubsystem drive) {
-    addCommands(new AutoTargetCommand(1, 180, drive));
+    addCommands(new TargetCommand(1, 180, drive));
   }
 
   // Called when the command is initially scheduled.
