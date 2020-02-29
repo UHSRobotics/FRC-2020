@@ -46,7 +46,7 @@ public class RobotContainer {
   // private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-  // private final DropIntakeSubsystem m_DropIntakeSubsystem = new DropIntakeSubsystem();
+  private final DropIntakeSubsystem m_DropIntakeSubsystem = new DropIntakeSubsystem();
   private final WinchServoSubsystem m_servoSubsystem = new WinchServoSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
@@ -81,6 +81,7 @@ public class RobotContainer {
     m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
     () -> m_driverController.getCrossButton()));
 
+    
     // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
@@ -110,10 +111,11 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, Button.kRect.value)
     //     .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     
-    // new JoystickButton(m_driverController, Button.kBumperLeft.value)
-    //     .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
-    //     () -> m_driverController.getBumperPressed(Hand.kLeft), 
-    //     () -> m_driverController.getBumperPressed(Hand.kRight) ));
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+        .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
+        () -> m_driverController.getBumperPressed(Hand.kLeft), 
+        () -> m_driverController.getBumperPressed(Hand.kRight) ));
+
     // new JoystickButton(m_driverController, Button.kBumperRight.value)
     //     .whenPressed(new AutoTargetCommand(m_visionSubsystem.getDistanceFromTarget(), m_visionSubsystem.getHorizontalAngle(), m_driveSubsystem));
     // new JoystickButton(m_driverController, Button.kCross.value)
