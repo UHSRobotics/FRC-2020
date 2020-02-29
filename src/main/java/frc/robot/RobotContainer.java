@@ -84,7 +84,7 @@ public class RobotContainer {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
 
-    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
+    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, m_hopper,
     () -> m_subsystemController.getCrossButton()));
 
     m_liftSubsystem.setDefaultCommand(
