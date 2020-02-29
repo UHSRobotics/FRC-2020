@@ -15,13 +15,13 @@ public class WinchServoSubsystem extends SubsystemBase {
     public static boolean toggleOn = false;
 
     public void toggle() {
-        if (!toggleOn) {
-            m_switch.setAngle(30);
-            toggleOn=true;
-        } else {
-            m_switch.setAngle(180);
+        if (toggleOn) {
+            m_switch.setAngle(0);
             toggleOn=false;
-        }
+        } else {
+            m_switch.setAngle(20);
+            toggleOn=true;
+            }
     }
 
     @Override

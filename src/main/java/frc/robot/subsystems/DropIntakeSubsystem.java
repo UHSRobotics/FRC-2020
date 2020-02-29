@@ -24,7 +24,7 @@ public class DropIntakeSubsystem extends SubsystemBase {
   private final double speedMultiplier = 0.5;
   
   public DropIntakeSubsystem() {
-     // set motors to brake
+     // set motors to coast
      m_motor.setNeutralMode(NeutralMode.Coast);
   }
 

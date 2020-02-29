@@ -27,6 +27,7 @@ public class IntakeCommand extends CommandBase {
     @Override
     public void execute() {
         if (m_data.getAsBoolean()) {
+            System.out.println("exe");
             // m_intake.setSpeedMultiplier(1, true);
             m_intake.switchOn();
         }

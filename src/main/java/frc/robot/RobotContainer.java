@@ -1,4 +1,4 @@
-  
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -22,7 +22,9 @@ import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.PIDDrive;
+import frc.robot.commands.SpinCommand;
 import frc.robot.commands.pidcommand.*;
+import frc.robot.subsystems.ColorSubsystem;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.DropIntakeSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
@@ -30,6 +32,7 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.NeoFwSubsystem;
+import frc.robot.subsystems.SpinSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.WinchServoSubsystem;
@@ -58,8 +61,8 @@ public class RobotContainer {
 
   // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
   // SolenoidTestSubsystem();
-  // private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
-  // private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
+  private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
+  private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
   // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
@@ -80,9 +83,9 @@ public class RobotContainer {
     m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
     () -> m_driverController.getCrossButton()));
 
-    m_liftSubsystem.setDefaultCommand(new LiftCommand(m_liftSubsystem, m_servoSubsystem, 
-    () -> m_driverController.getTriggerLeftButton(), () -> m_driverController.getTriggerRightButton(), 
-    () -> m_magSwitch.get()));
+    // m_liftSubsystem.setDefaultCommand(new LiftCommand(m_liftSubsystem, m_servoSubsystem, 
+    // () -> m_driverController.getTriggerLeftButton(), () -> m_driverController.getTriggerRightButton(), 
+    // () -> m_magSwitch.get()));
     
     m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
     () -> m_driverController.getTrigButton()));
@@ -106,12 +109,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // new JoystickButton(m_driverController, Button.kTrig.value)
-    //      .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButtonPressed()));
+    new JoystickButton(m_driverController, Button.kTrig.value)
+        .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButton()));
 
     new JoystickButton(m_driverController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
-    // new JoystickButton(m_driverController, Button.kCross.value)
+    
+        // new JoystickButton(m_driverController, Button.kCross.value)
     //     .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
     // new JoystickButton(m_driverController, Button.kRect.value)
     //     .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
@@ -134,8 +138,8 @@ public class RobotContainer {
     // new JoystickButton(m_driverController,
     // Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
 
-    // new JoystickButton(m_driverController, Button.kBumperLeft.value)
-    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+    .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
     // new JoystickButton(m_driverController, Button.kRect.value)
     // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
     // new JoystickButton(m_driverController, Button.kCross.value)

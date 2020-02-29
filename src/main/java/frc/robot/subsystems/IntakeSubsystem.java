@@ -19,12 +19,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final TalonSRX m_motor = new TalonSRX(11);
+    private final TalonSRX m_motor = new TalonSRX(26);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
     private NetworkTableEntry speedEntry;
     private double speedMultiplier = 1;
-    private double tempSpeed  = 0;
 
     public IntakeSubsystem() {
         // set motors to coast
@@ -32,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void switchOn() {
-        m_motor.set(ControlMode.PercentOutput, tempSpeed);
+        m_motor.set(ControlMode.PercentOutput, 1);
     }
 
     public void switchOff(){
