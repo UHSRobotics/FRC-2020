@@ -11,7 +11,8 @@ import frc.robot.subsystems.pidcontroller.LiftPID;
 public class LiftCommand extends CommandBase {
     private final LiftSubsystem m_lift;
     // private final WinchServoSubsystem m_winch;
-    private final BooleanSupplier m_left, m_right;
+    private final BooleanSupplier m_left;
+    private final BooleanSupplier m_right;
     // private final BooleanSupplier m_pidToggle;
     // private final LiftPID m_liftPID;
 
@@ -46,10 +47,11 @@ public class LiftCommand extends CommandBase {
             m_lift.setSpeed(1);
 
         } 
-        else if(m_right.getAsBoolean()){
+        if(m_right.getAsBoolean()){
             m_lift.setSpeed(-1);
         }
-        else{
+        if((!m_left.getAsBoolean())&&(!m_right.getAsBoolean()))
+        {
             m_lift.setSpeed(0);
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {

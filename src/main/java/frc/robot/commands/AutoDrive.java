@@ -24,16 +24,17 @@ public class AutoDrive extends CommandBase {
 
     @Override
     public void execute(){
-        m_drive.arcadeDrive(-0.5, 0);
-        Timer.delay(1);
-        m_drive.arcadeDrive(0, 0);
-        finished = true;
         m_fw.setSpeed(1);
         Timer.delay(2);
         m_hop.switchON(1);
         Timer.delay(5);
         m_fw.setSpeed(0);
         m_hop.switchOFF();
+        m_drive.arcadeDrive(0.5, 0);
+        Timer.delay(0.5);
+        m_drive.arcadeDrive(0, 0);
+        finished = true;
+
 
 
     }

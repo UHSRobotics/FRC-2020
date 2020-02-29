@@ -89,8 +89,8 @@ public class RobotContainer {
     () -> m_subsystemController.getCrossButton()));
 
     m_liftSubsystem.setDefaultCommand(
-        new LiftCommand(m_liftSubsystem, () -> m_subsystemController.getTriggerLeftButton(),
-            () -> m_driverController.getTriggerRightButton()));
+        new LiftCommand(m_liftSubsystem, () -> m_subsystemController.getBumper(Hand.kLeft),
+            () -> m_driverController.getBumper(Hand.kRight)));
 
     m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
     () -> m_subsystemController.getYMapped(Hand.kLeft)));
