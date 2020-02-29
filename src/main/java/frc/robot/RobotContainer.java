@@ -141,16 +141,18 @@ public class RobotContainer {
     // new JoystickButton(m_driverController,
     // Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
 
+    // @return 0-1-2-3=blue-green-red-yellow; -1: match revolution
+
     new JoystickButton(m_driverController, Button.kBumperRight.value)
     .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
-    // new JoystickButton(m_driverController, Button.kRect.value)
-    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
-    // new JoystickButton(m_driverController, Button.kCross.value)
-    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
-    // new JoystickButton(m_driverController, Button.kDisk.value)
-    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
-    // new JoystickButton(m_driverController, Button.kTrig.value)
-    // .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
+    new JoystickButton(m_driverController, Button.kRect.value)
+    .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
+    new JoystickButton(m_driverController, Button.kCross.value)
+    .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
+    new JoystickButton(m_driverController, Button.kDisk.value)
+    .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
+    new JoystickButton(m_driverController, Button.kTrig.value)
+    .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
 
     // new JoystickButton(m_driverController,
     // Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
