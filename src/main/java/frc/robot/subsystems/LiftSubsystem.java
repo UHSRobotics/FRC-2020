@@ -15,11 +15,12 @@ import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class LiftSubsystem extends SubsystemBase {
-    private final VictorSPX m_liftMotor = new VictorSPX(Constants.LiftConstants.liftMotor);
-    private final VictorSPX m_follow = new VictorSPX(Constants.LiftConstants.liftFollow);
+    private final TalonSRX m_liftMotor = new TalonSRX(Constants.LiftConstants.liftMotor);
+    private final TalonSRX m_follow = new TalonSRX(Constants.LiftConstants.liftFollow);
     private double speedMultiplier = 0.5;  
     private NetworkTableEntry speedEntry; 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");

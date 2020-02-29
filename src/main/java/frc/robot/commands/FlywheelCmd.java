@@ -23,7 +23,7 @@ import frc.robot.subsystems.HopperSubsystem;
  */
 public class FlywheelCmd extends CommandBase {
   private final NeoFwSubsystem m_neoFw;
-  private final HopperSubsystem m_hopper;
+  // private final HopperSubsystem m_hopper;
   private final BooleanSupplier m_fullPow;// , m_mag;
 
   /**
@@ -34,9 +34,9 @@ public class FlywheelCmd extends CommandBase {
    * @param rotation  The control input for turning
    */
 
-  public FlywheelCmd(NeoFwSubsystem subsystem, HopperSubsystem hopper, BooleanSupplier fullPow) {
+  public FlywheelCmd(NeoFwSubsystem subsystem, BooleanSupplier fullPow) {
     m_neoFw = subsystem;
-    m_hopper = hopper;
+    // m_hopper = hopper;
     m_fullPow = fullPow;
     // m_mag = mag;
     addRequirements(m_neoFw);
@@ -46,11 +46,11 @@ public class FlywheelCmd extends CommandBase {
   public void execute() {
     if (m_fullPow.getAsBoolean()) {
       m_neoFw.setSpeed(1); 
-      m_hopper.switchON(0.8);
+      // m_hopper.switchON(0.8);
       // m_neoFw.setPIDTarget(1);
     } else {
       m_neoFw.setSpeed(0);
-      m_hopper.switchOFF();
+      // m_hopper.switchOFF();
       // m_neoFw.setPIDTarget(0);
     }
   }

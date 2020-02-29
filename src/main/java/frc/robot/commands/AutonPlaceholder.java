@@ -21,6 +21,9 @@ public class AutonPlaceholder extends SequentialCommandGroup {
    * Creates a new AutonPlaceholder.
    */
   public AutonPlaceholder(TalonFXDriveSubsystem drive, NeoFwSubsystem fw, HopperSubsystem hop) {
+    addRequirements(drive);
+    addRequirements(fw);
+    addRequirements(hop);
     fw.setSpeed(1);
     // addCommands(new TargetCommand(0, 0, drive));
     hop.switchON(1);
@@ -28,7 +31,7 @@ public class AutonPlaceholder extends SequentialCommandGroup {
     hop.switchOFF();
     fw.setSpeed(0);
     drive.arcadeDrive(-0.3, 0);
-    Timer.delay(3);
+    Timer.delay(4);
     drive.disable();
   }
 

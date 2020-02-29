@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoDrive;
 // import frc.robot.commands.AutoTargetCommand;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
@@ -69,7 +70,7 @@ public class RobotContainer {
   // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
-  private final Command m_simpleAutoCommand = new DistancePIDCommand(m_driveSubsystem, 1);
+  private final Command m_simpleAutoCommand = new AutoDrive(m_driveSubsystem, m_neoFwSubsystem, m_hopper);
   private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem, m_neoFwSubsystem,
       m_hopper);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -84,12 +85,12 @@ public class RobotContainer {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
 
-    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem, m_hopper,
+    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
     () -> m_subsystemController.getCrossButton()));
 
     m_liftSubsystem.setDefaultCommand(
-        new LiftCommand(m_liftSubsystem, m_servoSubsystem, () -> m_subsystemController.getTriggerLeftButton(),
-            () -> m_driverController.getTriggerRightButton(), () -> m_magSwitch.get()));
+        new LiftCommand(m_liftSubsystem, () -> m_subsystemController.getTriggerLeftButton(),
+            () -> m_driverController.getTriggerRightButton()));
 
     m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
     () -> m_subsystemController.getYMapped(Hand.kLeft)));
@@ -99,7 +100,7 @@ public class RobotContainer {
         .setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft) * 0.25,
             () -> m_driverController.getXMapped(Hand.kRight) * 0.25));
     m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight)));
-    m_chooser.setDefaultOption("target", m_autonPlaceholder);
+    // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
 
@@ -183,6 +184,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    return m_simpleAutoCommand;
   }
 }
