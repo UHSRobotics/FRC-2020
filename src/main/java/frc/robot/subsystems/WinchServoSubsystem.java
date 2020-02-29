@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Servo;
 
 public class WinchServoSubsystem extends SubsystemBase {
     private final Servo m_switch = new Servo(0);
-    private static boolean toggleOn = false;
+    public static boolean toggleOn = false;
 
     public void toggle() {
         if (!toggleOn) {
