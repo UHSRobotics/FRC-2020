@@ -88,7 +88,6 @@ public class SpinCommand extends CommandBase {
         }
         currColor = m_colorSubsystem.getColor();
         if (currColor - prevColor == 1 || currColor - prevColor == -3) {
-          System.out.print("change increase current: " + colorChange);
           colorChange++;
         } else if (currColor - prevColor == -1 || currColor - prevColor == 3) {
           colorChange--;
