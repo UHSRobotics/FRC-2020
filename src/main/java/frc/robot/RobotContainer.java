@@ -72,6 +72,7 @@ public class RobotContainer {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   // Main Controller
   DualShockController m_driverController = new DualShockController(OIConstants.kDriverControllerPort);
+  DualShockController m_subsystemController = new DualShockController(1);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -81,14 +82,15 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
-    () -> m_driverController.getCrossButton()));
+    () -> m_subsystemController.getCrossButton()));
 
     // m_liftSubsystem.setDefaultCommand(new LiftCommand(m_liftSubsystem, m_servoSubsystem, 
     // () -> m_driverController.getTriggerLeftButton(), () -> m_driverController.getTriggerRightButton(), 
     // () -> m_magSwitch.get()));
     
     m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
-    () -> m_driverController.getTrigButton()));
+    () -> m_driverController.getTriggerRightButton()));
+
     // ManualDrive
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     () -> m_driverController.getYMapped(Hand.kLeft)*0.25, () ->
@@ -109,21 +111,22 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, Button.kTrig.value)
-        .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButton()));
+    // new JoystickButton(m_driverController, Button.kTrig.value)
+    //     .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButton()));
 
-    new JoystickButton(m_driverController, Button.kDisk.value)
+    new JoystickButton(m_subsystemController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     
-        // new JoystickButton(m_driverController, Button.kCross.value)
-    //     .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
+    new JoystickButton(m_driverController, Button.kCross.value)
+        .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
+    
     // new JoystickButton(m_driverController, Button.kRect.value)
     //     .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     
-    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+    new JoystickButton(m_subsystemController, Button.kBumperLeft.value)
         .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
-        () -> m_driverController.getBumperPressed(Hand.kLeft), 
-        () -> m_driverController.getBumperPressed(Hand.kRight) ));
+        () -> m_subsystemController.getBumperPressed(Hand.kLeft), 
+        () -> m_subsystemController.getBumperPressed(Hand.kRight) ));
     // new JoystickButton(m_driverController, Button.kBumperRight.value)
     //     .whenPressed(new AutoTargetCommand(m_visionSubsystem.getDistanceFromTarget(), m_visionSubsystem.getHorizontalAngle(), m_driveSubsystem));
     // new JoystickButton(m_driverController, Button.kCross.value)
