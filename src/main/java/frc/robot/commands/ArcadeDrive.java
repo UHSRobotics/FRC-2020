@@ -13,16 +13,15 @@ public class ArcadeDrive extends CommandBase {
   private final TalonFXDriveSubsystem m_drive;
   private final DoubleSupplier m_pow;
   private final DoubleSupplier m_turn;
-  private final BooleanSupplier m_reverse;
+  // private final BooleanSupplier m_reverse;
   private static boolean m_isReverse = false;
   // private final DriveRotationPID m_turnPID = new DriveRotationPID();
 
-  public ArcadeDrive(TalonFXDriveSubsystem subsystem, DoubleSupplier powerSupplier, DoubleSupplier turnSupplier,
-      BooleanSupplier reverseSupplier) {
+  public ArcadeDrive(TalonFXDriveSubsystem subsystem, DoubleSupplier powerSupplier, DoubleSupplier turnSupplier) {
     m_drive = subsystem;
     m_pow = powerSupplier;
     m_turn = turnSupplier;
-    m_reverse = reverseSupplier;
+    // m_reverse = reverseSupplier;
     addRequirements(m_drive);
     // addRequirements(m_turnPID);
   }
@@ -30,21 +29,24 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_reverse.getAsBoolean()) {
-      m_isReverse = !m_isReverse;
-      // m_turnPID.enable();
-      // m_turnPID.setSetpoint(180);
-    }
-    if (m_pow.getAsDouble() > Constants.joystickDeadzone || m_turn.getAsDouble() > Constants.joystickDeadzone) {
-      // m_turnPID.disable();
-    }
-    if (!m_isReverse) {
-      m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) > Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
-          Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? m_turn.getAsDouble() : 0);
-    } else {
-      m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) > Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
-          Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? -1 * m_turn.getAsDouble() : 0);
-    }
+    // if (m_reverse.getAsBoolean()) {
+    // m_isReverse = !m_isReverse;
+    // // m_turnPID.enable();
+    // // m_turnPID.setSetpoint(180);
+    // }
+    // if (m_pow.getAsDouble() > Constants.joystickDeadzone || m_turn.getAsDouble()
+    // > Constants.joystickDeadzone) {
+    // // m_turnPID.disable();
+    // }
+    // if (!m_isReverse) {
+    m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) > Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
+        Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? m_turn.getAsDouble() : 0);
+    // } else {
+    // m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) >
+    // Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
+    // Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? -1 *
+    // m_turn.getAsDouble() : 0);
+    // }
   }
 
   // Called once the command ends or is interrupted.
