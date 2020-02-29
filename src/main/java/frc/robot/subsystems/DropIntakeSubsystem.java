@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class DropIntakeSubsystem extends SubsystemBase {
-  private final TalonSRX m_motor = new TalonSRX(1);
+  private final TalonSRX m_motor;
 
   private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
   private NetworkTableEntry speedEntry;
@@ -25,6 +25,7 @@ public class DropIntakeSubsystem extends SubsystemBase {
   
   public DropIntakeSubsystem() {
      // set motors to coast
+     m_motor = new TalonSRX(1);
      m_motor.setNeutralMode(NeutralMode.Coast);
   }
 

@@ -74,7 +74,7 @@ public class RobotContainer {
       m_hopper);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   // Main Controller
-  DualShockController m_driverController = new DualShockController(OIConstants.kDriverControllerPort);
+  DualShockController m_driverController = new DualShockController(0);
   DualShockController m_subsystemController = new DualShockController(1);
 
   /**
