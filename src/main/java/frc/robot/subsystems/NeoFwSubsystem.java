@@ -46,8 +46,8 @@ public class NeoFwSubsystem extends SubsystemBase {
   public void setSpeed(double p) {
     p *= speedMultiplier;
     // System.out.println(p);
-    m_motor.set(-p);
-    m_motor2.set(-p);
+    m_motor.set(p);
+    m_motor2.set(p);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {

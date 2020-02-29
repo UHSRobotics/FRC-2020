@@ -25,16 +25,16 @@ public class DropIntakeSubsystem extends SubsystemBase {
   
   public DropIntakeSubsystem() {
      // set motors to brake
-     m_motor.setNeutralMode(NeutralMode.Brake);
+     m_motor.setNeutralMode(NeutralMode.Coast);
   }
 
   public void dropIntake() {
-    System.out.println("fml");
+     System.out.println("fml");
     m_motor.set(ControlMode.PercentOutput, speedMultiplier);
   }
 
   public void raiseIntake() {
-    System.out.print("ffffffml");
+    // System.out.print("ffffffml");
     m_motor.set(ControlMode.PercentOutput, speedMultiplier);
   }
 
@@ -48,6 +48,6 @@ public class DropIntakeSubsystem extends SubsystemBase {
       speedEntry = tab.addPersistent("Drop Intake", 1).getEntry();
       System.out.println("Added Single Speed Multiplier NT entry");
   }
-  dropIntake(); 
+  // dropIntake(); 
  }
 }

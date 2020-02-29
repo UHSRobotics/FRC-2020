@@ -19,7 +19,7 @@ public class WinchServoSubsystem extends SubsystemBase {
             m_switch.setAngle(30);
             toggleOn=true;
         } else {
-            m_switch.setAngle(0);
+            m_switch.setAngle(180);
             toggleOn=false;
         }
     }
