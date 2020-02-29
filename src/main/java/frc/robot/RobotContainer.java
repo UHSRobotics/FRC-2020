@@ -99,7 +99,7 @@ public class RobotContainer {
         .setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft) * 0.25,
             () -> m_driverController.getXMapped(Hand.kRight) * 0.25));
     m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight)));
-    // m_chooser.setDefaultOption("target", m_autonPlaceholder);
+    m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
 
