@@ -91,14 +91,14 @@ public class RobotContainer {
         new LiftCommand(m_liftSubsystem, m_servoSubsystem, () -> m_driverController.getTriggerLeftButton(),
             () -> m_driverController.getTriggerRightButton(), () -> m_magSwitch.get()));
 
-    // m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
-    // () -> m_driverController.getTriggerRightButton()));
+    m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
+    () -> m_subsystemController.getYMapped(Hand.kLeft)));
 
     // ManualDrive
     m_driveSubsystem
         .setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft) * 0.25,
             () -> m_driverController.getXMapped(Hand.kRight) * 0.25));
-    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getBumper(Hand.kLeft)));
+    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);

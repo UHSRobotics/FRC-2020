@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -19,11 +20,11 @@ public class HopperCommand extends CommandBase {
    */
 
   private final HopperSubsystem m_hopper;
-  private final BooleanSupplier m_actionvate; 
+  private final DoubleSupplier m_actionvate; 
   // double m_delay = 0.5;
   boolean finished = false;
 
-  public HopperCommand(HopperSubsystem subsystem, BooleanSupplier hopperActivition) {
+  public HopperCommand(HopperSubsystem subsystem, DoubleSupplier hopperActivition) {
     m_hopper = subsystem;
     m_actionvate = hopperActivition;
     addRequirements(m_hopper);
@@ -33,8 +34,8 @@ public class HopperCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_actionvate.getAsBoolean()){
-      m_hopper.switchON();
+    if(m_actionvate.getAsDouble() != 0){
+      m_hopper.switchON(m_actionvate.getAsDouble());
     }else{
       m_hopper.switchOFF();
 
