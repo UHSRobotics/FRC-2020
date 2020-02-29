@@ -24,35 +24,40 @@ public class IntakeSubsystem extends SubsystemBase {
     private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
     private NetworkTableEntry speedEntry;
     private double speedMultiplier = 1;
+    private double tempSpeed  = 0;
 
     public IntakeSubsystem() {
         // set motors to coast
         m_motor.setNeutralMode(NeutralMode.Coast);
     }
 
-    public void intakeSwitch() {
-        m_motor.set(ControlMode.PercentOutput, speedMultiplier);
+    public void switchOn() {
+        m_motor.set(ControlMode.PercentOutput, tempSpeed);
     }
 
-    public void setSpeedMultiplier(double speed, boolean updateNT) {
-        if (0 <= speed && speed <= 2) {
-            speedMultiplier = speed;
-            if (updateNT) {
-                System.out.println("Putted Single Speed Multiplier NT entry");
-                speedEntry.setDouble(speedMultiplier);
-            }
-        } else {
-            System.out.println("Putted Single Speed Multiplier NT entry");
-            speedEntry.setDouble(speedMultiplier);
-        }
+    public void switchOff(){
+        m_motor.set(ControlMode.PercentOutput, 0);
     }
+
+    // public void setSpeedMultiplier(double speed, boolean updateNT) {
+    //     if (0 <= speed && speed <= 2) {
+    //         speedMultiplier = speed;
+    //         if (updateNT) {
+    //             System.out.println("Putted Single Speed Multiplier NT entry");
+    //             speedEntry.setDouble(speedMultiplier);
+    //         }
+    //     } else {
+    //         System.out.println("Putted Single Speed Multiplier NT entry");
+    //         speedEntry.setDouble(speedMultiplier);
+    //     }
+    // }
 
     @Override
     public void periodic() {
-        if (speedEntry == null) {
-            speedEntry = tab.addPersistent("Intake", 1).getEntry();
-            System.out.println("Added Single Speed Multiplier NT entry");
-        }
-        setSpeedMultiplier(speedEntry.getDouble(1.0), false);
+        // if (speedEntry == null) {
+        //     speedEntry = tab.addPersistent("Intake", 1).getEntry();
+        //     System.out.println("Added Single Speed Multiplier NT entry");
+        // }
+        // setSpeedMultiplier(speedEntry.getDouble(1.0), false);
     }
 }
