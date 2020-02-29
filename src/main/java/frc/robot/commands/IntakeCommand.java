@@ -18,6 +18,7 @@ public class IntakeCommand extends CommandBase {
     private final BooleanSupplier m_data;
 
     public IntakeCommand(IntakeSubsystem intake, BooleanSupplier toggle) {
+        System.out.println("intake");
         m_intake = intake;
         m_data = toggle;
         addRequirements(m_intake);
@@ -27,6 +28,9 @@ public class IntakeCommand extends CommandBase {
     @Override
     public void execute() {
         if (m_data.getAsBoolean()) {
+            System.out.println("exe");
+            m_intake.setSpeedMultiplier(1, true);
+
             m_intake.intakeSwitch();
         }
     }
@@ -34,8 +38,8 @@ public class IntakeCommand extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_intake.setSpeedMultiplier(0, true);
-        m_intake.intakeSwitch();
+        // m_intake.setSpeedMultiplier(0, true);
+        // m_intake.intakeSwitch();
     }
 
     // Returns true when the command should end.

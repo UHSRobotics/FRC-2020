@@ -329,6 +329,10 @@ public class DualShockController extends GenericHID {
     return getRawButtonPressed(Button.kTrig.value);
   }
 
+  public boolean getTrigHeld() {
+    return getRawButton(Button.kTrig.value);
+  }
+
   /**
    * Whether the triangle button was released since the last check.
    *

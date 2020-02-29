@@ -18,12 +18,14 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCmd;
+import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.PIDDrive;
 import frc.robot.commands.pidcommand.*;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.DropIntakeSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 // import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
@@ -46,12 +48,13 @@ public class RobotContainer {
   private final LiftSubsystem m_liftSubsystem = new LiftSubsystem();
   private final DigitalInput m_magSwitch = new DigitalInput(3);
 
-  // private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
+  private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final DropIntakeSubsystem m_DropIntakeSubsystem = new DropIntakeSubsystem();
   private final WinchServoSubsystem m_servoSubsystem = new WinchServoSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  private final HopperSubsystem m_hopper = new HopperSubsystem();
 
   // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
   // SolenoidTestSubsystem();
@@ -81,14 +84,17 @@ public class RobotContainer {
     () -> m_driverController.getTriggerLeftButton(), () -> m_driverController.getTriggerRightButton(), 
     () -> m_magSwitch.get()));
     
+    m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
+    () -> m_driverController.getTrigButton()));
     // ManualDrive
-    // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
-    // () -> m_driverController.getYMapped(Hand.kLeft), () ->
-    // m_driverController.getXMapped(Hand.kRight) * 0.75, () ->
-    // m_driverController.getCrossButton()));
+    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
+    () -> m_driverController.getYMapped(Hand.kLeft)*0.25, () ->
+    m_driverController.getXMapped(Hand.kRight) * 0.25, () ->
+    m_driverController.getCrossButton()));
+    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_driverController.getCrossButton()));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
-    Shuffleboard.getTab("Autonomous").add(m_chooser);
+    // Shuffleboard.getTab("Autonomous").add(m_chooser);
 
   }
 
@@ -100,13 +106,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, Button.kTrig.value)
-         .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButtonPressed()));
+    // new JoystickButton(m_driverController, Button.kTrig.value)
+    //      .whileHeld(new IntakeCommand(m_IntakeSubsystem, () -> m_driverController.getTrigButtonPressed()));
 
     new JoystickButton(m_driverController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     // new JoystickButton(m_driverController, Button.kCross.value)
-    //     .whenPressed(new VisionRotationPIDCommand(m_driveSubsystem, m_visionSubsystem));
+    //     .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
     // new JoystickButton(m_driverController, Button.kRect.value)
     //     .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     
