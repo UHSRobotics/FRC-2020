@@ -28,7 +28,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
     private NetworkTableEntry encoderEntry;
-    private double speedMultiplier = 0.2;
+    private double speedMultiplier = 1;
     private NetworkTableEntry speedEntry;
 
     public TalonFXDriveSubsystem() {

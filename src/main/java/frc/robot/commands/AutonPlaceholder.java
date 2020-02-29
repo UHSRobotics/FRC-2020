@@ -27,7 +27,7 @@ public class AutonPlaceholder extends SequentialCommandGroup {
     Timer.delay(5);
     hop.switchOFF();
     fw.setSpeed(0);
-    drive.arcadeDrive(0.2, 0);
+    drive.arcadeDrive(-0.3, 0);
     Timer.delay(3);
     drive.disable();
   }

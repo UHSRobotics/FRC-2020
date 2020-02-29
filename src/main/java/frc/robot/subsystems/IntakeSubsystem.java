@@ -19,7 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final TalonSRX m_motor = new TalonSRX(26);
+    private final TalonSRX m_motor = new TalonSRX(12);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
     private NetworkTableEntry speedEntry;
