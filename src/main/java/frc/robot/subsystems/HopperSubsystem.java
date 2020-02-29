@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,17 +19,17 @@ public class HopperSubsystem extends SubsystemBase {
   /**
    * Creates a new HopperSubsystem.
    */
-  private final VictorSPX hopperMotor = new VictorSPX(78);
+  private final CANSparkMax m_motor = new CANSparkMax(20, MotorType.kBrushless);
 
   public HopperSubsystem() {
   }
 
   public void switchON(){
-    hopperMotor.set(ControlMode.PercentOutput, 0.5);
+    m_motor.set(0.5);
   }
 
   public void switchOFF(){
-    hopperMotor.set(ControlMode.PercentOutput, 0);
+   m_motor.set(0.0);
   }
 
   @Override

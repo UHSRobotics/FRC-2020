@@ -24,7 +24,7 @@ public class NeoFwSubsystem extends SubsystemBase {
    * Creates a new NeoFwSubsystem.
    */
   private final CANSparkMax m_motor = new CANSparkMax(10, MotorType.kBrushless);
-  private final CANSparkMax m_motor2 = new CANSparkMax(3, MotorType.kBrushless);
+  private final CANSparkMax m_motor2 = new CANSparkMax(2, MotorType.kBrushless);
   private final CANPIDController c = m_motor.getPIDController();
   // private final CANSparkMax m_motorInverted = new CANSparkMax(1, MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
