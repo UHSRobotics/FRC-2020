@@ -20,14 +20,14 @@ public class HopperCommand extends CommandBase {
 
   private final HopperSubsystem m_hopper;
   private final BooleanSupplier m_actionvate; 
-  double m_delay = 0.5;
-  boolean finished;
+  // double m_delay = 0.5;
+  boolean finished = false;
 
-  public HopperCommand(HopperSubsystem subsystem, BooleanSupplier hopperActivition, double delay) {
-    if(delay!=0) m_delay = delay;
+  public HopperCommand(HopperSubsystem subsystem, BooleanSupplier hopperActivition) {
     m_hopper = subsystem;
     m_actionvate = hopperActivition;
     addRequirements(m_hopper);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,20 +35,22 @@ public class HopperCommand extends CommandBase {
   public void execute() {
     if(m_actionvate.getAsBoolean()){
       m_hopper.switchON();
-      Timer.delay(m_delay);
+    }else{
       m_hopper.switchOFF();
-    }
 
+    }
   }
+
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_hopper.switchOFF();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

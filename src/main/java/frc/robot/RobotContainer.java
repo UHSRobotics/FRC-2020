@@ -18,14 +18,18 @@ import frc.robot.commands.TargetCommand;
 import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCmd;
+import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDDrive;
 import frc.robot.commands.pidcommand.*;
+import frc.robot.subsystems.ColorSubsystem;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.DropIntakeSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeoFwSubsystem;
+import frc.robot.subsystems.SpinSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.WinchServoSubsystem;
@@ -43,23 +47,24 @@ public class RobotContainer {
   private final NeoFwSubsystem m_neoFwSubsystem = new NeoFwSubsystem();
   private final DigitalInput m_magSwitch = new DigitalInput(3);
 
-  // private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
+  private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
 
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-  // private final DropIntakeSubsystem m_DropIntakeSubsystem = new DropIntakeSubsystem();
+  private final DropIntakeSubsystem m_DropIntakeSubsystem = new DropIntakeSubsystem();
   private final WinchServoSubsystem m_servoSubsystem = new WinchServoSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  private final HopperSubsystem m_hopperSubsystem = new HopperSubsystem();
 
   // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
   // SolenoidTestSubsystem();
-  // private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
-  // private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
+  private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
+  private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
   // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
-  // private final Command m_simpleAutoCommand = new DistancePIDCommand(m_driveSubsystem, 1);
-  // private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem);
+  private final Command m_simpleAutoCommand = new DistancePIDCommand(m_driveSubsystem, 1);
+  private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem, m_neoFwSubsystem, m_hopperSubsystem);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   // Main Controller
   DualShockController m_driverController = new DualShockController(OIConstants.kDriverControllerPort);
@@ -80,14 +85,17 @@ public class RobotContainer {
 
     m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
     () -> m_driverController.getCrossButton()));
+    m_hopperSubsystem.setDefaultCommand(new HopperCommand(m_hopperSubsystem,() -> m_driverController.getCrossButton()));
 
     // ManualDrive
-    // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
-    // () -> m_driverController.getYMapped(Hand.kLeft), () ->
-    // m_driverController.getXMapped(Hand.kRight) * 0.75, () ->
-    // m_driverController.getCrossButton()));
-    // m_chooser.setDefaultOption("target", m_autonPlaceholder);
-    // m_chooser.addOption("simple drive", m_simpleAutoCommand);
+    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
+    () -> m_driverController.getYMapped(Hand.kLeft), () ->
+    m_driverController.getXMapped(Hand.kRight) * 0.75, () ->
+    m_driverController.getCrossButton()));
+
+    //autonomous
+    m_chooser.setDefaultOption("target", m_autonPlaceholder);
+    m_chooser.addOption("simple drive", m_simpleAutoCommand);
     Shuffleboard.getTab("Autonomous").add(m_chooser);
 
   }
@@ -110,10 +118,10 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, Button.kRect.value)
     //     .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
     
-    // new JoystickButton(m_driverController, Button.kBumperLeft.value)
-    //     .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
-    //     () -> m_driverController.getBumperPressed(Hand.kLeft), 
-    //     () -> m_driverController.getBumperPressed(Hand.kRight) ));
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+        .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem, 
+        () -> m_driverController.getBumperPressed(Hand.kLeft), 
+        () -> m_driverController.getBumperPressed(Hand.kRight) ));
     // new JoystickButton(m_driverController, Button.kBumperRight.value)
     //     .whenPressed(new AutoTargetCommand(m_visionSubsystem.getDistanceFromTarget(), m_visionSubsystem.getHorizontalAngle(), m_driveSubsystem));
     // new JoystickButton(m_driverController, Button.kCross.value)
