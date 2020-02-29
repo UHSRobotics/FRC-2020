@@ -21,6 +21,7 @@ public class DropIntakeCommand extends CommandBase {
     this.m_dropIntake = m_dropIntake;
     this.m_data = m_data;
     this.m_dataT = m_dataT;
+    addRequirements(m_dropIntake);
   }
 
 
