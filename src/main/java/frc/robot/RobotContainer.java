@@ -19,12 +19,14 @@ import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCmd;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LiftCommand;
 import frc.robot.commands.PIDDrive;
 import frc.robot.commands.pidcommand.*;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.DropIntakeSubsystem;
 // import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.NeoFwSubsystem;
 import frc.robot.subsystems.TalonFXDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -41,6 +43,7 @@ public class RobotContainer {
 
   // private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
   private final NeoFwSubsystem m_neoFwSubsystem = new NeoFwSubsystem();
+  private final LiftSubsystem m_liftSubsystem = new LiftSubsystem();
   private final DigitalInput m_magSwitch = new DigitalInput(3);
 
   // private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
@@ -70,17 +73,14 @@ public class RobotContainer {
   public RobotContainer() {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
-    // m_flywheelSubsystem.setDefaultCommand(new
-    // DoubleFWheelCmd(m_flywheelSubsystem,
-    // () -> m_driverController.getY(Hand.kLeft), () ->
-    // m_driverController.getY(Hand.kRight)));
-    // m_flywheelSubsystem.setDefaultCommand(new FlywheelCmd(m_flywheelSubsystem,
-    // () -> m_driverController.getY(Hand.kLeft), () ->
-    // m_driverController.getCrossButton()))
 
     m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
-    () -> m_driverController.getCrossButton()));// , () -> m_magSwitch.get()));
+    () -> m_driverController.getCrossButton()));
 
+    m_liftSubsystem.setDefaultCommand(new LiftCommand(m_liftSubsystem, m_servoSubsystem, 
+    () -> m_driverController.getTriggerLeftButton(), () -> m_driverController.getTriggerRightButton(), 
+    () -> m_magSwitch.get()));
+    
     // ManualDrive
     // m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
     // () -> m_driverController.getYMapped(Hand.kLeft), () ->
