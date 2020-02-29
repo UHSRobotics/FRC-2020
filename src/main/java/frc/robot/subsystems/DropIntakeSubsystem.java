@@ -29,11 +29,13 @@ public class DropIntakeSubsystem extends SubsystemBase {
   }
 
   public void dropIntake() {
+    System.out.println("fml");
     m_motor.set(ControlMode.PercentOutput, speedMultiplier);
   }
 
   public void raiseIntake() {
-    m_motor.set(ControlMode.PercentOutput, speedMultiplier*-1);
+    System.out.print("ffffffml");
+    m_motor.set(ControlMode.PercentOutput, speedMultiplier);
   }
 
   public void stopIntake() {
