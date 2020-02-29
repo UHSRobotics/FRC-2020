@@ -14,18 +14,19 @@ public class LiftCommand extends CommandBase {
     // private final BooleanSupplier m_pidToggle;
     // private final LiftPID m_liftPID;
 
-    // public LiftCommand(LiftSubsystem lift, LiftPID liftPID, BooleanSupplier data, BooleanSupplier usePID) {
-    //     m_lift = lift;
-    //     m_data = data;
-    //     m_liftPID = liftPID;
-    //     m_pidToggle = usePID;
-    //     m_sensor = null;
-    //     addRequirements(m_lift);
-    //     addRequirements(m_liftPID);
+    // public LiftCommand(LiftSubsystem lift, LiftPID liftPID, BooleanSupplier data,
+    // BooleanSupplier usePID) {
+    // m_lift = lift;
+    // m_data = data;
+    // m_liftPID = liftPID;
+    // m_pidToggle = usePID;
+    // m_sensor = null;
+    // addRequirements(m_lift);
+    // addRequirements(m_liftPID);
     // }
-    
-    public LiftCommand(LiftSubsystem lift, WinchServoSubsystem winch,
-     BooleanSupplier left, BooleanSupplier right, BooleanSupplier magSensor){
+
+    public LiftCommand(LiftSubsystem lift, WinchServoSubsystem winch, BooleanSupplier left, BooleanSupplier right,
+            BooleanSupplier magSensor) {
         m_lift = lift;
         m_winch = winch;
         m_left = left;
@@ -37,33 +38,32 @@ public class LiftCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if(m_left.getAsBoolean() && m_sensor.getAsBoolean()){
-            if(!WinchServoSubsystem.toggleOn){
+        if (m_left.getAsBoolean() && !m_right.getAsBoolean() && m_sensor.getAsBoolean()) {
+            if (!WinchServoSubsystem.toggleOn) {
                 m_winch.toggle();
             }
             m_lift.setSpeed(1);
-        } else if(m_left.getAsBoolean() && m_right.getAsBoolean()){
-            if(!WinchServoSubsystem.toggleOn){
+        } else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
+            if (!WinchServoSubsystem.toggleOn) {
                 m_winch.toggle();
             }
             m_lift.setSpeed(-1);
-        }
-        if(((!m_sensor.getAsBoolean()) && (!m_right.getAsBoolean())) || ((!m_left.getAsBoolean()) && (!m_right.getAsBoolean()))){
-            if(WinchServoSubsystem.toggleOn){
+        } else {
+            if (WinchServoSubsystem.toggleOn) {
                 m_lift.setSpeed(0);
                 m_winch.toggle();
             }
         }
         // if (m_data.getAsBoolean()) {
-        //     m_lift.setSpeed(1);
-        // } else {
-        //     if (m_pidToggle.getAsBoolean() && !m_liftPID.isEnabled()) {
-        //         m_liftPID.setSetpoint(1);
-        //         m_liftPID.enable();
-        //     } else if (!m_pidToggle.getAsBoolean()) {
-        //         m_liftPID.disable();
-        //         m_lift.setSpeed(0);
-        //     }
+        // m_lift.setSpeed(1);
+        // } else {F
+        // if (m_pidToggle.getAsBoolean() && !m_liftPID.isEnabled()) {
+        // m_liftPID.setSetpoint(1);
+        // m_liftPID.enable();
+        // } else if (!m_pidToggle.getAsBoolean()) {
+        // m_liftPID.disable();
+        // m_lift.setSpeed(0);
+        // }
         // }
     }
 

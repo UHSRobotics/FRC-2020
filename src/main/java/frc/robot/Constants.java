@@ -31,7 +31,7 @@ public final class Constants {
     }
 
     public static final int controllerPrecision = 1000;
-    public static final double joystickDeadzone = 0.1;
+    public static final double joystickDeadzone = 0.05;
 
     public static final class OIConstants {
         public static final int kDriverControllerPort = 0;

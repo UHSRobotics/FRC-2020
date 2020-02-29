@@ -2,6 +2,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /*----------------------------------------------------------------------------*/
@@ -27,12 +28,11 @@ public class IntakeCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (m_data.getAsDouble() != 0) {
+        if (Math.abs(m_data.getAsDouble()) > Constants.joystickDeadzone) {
             System.out.println("exe");
             // m_intake.setSpeedMultiplier(1, true);
             m_intake.switchOn(m_data.getAsDouble());
-        }
-        else{
+        } else {
             m_intake.switchOff();
         }
     }

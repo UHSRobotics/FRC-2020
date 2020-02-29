@@ -20,7 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class LiftSubsystem extends SubsystemBase {
     private final VictorSPX m_liftMotor = new VictorSPX(Constants.LiftConstants.liftMotor);
     private final VictorSPX m_follow = new VictorSPX(Constants.LiftConstants.liftFollow);
-    private double speedMultiplier = 1;  
+    private double speedMultiplier = 0.5;  
     private NetworkTableEntry speedEntry; 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
                                                   
