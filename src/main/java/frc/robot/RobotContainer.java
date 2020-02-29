@@ -84,8 +84,8 @@ public class RobotContainer {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
 
-    // m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
-    // () -> m_subsystemController.getCrossButton()));
+    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
+    () -> m_subsystemController.getCrossButton()));
 
     m_liftSubsystem.setDefaultCommand(
         new LiftCommand(m_liftSubsystem, m_servoSubsystem, () -> m_driverController.getTriggerLeftButton(),
@@ -98,7 +98,7 @@ public class RobotContainer {
     m_driveSubsystem
         .setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft) * 0.25,
             () -> m_driverController.getXMapped(Hand.kRight) * 0.25));
-    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_driverController.getBumper(Hand.kLeft)));
+    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getBumper(Hand.kLeft)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
@@ -117,8 +117,8 @@ public class RobotContainer {
     // .whileHeld(new IntakeCommand(m_IntakeSubsystem, () ->
     // m_driverController.getTrigButton()));
 
-    // new JoystickButton(m_subsystemController, Button.kDisk.value)
-    // .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
+    new JoystickButton(m_subsystemController, Button.kDisk.value)
+    .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
 
     // new JoystickButton(m_driverController, Button.kCross.value)
     // .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
