@@ -96,7 +96,7 @@ public class RobotContainer {
     () -> m_driverController.getYMapped(Hand.kLeft)*0.25, () ->
     m_driverController.getXMapped(Hand.kRight) * 0.25, () ->
     m_driverController.getCrossButton()));
-    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_driverController.getCrossButton()));
+    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_driverController.getTrigButton()));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
@@ -117,8 +117,8 @@ public class RobotContainer {
     new JoystickButton(m_subsystemController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     
-    new JoystickButton(m_driverController, Button.kCross.value)
-        .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
+    // new JoystickButton(m_driverController, Button.kCross.value)
+    //     .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
     
     // new JoystickButton(m_driverController, Button.kRect.value)
     //     .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem, m_visionSubsystem));
