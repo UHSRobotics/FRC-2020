@@ -35,27 +35,28 @@ public class LiftSubsystem extends SubsystemBase {
       m_liftMotor.set(ControlMode.PercentOutput, s);
   }
   
-  public void setSpeedMultiplier(double speed, boolean updateNT) {
-    if (0 <= speed && speed <= 2) {
-      speedMultiplier = speed;
-      if (updateNT) {
-        System.out.println("Putted Single Speed Multiplier NT entry");
-        speedEntry.setDouble(speedMultiplier);
-      }
-    } else {
-      System.out.println("Putted Single Speed Multiplier NT entry");
-      speedEntry.setDouble(speedMultiplier);
-    }  
-  }
+  // public void setSpeedMultiplier(double speed, boolean updateNT) {
+  //   if (0 <= speed && speed <= 2) {
+  //     speedMultiplier = speed;
+  //     if (updateNT) {
+  //       System.out.println("Putted Single Speed Multiplier NT entry");
+  //       speedEntry.setDouble(speedMultiplier);
+  //     }
+  //   } else {
+  //     System.out.println("Putted Single Speed Multiplier NT entry");
+  //     speedEntry.setDouble(speedMultiplier);
+  //   }  
+  // }
 
 
   @Override
   public void periodic() {
-    if (speedEntry == null) {
-        speedEntry = tab.addPersistent("lift", 1).getEntry();
-        System.out.println("Added Single Speed Multiplier NT entry");
-      }
-      setSpeedMultiplier(speedEntry.getDouble(0.25), false);
+  //   if (speedEntry == null) {
+  //       speedEntry = tab.addPersistent("lift", 1).getEntry();
+  //       System.out.println("Added Single Speed Multiplier NT entry");
+  //     }
+  //     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
     
-  }
+  // }
+}
 }

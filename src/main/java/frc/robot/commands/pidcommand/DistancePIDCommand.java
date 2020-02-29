@@ -9,12 +9,12 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class DistancePIDCommand extends ProfiledPIDCommand {
     public DistancePIDCommand(TalonFXDriveSubsystem drive, double goal) {
-        super(new ProfiledPIDController(DrivePIDConstants.KpDist, DrivePIDConstants.KpDist, DrivePIDConstants.KpDist,
+        super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD,
                 new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading
                 drive::getEncoderLeft,
                 // Set reference to target
-                goal,
+                goal*2048,
                 // Pipe output to turn robot
                 (output, setpoint) -> drive.arcadeDrive(output, 0),
                 // Require the drive

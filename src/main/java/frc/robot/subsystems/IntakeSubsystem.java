@@ -24,6 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
     private NetworkTableEntry speedEntry;
     private double speedMultiplier = 1;
+    private double tempSpeed  = 0.3;
 
     public IntakeSubsystem() {
         // set motors to coast
