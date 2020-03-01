@@ -31,7 +31,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
     private double speedMultiplier = 1;
     private NetworkTableEntry speedEntry;
 
-    private double aLimit = 0.075;
+    private double aLimit = 0.07;
     private double pow0;
 
     public TalonFXDriveSubsystem() {
