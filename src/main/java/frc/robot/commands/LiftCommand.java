@@ -13,6 +13,8 @@ public class LiftCommand extends CommandBase {
     // private final WinchServoSubsystem m_winch;
     private final BooleanSupplier m_left;
     private final BooleanSupplier m_right;
+    private boolean l;
+    private boolean r;
     // private final BooleanSupplier m_pidToggle;
     // private final LiftPID m_liftPID;
 
@@ -32,6 +34,7 @@ public class LiftCommand extends CommandBase {
         // m_winch = winch;
         m_left = left;
         m_right = right;
+
         // m_sensor = magSensor;
         addRequirements(m_lift);
         // addRequirements(m_winch);
@@ -47,10 +50,11 @@ public class LiftCommand extends CommandBase {
             m_lift.setSpeed(1);
 
         } 
-        if(m_right.getAsBoolean()){
+        else if(m_right.getAsBoolean()){
             m_lift.setSpeed(-1);
+            
         }
-        if((!m_left.getAsBoolean())&&(!m_right.getAsBoolean()))
+        else 
         {
             m_lift.setSpeed(0);
         }

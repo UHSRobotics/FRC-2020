@@ -90,7 +90,7 @@ public class RobotContainer {
 
     m_liftSubsystem.setDefaultCommand(
         new LiftCommand(m_liftSubsystem, () -> m_subsystemController.getBumper(Hand.kLeft),
-            () -> m_driverController.getBumper(Hand.kRight)));
+            () -> m_subsystemController.getBumper(Hand.kRight)));
 
     m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
     () -> m_subsystemController.getYMapped(Hand.kLeft)));

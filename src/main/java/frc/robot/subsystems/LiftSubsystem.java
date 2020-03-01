@@ -21,12 +21,14 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class LiftSubsystem extends SubsystemBase {
     private final TalonSRX m_liftMotor = new TalonSRX(Constants.LiftConstants.liftMotor);
     private final TalonSRX m_follow = new TalonSRX(Constants.LiftConstants.liftFollow);
-    private double speedMultiplier = 0.5;  
+    private double speedMultiplier = 1;  
     private NetworkTableEntry speedEntry; 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
                                                   
 
   public LiftSubsystem() {
+      m_liftMotor.setNeutralMode(NeutralMode.Brake);
+      m_follow.setNeutralMode(NeutralMode.Brake);
       m_follow.follow(m_liftMotor);
    
   }
