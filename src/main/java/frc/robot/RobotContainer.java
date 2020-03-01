@@ -71,8 +71,8 @@ public class RobotContainer {
 
   // placeholder command for autonomous
   private final Command m_simpleAutoCommand = new AutoDrive(m_driveSubsystem, m_neoFwSubsystem, m_hopper);
-  private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem, m_neoFwSubsystem,
-      m_hopper);
+  // private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem, m_neoFwSubsystem,
+  //     m_hopper);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   // Main Controller
   DualShockController m_driverController = new DualShockController(0);

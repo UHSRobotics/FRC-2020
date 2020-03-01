@@ -84,6 +84,11 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
 
+    public void arcadeDriveAuton(double pow, double turn) {
+        m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
+        m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
+    }
+
     public void pidDrive(double pos) {
         m_rightMotor.set(ControlMode.Position, pos, DemandType.ArbitraryFeedForward, 0);
         m_leftMotor.follow(m_rightMotor);

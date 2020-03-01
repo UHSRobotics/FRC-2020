@@ -30,9 +30,9 @@ public class AutoDrive extends CommandBase {
         Timer.delay(5);
         m_fw.setSpeed(0);
         m_hop.switchOFF();
-        m_drive.arcadeDrive(0.4, 0);
-        Timer.delay(0.5);
-        m_drive.arcadeDrive(0, 0);
+        m_drive.arcadeDriveAuton(0.4, 0);
+        Timer.delay(1);
+        m_drive.arcadeDriveAuton(0, 0);
         finished = true;
 
 
