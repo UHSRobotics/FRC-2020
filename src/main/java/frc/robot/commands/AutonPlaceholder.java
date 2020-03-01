@@ -24,12 +24,12 @@ public class AutonPlaceholder extends SequentialCommandGroup {
     addRequirements(drive);
     addRequirements(fw);
     addRequirements(hop);
-    fw.setSpeed(1);
-    // addCommands(new TargetCommand(0, 0, drive));
-    hop.switchON(1);
-    Timer.delay(5);
-    hop.switchOFF();
-    fw.setSpeed(0);
+    // fw.setSpeed(1);
+    // // addCommands(new TargetCommand(0, 0, drive));
+    // hop.switchON(1);
+    // Timer.delay(5);
+    // hop.switchOFF();
+    // fw.setSpeed(0);
     drive.arcadeDrive(-0.3, 0);
     Timer.delay(4);
     drive.disable();
