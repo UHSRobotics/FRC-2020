@@ -39,8 +39,8 @@ public class ArcadeDrive extends CommandBase {
     // // m_turnPID.disable();
     // }
     // if (!m_isReverse) {
-    m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) > Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
-        Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? m_turn.getAsDouble() : 0);
+    m_drive.arcadeDrive(m_pow.getAsDouble(),
+        m_turn.getAsDouble());
     // } else {
     // m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) >
     // Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
