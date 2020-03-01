@@ -106,11 +106,11 @@ public class VisionSubsystem extends SubsystemBase {
     setScale(scaleEntry.getDouble(1.0), true);
     if(error>10){
       error = 0; 
-      System.out.println("Target not detected");
+      // System.out.println("Target not detected");
     }
     if(getY()==0.0) error++;
     if(cnt>50){
-      System.out.println(getHorizontalAngle()+" " + getAngle());
+      // System.out.println(getHorizontalAngle()+" " + getAngle());
       cnt=0;
     }
     cnt++;
