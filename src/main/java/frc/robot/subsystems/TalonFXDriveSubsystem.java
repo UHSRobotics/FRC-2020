@@ -31,7 +31,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
     private double speedMultiplier = 1;
     private NetworkTableEntry speedEntry;
 
-    private double aLimit = 0.001;
+    private double aLimit = 0.04;
     private double pow0;
 
     public TalonFXDriveSubsystem() {
@@ -79,7 +79,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
             pow = pow0 + aLimit;
         }
 
-        pow0   = pow;
+        pow0 = pow;
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
