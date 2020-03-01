@@ -31,7 +31,11 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
     private double speedMultiplier = 1;
     private NetworkTableEntry speedEntry;
 
+    private double aLimit = 0.001;
+    private double pow0;
+
     public TalonFXDriveSubsystem() {
+        pow0 = 0;
         // set motors to coast
         m_leftMotor.setNeutralMode(NeutralMode.Coast);
         m_rightMotor.setNeutralMode(NeutralMode.Coast);
@@ -45,7 +49,10 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
         m_rightMotor.setInverted(false);
         m_leftFollowMotor.setInverted(InvertType.FollowMaster);
         m_rightFollowMotor.setInverted(InvertType.FollowMaster);
+        // Acceleration
+
         // reset encoder
+
         m_leftMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
         m_rightMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
         m_leftFollowMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
@@ -68,6 +75,11 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
 
     public void arcadeDrive(double pow, double turn) {
         pow *= speedMultiplier;
+        if (pow - pow0 >= aLimit) {
+            pow = pow0 + aLimit;
+        }
+
+        pow0   = pow;
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }

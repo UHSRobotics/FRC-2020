@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -31,8 +32,7 @@ public class LiftSubsystem extends SubsystemBase {
       m_liftMotor.setNeutralMode(NeutralMode.Brake);
       m_follow.setNeutralMode(NeutralMode.Brake);
       m_follow.follow(m_liftMotor);
-    //   m_liftMotor.configSelectedFeedbackSensor(feedbackDevice)
-   
+      m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
   }
 
   public void setSpeed(double s) {

@@ -39,15 +39,21 @@ public final class Constants {
     }
 
     public static final class DrivePIDConstants {
-        public static final double KpRot = 0.1;
-        public static final double KpDist = 0.1;
+        public static final double KpRot = 0.02;
         public static final double KiRot = .0001;
+        public static final double KdRot = 0.001;
+        public static final double KpDist = 0.1;
         public static final double KiDist = .0001;
-        public static final double KdRot = 2.5;
         public static final double KdDist = 2.5;
         public static final double kP = 0.1;
         public static final double kI = 0;
         public static final double kD = 0;
+
+    }
+
+    public static final class PhysicalMeasurements{
+        public static final double wheelDiam = 15.24;
+        public static final double driveBaseWidth = 69.85;
 
     }
 
