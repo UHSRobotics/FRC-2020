@@ -8,11 +8,16 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class WinchServoSubsystem extends SubsystemBase {
     private final Servo m_switch = new Servo(0);
     public static boolean toggleOn = false;
+    private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");
+    private NetworkTableEntry servoEntry;
 
     public void toggle() {
         if (toggleOn) {
@@ -26,6 +31,9 @@ public class WinchServoSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if(servoEntry == null)
+            servoEntry = servoTab.addPersistent("Servo", false).getEntry();
+        servoEntry.setBoolean(toggleOn);
         // This method will be called once per scheduler run
     }
 }
