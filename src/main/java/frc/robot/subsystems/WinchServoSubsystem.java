@@ -18,9 +18,14 @@ public class WinchServoSubsystem extends SubsystemBase {
     public static boolean toggleOn = false;
     private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");
     private NetworkTableEntry servoEntry;
+    private static double angle  = 0;
+    private static boolean init = false;
+
 
     public void toggle() {
         toggleOn = !toggleOn;
+        angle = m_switch.getAngle();
+        System.out.print(angle);
     }
 
     @Override
@@ -29,10 +34,14 @@ public class WinchServoSubsystem extends SubsystemBase {
             servoEntry = servoTab.addPersistent("Servo", false).getEntry();
         servoEntry.setBoolean(toggleOn);
         if(toggleOn){
-            m_switch.setAngle(200);
+            m_switch.setAngle(215);
         } else {
-            m_switch.setAngle(30);
+            m_switch.setAngle(105);
         }
         // This method will be called once per scheduler run
     }
+    public boolean getToggle(){
+        return toggleOn;
+    }
+
 }

@@ -26,6 +26,7 @@ public class LiftSubsystem extends SubsystemBase {
     private double speedMultiplier = 1;  
     private NetworkTableEntry speedEntry; 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
+    private static boolean init = false;
                                                   
 
   public LiftSubsystem() {
@@ -64,5 +65,11 @@ public class LiftSubsystem extends SubsystemBase {
   //     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
     
   // }
+}
+public void initialized(){
+  init = true;
+}
+public boolean getInit(){
+  return init;
 }
 }
