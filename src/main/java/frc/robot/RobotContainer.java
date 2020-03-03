@@ -4,37 +4,29 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousSequence;
-// import frc.robot.commands.AutoTargetCommand;
-import frc.robot.commands.DropIntakeCommand;
 import frc.robot.commands.FlywheelCommand;
 import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.SpinCommand;
-import frc.robot.commands.pidcommand.*;
 import frc.robot.subsystems.ColorSubsystem;
-// import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.DropIntakeSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
-// import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
-import frc.robot.subsystems.FlywheelSubsystem;
-import frc.robot.subsystems.SpinSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.ServoSubsystem;
+import frc.robot.subsystems.SpinSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -45,34 +37,23 @@ import frc.robot.subsystems.ServoSubsystem;
  */
 public class RobotContainer {
 
-  // private final FlywheelSubsystem m_flywheelSubsystem = new
-  // FlywheelSubsystem();
-  private final FlywheelSubsystem m_neoFwSubsystem = new FlywheelSubsystem();
+  // Subsystem setup
+  private final FlywheelSubsystem m_flywheelSubsystem = new FlywheelSubsystem();
   private final LiftSubsystem m_liftSubsystem = new LiftSubsystem();
   private final DigitalInput m_magSwitch = new DigitalInput(3);
-
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   // private final DropIntakeSubsystem m_DropIntakeSubsystem = new
   // DropIntakeSubsystem();
   private final ServoSubsystem m_servoSubsystem = new ServoSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
   private final HopperSubsystem m_hopper = new HopperSubsystem();
-
-  // private final SolenoidTestSubsystem m_solenoidTestSubsystem = new
-  // SolenoidTestSubsystem();
   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
 
-  // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-
-  // placeholder command for autonomous
-  private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_neoFwSubsystem, m_hopper);
-  // private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem, m_neoFwSubsystem,
-  //     m_hopper);
+  // Autonomous setup
+  private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_flywheelSubsystem, m_hopper);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  // Main Controller
   DualShockController m_driverController = new DualShockController(0);
   DualShockController m_subsystemController = new DualShockController(1);
 
@@ -82,21 +63,15 @@ public class RobotContainer {
   public RobotContainer() {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
-
-    m_neoFwSubsystem.setDefaultCommand(new FlywheelCommand(m_neoFwSubsystem,
-    () -> m_subsystemController.getCrossButton()));
-
-    m_liftSubsystem.setDefaultCommand(
-        new LiftCommand(m_liftSubsystem, () -> m_subsystemController.getBumper(Hand.kLeft),
+    m_flywheelSubsystem
+        .setDefaultCommand(new FlywheelCommand(m_flywheelSubsystem, () -> m_subsystemController.getCrossButton()));
+    m_liftSubsystem
+        .setDefaultCommand(new LiftCommand(m_liftSubsystem, () -> m_subsystemController.getBumper(Hand.kLeft),
             () -> m_subsystemController.getBumper(Hand.kRight), m_servoSubsystem));
-
-    m_IntakeSubsystem.setDefaultCommand(new IntakeCommand(m_IntakeSubsystem,
-    () -> m_subsystemController.getYMapped(Hand.kLeft)));
-
-    // ManualDrive
-    m_driveSubsystem
-        .setDefaultCommand(new ArcadeDrive(m_driveSubsystem, () -> m_driverController.getYMapped(Hand.kLeft) * 0.4,
-            () -> m_driverController.getXMapped(Hand.kRight) * 0.4));
+    m_IntakeSubsystem
+        .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> m_subsystemController.getYMapped(Hand.kLeft)));
+    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
+        () -> m_driverController.getYMapped(Hand.kLeft) * 0.4, () -> m_driverController.getXMapped(Hand.kRight) * 0.4));
     m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
@@ -116,39 +91,15 @@ public class RobotContainer {
     // .whileHeld(new IntakeCommand(m_IntakeSubsystem, () ->
     // m_driverController.getTrigButton()));
 
-    new JoystickButton(m_subsystemController, Button.kDisk.value)
-    .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
-
-    // new JoystickButton(m_driverController, Button.kCross.value)
-    // .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
-
-    // new JoystickButton(m_driverController, Button.kRect.value)
-    // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
-    // m_visionSubsystem));
-
     // new JoystickButton(m_subsystemController, Button.kBumperLeft.value)
     // .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem,
     // () -> m_subsystemController.getBumperPressed(Hand.kLeft),
     // () -> m_subsystemController.getBumperPressed(Hand.kRight) ));
-    // new JoystickButton(m_driverController, Button.kBumperRight.value)
-    // .whenPressed(new AutoTargetCommand(m_visionSubsystem.getDistanceFromTarget(),
-    // m_visionSubsystem.getHorizontalAngle(), m_driveSubsystem));
-    // new JoystickButton(m_driverController, Button.kCross.value)
-    // .whenPressed(new VisionRotationPIDCommand(m_driveSubsystem,
-    // m_visionSubsystem));
-    // new JoystickButton(m_driverController, Button.kRect.value)
-    // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
-    // m_visionSubsystem));
-    //
-    // new JoystickButton(m_driverController, Button.kTrig.value)
-    // .whenPressed(new PIDDrive(m_driveSubsystem, () ->
-    // m_driverController.getTrigButtonPressed(), 4000 * 5));
-
-    // new JoystickButton(m_driverController,
-    // Button.kBumperRight.value).whenPressed(new VisionDrive(m_driveSubsystem));
 
     // @return 0-1-2-3=blue-green-red-yellow; -1: match revolution
 
+    new JoystickButton(m_subsystemController, Button.kDisk.value)
+        .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     new JoystickButton(m_driverController, Button.kBumperRight.value)
         .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
     new JoystickButton(m_driverController, Button.kRect.value)
@@ -160,20 +111,6 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kTrig.value)
         .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
 
-    // new JoystickButton(m_driverController,
-    // Button.kDisk.value).toggleWhenPressed(new TankDrive(m_driveSubsystem,
-    // () -> m_driverController.getYMapped(Hand.kLeft), () ->
-    // m_driverController.getYMapped(Hand.kRight)));
-
-    // new JoystickButton(m_driverController, Button.kTrig.value)
-    // .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidForward,
-    // m_solenoidTestSubsystem));
-    // new JoystickButton(m_driverController, Button.kCross.value)
-    // .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidBack,
-    // m_solenoidTestSubsystem));
-    // new JoystickButton(m_driverController, Button.kRect.value)
-    // .whenPressed(new InstantCommand(m_solenoidTestSubsystem::solenoidOff,
-    // m_solenoidTestSubsystem));
   }
 
   /**

@@ -1,11 +1,10 @@
 package frc.robot.subsystems.pidcontroller;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.LiftConstants;
-import frc.robot.Constants.VisionControlConstants;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 

@@ -2,11 +2,9 @@ package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.ServoSubsystem;
-import frc.robot.subsystems.pidcontroller.LiftPID;
 
 public class LiftCommand extends CommandBase {
     private final LiftSubsystem m_lift;

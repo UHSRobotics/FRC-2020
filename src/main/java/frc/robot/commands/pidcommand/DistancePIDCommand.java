@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.DrivePIDConstants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
 
 public class DistancePIDCommand extends ProfiledPIDCommand {
     //goal in cm

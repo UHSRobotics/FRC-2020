@@ -19,7 +19,6 @@ public class ServoSubsystem extends SubsystemBase {
     private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");
     private NetworkTableEntry servoEntry;
     private static double angle  = 0;
-    private static boolean init = false;
 
 
     public void toggle() {
