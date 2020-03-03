@@ -11,22 +11,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutonomousSequence;
-import frc.robot.commands.FlywheelCommand;
-import frc.robot.commands.HopperCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.LiftCommand;
-import frc.robot.commands.SpinCommand;
-import frc.robot.subsystems.ColorSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.FlywheelSubsystem;
-import frc.robot.subsystems.HopperSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LiftSubsystem;
-import frc.robot.subsystems.ServoSubsystem;
-import frc.robot.subsystems.SpinSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.commands.*;
+import frc.robot.commands.pidcommand.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -90,6 +77,18 @@ public class RobotContainer {
     // new JoystickButton(m_driverController, Button.kTrig.value)
     // .whileHeld(new IntakeCommand(m_IntakeSubsystem, () ->
     // m_driverController.getTrigButton()));
+
+// new JoystickButton(m_subsystemController, Button.kRect.value)
+//     .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
+    new JoystickButton(m_subsystemController, Button.kDisk.value)
+    .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
+//sketch delete this
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+    .whenPressed(new DistancePIDCommand(m_driveSubsystem, 200));
+
+    // new JoystickButton(m_subsystemController, Button.kRect.value)
+    // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
+    // m_visionSubsystem));
 
     // new JoystickButton(m_subsystemController, Button.kBumperLeft.value)
     // .whileHeld(new DropIntakeCommand(m_DropIntakeSubsystem,
