@@ -5,15 +5,15 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LiftSubsystem;
-import frc.robot.subsystems.WinchServoSubsystem;
+import frc.robot.subsystems.ServoSubsystem;
 import frc.robot.subsystems.pidcontroller.LiftPID;
 
 public class LiftCommand extends CommandBase {
     private final LiftSubsystem m_lift;
-    // private final WinchServoSubsystem m_winch;
+    // private final ServoSubsystem m_winch;
     private final BooleanSupplier m_left;
     private final BooleanSupplier m_right;
-    private final WinchServoSubsystem m_servo;
+    private final ServoSubsystem m_servo;
 
     // private final BooleanSupplier m_pidToggle;
     // private final LiftPID m_liftPID;
@@ -29,7 +29,7 @@ public class LiftCommand extends CommandBase {
     // addRequirements(m_liftPID);
     // }
 
-    public LiftCommand(LiftSubsystem lift, BooleanSupplier left, BooleanSupplier right, WinchServoSubsystem servo) {
+    public LiftCommand(LiftSubsystem lift, BooleanSupplier left, BooleanSupplier right, ServoSubsystem servo) {
         m_lift = lift;
         // m_winch = winch;
         m_left = left;
@@ -44,7 +44,7 @@ public class LiftCommand extends CommandBase {
     @Override
     public void execute() {
         if (m_left.getAsBoolean()&&!m_servo.getToggle()) {
-            // if (!WinchServoSubsystem.toggleOn) {
+            // if (!ServoSubsystem.toggleOn) {
             //     m_winch.toggle();
             //     Timer.delay(0.5);
             // }
@@ -61,13 +61,13 @@ public class LiftCommand extends CommandBase {
             m_lift.setSpeed(0);
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
-        //     if (!WinchServoSubsystem.toggleOn) {
+        //     if (!ServoSubsystem.toggleOn) {
         //         m_winch.toggle();
         //         Timer.delay(0.5);
         //     }
         //     m_lift.setSpeed(-1);
         // } else {
-        //     if (WinchServoSubsystem.toggleOn) {
+        //     if (ServoSubsystem.toggleOn) {
         //         m_lift.setSpeed(0);
         //         Timer.delay(0.5);
         //         m_winch.toggle();

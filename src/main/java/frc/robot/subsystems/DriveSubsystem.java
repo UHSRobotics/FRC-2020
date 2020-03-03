@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants;
 
-public class TalonFXDriveSubsystem extends SubsystemBase {
+public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_leftMotor = new TalonFX(7);
     private final TalonFX m_rightMotor = new TalonFX(5);
     private final TalonFX m_leftFollowMotor = new TalonFX(8);
@@ -34,7 +34,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
     private double aLimit = 0.07;
     private double pow0;
 
-    public TalonFXDriveSubsystem() {
+    public DriveSubsystem() {
         pow0 = 0;
         // set motors to coast
         m_leftMotor.setNeutralMode(NeutralMode.Coast);

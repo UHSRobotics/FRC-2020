@@ -14,15 +14,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.DualShockController.Button;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutoDrive;
+import frc.robot.commands.AutonomousSequence;
 // import frc.robot.commands.AutoTargetCommand;
-import frc.robot.commands.AutonPlaceholder;
 import frc.robot.commands.DropIntakeCommand;
-import frc.robot.commands.FlywheelCmd;
+import frc.robot.commands.FlywheelCommand;
 import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand;
-import frc.robot.commands.PIDDrive;
 import frc.robot.commands.SpinCommand;
 import frc.robot.commands.pidcommand.*;
 import frc.robot.subsystems.ColorSubsystem;
@@ -32,11 +30,11 @@ import frc.robot.subsystems.HopperSubsystem;
 // import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
-import frc.robot.subsystems.NeoFwSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 import frc.robot.subsystems.SpinSubsystem;
-import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import frc.robot.subsystems.WinchServoSubsystem;
+import frc.robot.subsystems.ServoSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -49,16 +47,16 @@ public class RobotContainer {
 
   // private final FlywheelSubsystem m_flywheelSubsystem = new
   // FlywheelSubsystem();
-  private final NeoFwSubsystem m_neoFwSubsystem = new NeoFwSubsystem();
+  private final FlywheelSubsystem m_neoFwSubsystem = new FlywheelSubsystem();
   private final LiftSubsystem m_liftSubsystem = new LiftSubsystem();
   private final DigitalInput m_magSwitch = new DigitalInput(3);
 
-  private final TalonFXDriveSubsystem m_driveSubsystem = new TalonFXDriveSubsystem();
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   // private final DropIntakeSubsystem m_DropIntakeSubsystem = new
   // DropIntakeSubsystem();
-  private final WinchServoSubsystem m_servoSubsystem = new WinchServoSubsystem();
+  private final ServoSubsystem m_servoSubsystem = new ServoSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
   private final HopperSubsystem m_hopper = new HopperSubsystem();
 
@@ -70,7 +68,7 @@ public class RobotContainer {
   // private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // placeholder command for autonomous
-  private final Command m_simpleAutoCommand = new AutoDrive(m_driveSubsystem, m_neoFwSubsystem, m_hopper);
+  private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_neoFwSubsystem, m_hopper);
   // private final AutonPlaceholder m_autonPlaceholder = new AutonPlaceholder(m_driveSubsystem, m_neoFwSubsystem,
   //     m_hopper);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -85,7 +83,7 @@ public class RobotContainer {
     m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
 
-    m_neoFwSubsystem.setDefaultCommand(new FlywheelCmd(m_neoFwSubsystem,
+    m_neoFwSubsystem.setDefaultCommand(new FlywheelCommand(m_neoFwSubsystem,
     () -> m_subsystemController.getCrossButton()));
 
     m_liftSubsystem.setDefaultCommand(

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
-public class WinchServoSubsystem extends SubsystemBase {
+public class ServoSubsystem extends SubsystemBase {
     private final Servo m_switch = new Servo(0);
     public static boolean toggleOn = false;
     private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");

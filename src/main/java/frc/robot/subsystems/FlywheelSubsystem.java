@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class NeoFwSubsystem extends SubsystemBase {
+public class FlywheelSubsystem extends SubsystemBase {
   /**
    * Creates a new NeoFwSubsystem.
    */
@@ -32,7 +32,7 @@ public class NeoFwSubsystem extends SubsystemBase {
   private double speedMultiplier = 1, targetVelocity = 0.0;
 
   
-  public NeoFwSubsystem() {
+  public FlywheelSubsystem() {
     m_motor.setIdleMode(IdleMode.kCoast);
     m_motor2.setIdleMode(IdleMode.kCoast);
     m_motor2.setInverted(true);

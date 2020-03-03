@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.DrivePIDConstants;
-import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 
 public class RotationPIDCommand extends ProfiledPIDCommand {
     //goal is in degrees, clockwise
-    public RotationPIDCommand(TalonFXDriveSubsystem drive, double goal) {
+    public RotationPIDCommand(DriveSubsystem drive, double goal) {
         super(new ProfiledPIDController(DrivePIDConstants.KpRot, DrivePIDConstants.KiRot,
                 DrivePIDConstants.KdRot, new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading
