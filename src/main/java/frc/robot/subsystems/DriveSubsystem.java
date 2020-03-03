@@ -81,11 +81,13 @@ public class DriveSubsystem extends SubsystemBase {
         }
 
         pow0 = pow;
+        printEncoder();
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
 
     public void arcadeDriveAuton(double pow, double turn) {
+        printEncoder();
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -110,8 +112,12 @@ public class DriveSubsystem extends SubsystemBase {
         m_leftMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    public void encoderTest() {
-        encoderEntry.setDouble(m_rightMotor.getSensorCollection().getIntegratedSensorPosition());
+    public void printEncoder() {
+        if (encoderEntry == null) {
+            encoderEntry = tab.addPersistent("Encoder", 1).getEntry();
+            System.out.println("Added Encoder NT entry");
+        }
+        encoderEntry.setDouble(getEncoderRight());
     }
 
     //in centimeters
