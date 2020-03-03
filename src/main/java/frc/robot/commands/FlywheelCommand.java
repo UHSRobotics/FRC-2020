@@ -12,8 +12,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 // import frc.robot.subsystems.FlywheelSubsystem;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-import frc.robot.subsystems.NeoFwSubsystem;
-import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 
 /**
  * A command to drive the robot with joystick input (passed in as
@@ -21,8 +20,8 @@ import frc.robot.subsystems.HopperSubsystem;
  * actual code should inline a command this simple with
  * {@link edu.wpi.first.wpilibj2.command.RunCommand}.
  */
-public class FlywheelCmd extends CommandBase {
-  private final NeoFwSubsystem m_neoFw;
+public class FlywheelCommand extends CommandBase {
+  private final FlywheelSubsystem m_neoFw;
   // private final HopperSubsystem m_hopper;
   private final BooleanSupplier m_fullPow;// , m_mag;
 
@@ -34,7 +33,7 @@ public class FlywheelCmd extends CommandBase {
    * @param rotation  The control input for turning
    */
 
-  public FlywheelCmd(NeoFwSubsystem subsystem, BooleanSupplier fullPow) {
+  public FlywheelCommand(FlywheelSubsystem subsystem, BooleanSupplier fullPow) {
     m_neoFw = subsystem;
     // m_hopper = hopper;
     m_fullPow = fullPow;

@@ -18,13 +18,14 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Ports;
 
-public class NeoFwSubsystem extends SubsystemBase {
+public class FlywheelSubsystem extends SubsystemBase {
   /**
    * Creates a new NeoFwSubsystem.
    */
-  private final CANSparkMax m_motor = new CANSparkMax(10, MotorType.kBrushless);
-  private final CANSparkMax m_motor2 = new CANSparkMax(2, MotorType.kBrushless);
+  private final CANSparkMax m_motor = new CANSparkMax(Ports.flywheel, MotorType.kBrushless);
+  private final CANSparkMax m_motor2 = new CANSparkMax(Ports.flywheelInvert, MotorType.kBrushless);
   private final CANPIDController c = m_motor.getPIDController();
   // private final CANSparkMax m_motorInverted = new CANSparkMax(1, MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
@@ -32,7 +33,7 @@ public class NeoFwSubsystem extends SubsystemBase {
   private double speedMultiplier = 1, targetVelocity = 0.0;
 
   
-  public NeoFwSubsystem() {
+  public FlywheelSubsystem() {
     m_motor.setIdleMode(IdleMode.kCoast);
     m_motor2.setIdleMode(IdleMode.kCoast);
     m_motor2.setInverted(true);

@@ -7,24 +7,22 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.PIDConstants;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import frc.robot.Constants.Ports;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final TalonSRX m_motor = new TalonSRX(12);
+    private final TalonSRX m_motor = new TalonSRX(Ports.intake);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
     private NetworkTableEntry speedEntry;
     private double speedMultiplier = 1;
-    private double tempSpeed  = -0.3;
 
     public IntakeSubsystem() {
         // set motors to coast
@@ -35,29 +33,29 @@ public class IntakeSubsystem extends SubsystemBase {
         m_motor.set(ControlMode.PercentOutput, s);
     }
 
-    public void switchOff(){
+    public void switchOff() {
         m_motor.set(ControlMode.PercentOutput, 0);
     }
 
-    // public void setSpeedMultiplier(double speed, boolean updateNT) {
-    //     if (0 <= speed && speed <= 2) {
-    //         speedMultiplier = speed;
-    //         if (updateNT) {
-    //             System.out.println("Putted Single Speed Multiplier NT entry");
-    //             speedEntry.setDouble(speedMultiplier);
-    //         }
-    //     } else {
-    //         System.out.println("Putted Single Speed Multiplier NT entry");
-    //         speedEntry.setDouble(speedMultiplier);
-    //     }
-    // }
+    public void setSpeedMultiplier(double speed, boolean updateNT) {
+        if (0 <= speed && speed <= 2) {
+            speedMultiplier = speed;
+            if (updateNT) {
+                System.out.println("NT update (intake)");
+                speedEntry.setDouble(speedMultiplier);
+            }
+        } else {
+            System.out.println("NT update (intake)");
+            speedEntry.setDouble(speedMultiplier);
+        }
+    }
 
     @Override
     public void periodic() {
-        // if (speedEntry == null) {
-        //     speedEntry = tab.addPersistent("Intake", 1).getEntry();
-        //     System.out.println("Added Single Speed Multiplier NT entry");
-        // }
-        // setSpeedMultiplier(speedEntry.getDouble(1.0), false);
+        if (speedEntry == null) {
+            speedEntry = tab.addPersistent("Intake", 1).getEntry();
+            System.out.println("NT update (intake)");
+        }
+        setSpeedMultiplier(speedEntry.getDouble(1.0), false);
     }
 }
