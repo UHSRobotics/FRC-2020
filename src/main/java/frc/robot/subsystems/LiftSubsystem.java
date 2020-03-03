@@ -64,12 +64,12 @@ public class LiftSubsystem extends SubsystemBase {
   //     }
   //     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
     
-  // }
-}
-public void initialized(){
-  init = true;
-}
-public boolean getInit(){
-  return init;
-}
+  }
+
+  public void initialized(){
+    init = true;
+  }
+  public boolean getInit(){
+    return init;
+  }
 }

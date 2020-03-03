@@ -43,21 +43,22 @@ public class LiftCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_left.getAsBoolean()&&!m_servo.getToggle()) {
-            // if (!WinchServoSubsystem.toggleOn) {
-            //     m_winch.toggle();
-            //     Timer.delay(0.5);
-            // }
+        if (m_left.getAsBoolean()) {
+            if (!m_servo.getToggle()) {
+                m_servo.toggle();
+                Timer.delay(0.1);
+            }
             m_lift.setSpeed(1);
             m_lift.initialized();
 
-        } 
-        else if(m_right.getAsBoolean()&&m_lift.getInit()){
+        } else if(m_right.getAsBoolean() && m_lift.getInit()){
+            if(m_servo.getToggle()){
+                m_servo.toggle();
+                Timer.delay(0.1);
+            }
             m_lift.setSpeed(-1);
             
-        }
-        else 
-        {
+        } else{
             m_lift.setSpeed(0);
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
