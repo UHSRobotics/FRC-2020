@@ -19,6 +19,21 @@ package frc.robot;
  */
 public final class Constants {
 
+    public static final class Ports {
+        public static final int driveRight = 5;
+        public static final int driveLeft = 7;
+        public static final int driveRightFollow = 6;
+        public static final int driveLeftFollow = 8;
+        public static final int flywheel = 10;
+        public static final int flywheelInvert = 2;
+        public static final int lift = 4;
+        public static final int liftFollow = 9;
+        public static final int intake = 12;
+        public static final int servo = 0;
+        public static final int hopper = 20;
+
+    }
+
     public static final class ColorConstants {
         public static final int waitCycle = 5;
         public static final int colorRange = 30;
@@ -51,7 +66,7 @@ public final class Constants {
 
     }
 
-    public static final class PhysicalMeasurements{
+    public static final class PhysicalMeasurements {
         public static final double wheelDiam = 15.24;
         public static final double driveBaseWidth = 69.85;
 
@@ -73,25 +88,16 @@ public final class Constants {
         // angle limits in degrees
         public static final double innerPortAngleLimit = 33;
         public static final double mToInch = 39.3701;
-        //to-do
+        // to-do
         public static final double cameraHeight = 0;
         public static final double comfortMin = 0, comfortMax = 0;
     }
 
     public static final class LiftConstants {
         // todo
-        public static final int liftMotor = 4;
-        public static final int liftFollow = 9;
         public static final double Kp = 1;
         public static final double Kd = 0;
         public static final double Ki = 0;
-    }
-
-    public static final class DriveConstants {
-        public static final int leftMotor = 1;
-        public static final int rightMotor = 3;
-        public static final int leftFollowMotor = 2;
-        public static final int rightFollowMotor = 0;
     }
 
     public static final class FlywheelCons {

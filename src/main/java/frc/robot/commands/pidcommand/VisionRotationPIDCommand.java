@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants.DrivePIDConstants;
-import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class VisionRotationPIDCommand extends ProfiledPIDCommand {
-    public VisionRotationPIDCommand(TalonFXDriveSubsystem drive, VisionSubsystem data) {
+    public VisionRotationPIDCommand(DriveSubsystem drive, VisionSubsystem data) {
         super(new ProfiledPIDController(DrivePIDConstants.KpRot, DrivePIDConstants.KiRot,
                 DrivePIDConstants.KdRot, new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading
