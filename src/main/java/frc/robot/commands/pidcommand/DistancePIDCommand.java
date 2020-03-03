@@ -16,7 +16,7 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
         // Close loop on heading
         drive::getEncoderRight,
         // Set reference to target
-        goal/(Constants.PhysicalMeasurements.wheelDiam * Math.PI) * 4096,
+        goal,
         // Pipe output to turn robot
         (output, setpoint) -> drive.arcadeDriveAuton(output * 0.5, 0),
         // Require the drive

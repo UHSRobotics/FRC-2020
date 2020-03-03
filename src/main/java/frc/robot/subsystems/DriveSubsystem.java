@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.Ports;
+import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_leftMotor = new TalonFX(Ports.driveLeft);
@@ -113,12 +114,14 @@ public class DriveSubsystem extends SubsystemBase {
         encoderEntry.setDouble(m_rightMotor.getSensorCollection().getIntegratedSensorPosition());
     }
 
+    //in centimeters
     public double getEncoderLeft() {
-        return m_leftMotor.getSelectedSensorPosition();
+        return m_leftMotor.getSelectedSensorPosition() / 4096.0 * (Constants.PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
+    //in centimeters
     public double getEncoderRight() {
-        return m_rightMotor.getSelectedSensorPosition();
+        return m_rightMotor.getSelectedSensorPosition() / 4096.0 * (Constants.PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {
