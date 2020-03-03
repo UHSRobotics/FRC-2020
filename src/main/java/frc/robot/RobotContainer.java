@@ -118,13 +118,15 @@ public class RobotContainer {
     // .whileHeld(new IntakeCommand(m_IntakeSubsystem, () ->
     // m_driverController.getTrigButton()));
 
+// new JoystickButton(m_subsystemController, Button.kRect.value)
+//     .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
     new JoystickButton(m_subsystemController, Button.kDisk.value)
     .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
+//sketch delete this
+    new JoystickButton(m_subsystemController, Button.kRect.value)
+    .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
 
-    // new JoystickButton(m_driverController, Button.kCross.value)
-    // .whenPressed(new DistancePIDCommand(m_driveSubsystem, 1));
-
-    // new JoystickButton(m_driverController, Button.kRect.value)
+    // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
     // m_visionSubsystem));
 

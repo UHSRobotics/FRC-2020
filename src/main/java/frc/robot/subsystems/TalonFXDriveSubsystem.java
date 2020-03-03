@@ -114,6 +114,7 @@ public class TalonFXDriveSubsystem extends SubsystemBase {
     }
 
     public double getEncoderLeft() {
+        System.out.println(m_leftMotor.getSelectedSensorPosition());
         return m_leftMotor.getSelectedSensorPosition();
     }
 

@@ -45,7 +45,7 @@ public final class Constants {
         public static final double KpDist = 0.1;
         public static final double KiDist = .0001;
         public static final double KdDist = 2.5;
-        public static final double kP = 0.1;
+        public static final double kP = 1;
         public static final double kI = 0;
         public static final double kD = 0;
 

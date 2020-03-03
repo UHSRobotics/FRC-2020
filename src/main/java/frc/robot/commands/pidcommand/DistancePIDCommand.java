@@ -14,7 +14,7 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
         super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD,
                 new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading
-                drive::getEncoderLeft,
+                drive::getEncoderRight,
                 // Set reference to target
                 goal/(Constants.PhysicalMeasurements.wheelDiam * Math.PI) * 4096,
                 // Pipe output to turn robot
