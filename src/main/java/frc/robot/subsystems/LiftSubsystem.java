@@ -16,11 +16,11 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.Ports;
 
 public class LiftSubsystem extends SubsystemBase {
-  private final TalonSRX m_liftMotor = new TalonSRX(Constants.LiftConstants.liftMotor);
-  private final TalonSRX m_follow = new TalonSRX(Constants.LiftConstants.liftFollow);
+  private final TalonSRX m_liftMotor = new TalonSRX(Ports.lift);
+  private final TalonSRX m_follow = new TalonSRX(Ports.liftFollow);
   private double speedMultiplier = 1;
   private NetworkTableEntry speedEntry;
   private final ShuffleboardTab tab = Shuffleboard.getTab("Lift");

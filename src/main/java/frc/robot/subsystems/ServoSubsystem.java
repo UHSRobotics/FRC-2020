@@ -8,13 +8,14 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Ports;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class ServoSubsystem extends SubsystemBase {
-    private final Servo m_switch = new Servo(0);
+    private final Servo m_switch = new Servo(Ports.servo);
     public static boolean toggleOn = false;
     private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");
     private NetworkTableEntry servoEntry;

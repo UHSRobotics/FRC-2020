@@ -18,12 +18,13 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.Ports;
 
 public class DriveSubsystem extends SubsystemBase {
-    private final TalonFX m_leftMotor = new TalonFX(7);
-    private final TalonFX m_rightMotor = new TalonFX(5);
-    private final TalonFX m_leftFollowMotor = new TalonFX(8);
-    private final TalonFX m_rightFollowMotor = new TalonFX(6);
+    private final TalonFX m_leftMotor = new TalonFX(Ports.driveLeft);
+    private final TalonFX m_rightMotor = new TalonFX(Ports.driveRight);
+    private final TalonFX m_leftFollowMotor = new TalonFX(Ports.driveLeftFollow);
+    private final TalonFX m_rightFollowMotor = new TalonFX(Ports.driveRightFollow);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
     private NetworkTableEntry encoderEntry;
