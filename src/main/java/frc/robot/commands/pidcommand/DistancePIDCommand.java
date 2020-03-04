@@ -2,8 +2,8 @@ package frc.robot.commands.pidcommand;
 
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
-import frc.robot.Constants;
-import frc.robot.Constants.DrivePIDConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.PhysicalMeasurements;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.*;
 
@@ -12,11 +12,11 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
     //goal in cm
     public DistancePIDCommand(DriveSubsystem drive, double goal) {
         
-        super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD, new Constraints(800,2000)),
+        super(new ProfiledPIDController(DriveConstants.KpDist, DriveConstants.KiDist, DriveConstants.KdDist, new Constraints(DriveConstants.velLimit,DriveConstants.accelLimit)),
         // Close loop on heading
-        drive::getEncoderRight,
+        drive::getAvgEncCM,
         // Set reference to target
-        goal,
+        drive.getAvgEncCM() + goal,
         // Pipe output to turn robot
         (output, setpoint) -> drive.arcadeDriveAuton(output,0),
         // Require the drive
@@ -24,7 +24,7 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
         
         getController().setTolerance(1);
 
-        System.out.println("goal is " + goal/(Constants.PhysicalMeasurements.wheelDiam * Math.PI) * 4096);
+        System.out.println("goal is " + goal/(PhysicalMeasurements.wheelDiam * Math.PI) * 4096);
 
         // Set the controller to be continuous (because it is an angle controller)
         // getController().enableContinuousInput(-180, 180);

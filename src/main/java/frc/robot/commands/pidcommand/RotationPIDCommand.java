@@ -4,15 +4,15 @@ import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
-import frc.robot.Constants.DrivePIDConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 
 public class RotationPIDCommand extends ProfiledPIDCommand {
     //goal is in degrees, clockwise
     public RotationPIDCommand(DriveSubsystem drive, double goal) {
-        super(new ProfiledPIDController(DrivePIDConstants.KpRot, DrivePIDConstants.KiRot,
-                DrivePIDConstants.KdRot, new TrapezoidProfile.Constraints(10, 20)),
+        super(new ProfiledPIDController(DriveConstants.KpRot, DriveConstants.KiRot,
+                DriveConstants.KdRot, new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading
                 drive::getEncoderLeft,
                 // Set reference to target

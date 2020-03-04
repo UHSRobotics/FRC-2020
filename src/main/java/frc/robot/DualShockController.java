@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.Constants.OIConstants;
 
 /**
  * Handle input from a Dualshock controller connected to the Driver Station.
@@ -47,11 +47,11 @@ public class DualShockController extends GenericHID {
    *                  https://www.desmos.com/calculator/p2q98lfjet
    */
   public void initMapping(double curvature) {
-    controllerMapping = new double[Constants.controllerPrecision + 5];
+    controllerMapping = new double[OIConstants.controllerPrecision + 5];
     double tempX, w2, w1 = Math.exp(curvature * (-0.1));
     for (int i = 0; i < controllerMapping.length; i++) {
       // mapping i (probally 0 to 1000) to -1 to 1
-      tempX = (i - (Constants.controllerPrecision / 2.0)) / (Constants.controllerPrecision / 2.0);
+      tempX = (i - (OIConstants.controllerPrecision / 2.0)) / (OIConstants.controllerPrecision / 2.0);
       w2 = w1 + Math.exp(10.0 * (Math.abs(tempX) - 1)) * (1 - w1);
       controllerMapping[i] = tempX * w2;
     }
@@ -68,7 +68,7 @@ public class DualShockController extends GenericHID {
     if (!mappingInitialized)
       return input;
     return controllerMapping[(int) Math
-        .round(input * (Constants.controllerPrecision / 2) + (Constants.controllerPrecision / 2))];
+        .round(input * (OIConstants.controllerPrecision / 2) + (OIConstants.controllerPrecision / 2))];
   }
 
   /**
@@ -78,8 +78,8 @@ public class DualShockController extends GenericHID {
    */
   private double getDeadzonedOutput(double input) {
     // https://www.desmos.com/calculator/oubwvzj81f
-    return Math.abs(input) < Constants.joystickDeadzone ? 0
-        : (input - Math.signum(input) * Constants.joystickDeadzone) / (1 - Constants.joystickDeadzone);
+    return Math.abs(input) < OIConstants.joystickDeadzone ? 0
+        : (input - Math.signum(input) * OIConstants.joystickDeadzone) / (1 - OIConstants.joystickDeadzone);
   }
 
   public double getXMapped(Hand hand) {

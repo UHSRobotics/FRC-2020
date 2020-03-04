@@ -31,8 +31,8 @@ public class ArcadeDrive extends CommandBase {
     // // m_turnPID.enable();
     // // m_turnPID.setSetpoint(180);
     // }
-    // if (m_pow.getAsDouble() > Constants.joystickDeadzone || m_turn.getAsDouble()
-    // > Constants.joystickDeadzone) {
+    // if (m_pow.getAsDouble() > OIConstants.joystickDeadzone || m_turn.getAsDouble()
+    // > OIConstants.joystickDeadzone) {
     // // m_turnPID.disable();
     // }
     // if (!m_isReverse) {
@@ -40,8 +40,8 @@ public class ArcadeDrive extends CommandBase {
         m_turn.getAsDouble());
     // } else {
     // m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) >
-    // Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
-    // Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? -1 *
+    // OIConstants.joystickDeadzone ? m_pow.getAsDouble() : 0,
+    // Math.abs(m_turn.getAsDouble()) > OIConstants.joystickDeadzone ? -1 *
     // m_turn.getAsDouble() : 0);
     // }
   }

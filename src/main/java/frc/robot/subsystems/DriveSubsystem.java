@@ -17,6 +17,8 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.PhysicalMeasurements;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.Ports;
 import frc.robot.Constants;
@@ -129,14 +131,22 @@ public class DriveSubsystem extends SubsystemBase {
         encoderEntry.setDouble(getEncoderRight());
     }
 
+    public double getAvgEncCM() {
+        return encToCm((getEncoderLeft() + getEncoderRight())/2.0);
+    }
+
     //in centimeters
     public double getEncoderLeft() {
-        return m_leftMotor.getSelectedSensorPosition() / 4096.0 * (Constants.PhysicalMeasurements.wheelDiam * Math.PI);
+        return m_leftMotor.getSelectedSensorPosition();
     }
 
     //in centimeters
     public double getEncoderRight() {
-        return m_rightMotor.getSelectedSensorPosition() / 4096.0 * (Constants.PhysicalMeasurements.wheelDiam * Math.PI);
+        return m_rightMotor.getSelectedSensorPosition();
+    }
+
+    public static double encToCm(double encoderTicks){
+        return encoderTicks / DriveConstants.ticksPerRev * (PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {

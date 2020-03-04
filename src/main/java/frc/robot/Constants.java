@@ -45,25 +45,24 @@ public final class Constants {
                 { 80, 145, 30 } };
     }
 
-    public static final int controllerPrecision = 1000;
-    public static final double joystickDeadzone = 0.05;
-
+    
     public static final class OIConstants {
+        public static final int controllerPrecision = 1000;
+        public static final double joystickDeadzone = 0.05;
         public static final int kDriverControllerPort = 0;
         public static final double kDriverControllerCurvature = 3;
     }
 
-    public static final class DrivePIDConstants {
+    public static final class DriveConstants {
         public static final double KpRot = 0.02;
         public static final double KiRot = .0001;
         public static final double KdRot = 0.001;
-        public static final double KpDist = 0.1;
-        public static final double KiDist = .0001;
-        public static final double KdDist = 2.5;
-        public static final double kP = 0.001;
-        public static final double kI = 0.0001;
-        public static final double kD = 0.00002;
-        public static final double speedLimit = 0.5;
+        public static final double KpDist = 0.001;
+        public static final double KiDist = 0.0001;
+        public static final double KdDist = 0.00002;
+        public static final double velLimit = 400; //cm per second?
+        public static final double accelLimit = 1000; //cm per second?
+        public static final double ticksPerRev = 2048;
     }
 
     public static final class PhysicalMeasurements {
