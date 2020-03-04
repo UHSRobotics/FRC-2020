@@ -80,8 +80,6 @@ public class RobotContainer {
 
 // new JoystickButton(m_subsystemController, Button.kRect.value)
 //     .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
-    new JoystickButton(m_subsystemController, Button.kDisk.value)
-    .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
 //sketch delete this
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
     .whenPressed(new DistancePIDCommand(m_driveSubsystem, 2000));
