@@ -58,7 +58,7 @@ public class RobotContainer {
     m_IntakeSubsystem
         .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> m_subsystemController.getYMapped(Hand.kLeft)));
     m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
-        () -> m_driverController.getYMapped(Hand.kLeft) * 0.4, () -> m_driverController.getXMapped(Hand.kRight) * 0.4));
+        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight)));
     m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
