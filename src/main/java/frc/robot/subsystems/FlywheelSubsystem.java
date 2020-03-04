@@ -27,21 +27,21 @@ public class FlywheelSubsystem extends SubsystemBase {
   private final CANSparkMax m_motor = new CANSparkMax(Ports.flywheel, MotorType.kBrushless);
   private final CANSparkMax m_motor2 = new CANSparkMax(Ports.flywheelInvert, MotorType.kBrushless);
   private final CANPIDController c = m_motor.getPIDController();
-  // private final CANSparkMax m_motorInverted = new CANSparkMax(1, MotorType.kBrushless);
+  // private final CANSparkMax m_motorInverted = new CANSparkMax(1,
+  // MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
+  private NetworkTableEntry velocityEntry;
   private double speedMultiplier = 1, targetVelocity = 0.0;
 
-  
   public FlywheelSubsystem() {
     m_motor.setIdleMode(IdleMode.kCoast);
     m_motor2.setIdleMode(IdleMode.kCoast);
     m_motor2.setInverted(true);
     // m_motorInverted.setInverted(true);
-    c.setP(Constants.FlyWheelPIDConstants.kP);
-    c.setI(Constants.FlyWheelPIDConstants.kI);
-    c.setD(Constants.FlyWheelPIDConstants.kD);
-    c.setFF(Constants.FlyWheelPIDConstants.kF);
+    c.setP(Constants.FlywheelConstants.Kp);
+    c.setI(Constants.FlywheelConstants.Ki);
+    c.setD(Constants.FlywheelConstants.Kd);
   }
 
   public void setSpeed(double p) {
@@ -49,6 +49,14 @@ public class FlywheelSubsystem extends SubsystemBase {
     // System.out.println(p);
     m_motor.set(p);
     m_motor2.set(p);
+  }
+
+  /**
+   * 
+   * @return velocity in rpm
+   */
+  public double getRate() {
+    return m_motor.getEncoder().getVelocity();
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
@@ -64,12 +72,12 @@ public class FlywheelSubsystem extends SubsystemBase {
     }
   }
 
-  public void setPIDTarget(double t){
+  public void setPIDTarget(double t) {
     targetVelocity = t;
     c.setReference(targetVelocity, ControlType.kVelocity);
   }
 
-  public boolean atSetPoint(){
+  public boolean atSetPoint() {
     return m_motor.getEncoder().getVelocity() >= targetVelocity;
   }
 
@@ -80,5 +88,11 @@ public class FlywheelSubsystem extends SubsystemBase {
       System.out.println("Added Single Speed Multiplier NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);
+    if (velocityEntry == null) {
+      velocityEntry = tab.addPersistent("Velocity (RPM)", 0).getEntry();
+      System.out.println("added velocity entry");
+    }
+    velocityEntry.setDouble(getRate());
+
   }
 }

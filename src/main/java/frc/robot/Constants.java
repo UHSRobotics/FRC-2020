@@ -102,10 +102,10 @@ public final class Constants {
         public static final double liftLowerBound = 100;
     }
 
-    public static final class FlywheelCons {
-        public static final int flySingle = 2;
-        public static final int leftMotor = 1;
-        public static final int rightMotor = 0;
+    public static final class FlywheelConstants {
+        public static final double Kp = 0.1;
+        public static final double Kd = 0;
+        public static final double Ki = 0;
     }
 
     public static final class SpinCons {
@@ -170,12 +170,5 @@ public final class Constants {
         public final static int kSlot_Turning = SLOT_1;
         public final static int kSlot_Velocit = SLOT_2;
         public final static int kSlot_MotProf = SLOT_3;
-    }
-
-    public static final class FlyWheelPIDConstants {
-        public static final double kP = -1;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kF = 0;
     }
 }
