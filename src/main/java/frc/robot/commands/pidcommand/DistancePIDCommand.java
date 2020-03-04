@@ -12,7 +12,7 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
     //goal in cm
     public DistancePIDCommand(DriveSubsystem drive, double goal) {
         
-        super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD, new Constraints(400,800)),
+        super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD, new Constraints(800,2000)),
         // Close loop on heading
         drive::getEncoderRight,
         // Set reference to target
