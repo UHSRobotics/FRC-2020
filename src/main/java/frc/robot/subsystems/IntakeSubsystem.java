@@ -29,12 +29,8 @@ public class IntakeSubsystem extends SubsystemBase {
         m_motor.setNeutralMode(NeutralMode.Coast);
     }
 
-    public void switchOn(double s) {
-        m_motor.set(ControlMode.PercentOutput, s);
-    }
-
-    public void switchOff() {
-        m_motor.set(ControlMode.PercentOutput, 0);
+    public void move(double vel) {
+        m_motor.set(ControlMode.PercentOutput, vel);
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {

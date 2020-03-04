@@ -20,13 +20,7 @@ public class IntakeCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Math.abs(m_data.getAsDouble()) > OIConstants.joystickDeadzone) {
-            System.out.println("exe");
-            // m_intake.setSpeedMultiplier(1, true);
-            m_intake.switchOn(m_data.getAsDouble());
-        } else {
-            m_intake.switchOff();
-        }
+        m_intake.move(m_data.getAsDouble());
     }
 
     // Called once the command ends or is interrupted.
@@ -34,7 +28,7 @@ public class IntakeCommand extends CommandBase {
     public void end(boolean interrupted) {
         // m_intake.setSpeedMultiplier(0, true);
         // m_intake.intakeSwitch();
-        m_intake.switchOff();
+        m_intake.move(0);
     }
 
     // Returns true when the command should end.
