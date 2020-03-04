@@ -31,13 +31,13 @@ public class ArcadeDrive extends CommandBase {
     // // m_turnPID.enable();
     // // m_turnPID.setSetpoint(180);
     // }
-    // if (m_pow.getAsDouble() > OIConstants.joystickDeadzone || m_turn.getAsDouble()
+    // if (m_pow.getAsDouble() > OIConstants.joystickDeadzone ||
+    // m_turn.getAsDouble()
     // > OIConstants.joystickDeadzone) {
     // // m_turnPID.disable();
     // }
     // if (!m_isReverse) {
-    m_drive.arcadeDrive(m_pow.getAsDouble(),
-        m_turn.getAsDouble());
+    m_drive.arcadeDrive(m_pow.getAsDouble(), m_turn.getAsDouble());
     // } else {
     // m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) >
     // OIConstants.joystickDeadzone ? m_pow.getAsDouble() : 0,

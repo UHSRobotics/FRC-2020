@@ -31,7 +31,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
     private double speedMultiplier = 1;
-    private NetworkTableEntry speedEntry, encoderEntry, velEntry;
+    private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry,rpowerEntry;
 
     private double aLimit = 0.07;
     private double pow0;
@@ -75,28 +75,31 @@ public class DriveSubsystem extends SubsystemBase {
 
     }
 
+    /**
+     * @param pow -1 to 1;
+     * @param turn positive -> counter-clockwise
+     */
+    //TODO: make sure positive is actually counter clockwise
     public void arcadeDrive(double pow, double turn) {
+        //jank acceleration control
         pow *= speedMultiplier;
         if (Math.abs(pow - pow0)>= aLimit) {
             pow = pow0 + Math.signum(pow-pow0) * aLimit;
         }
         pow0 = pow;
         
-        if (velEntry == null) {
-            velEntry = tab.addPersistent("Velocity", 1).getEntry();
-            System.out.println("Added Velocity NT entry");
-        }
-        velEntry.setDouble(pow);
+        putPowerEntry(pow - turn,pow + turn);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
 
+    /**
+     * Doesn't go through acceleration limit or speed multiplier
+     * @param pow -1 to 1;
+     * @param turn positive -> counter-clockwise
+     */
     public void arcadeDriveAuton(double pow, double turn) {
-        if (velEntry == null) {
-            velEntry = tab.addPersistent("Velocity", 1).getEntry();
-            System.out.println("Added Velocity NT entry");
-        }
-        velEntry.setDouble(pow);
+        putPowerEntry(pow - turn,pow + turn);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -146,6 +149,10 @@ public class DriveSubsystem extends SubsystemBase {
         return encoderTicks / DriveConstants.ticksPerRev * (PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
+    public void setSpeedMultiplier(double speed){
+        setSpeedMultiplier(speed, true);
+    }
+
     public void setSpeedMultiplier(double speed, boolean updateNT) {
         if (0 <= speed && speed <= 2) {
             speedMultiplier = speed;
@@ -159,6 +166,19 @@ public class DriveSubsystem extends SubsystemBase {
         }
     }
 
+    public void putPowerEntry(double left, double right){
+        if (lpowerEntry == null) {
+            lpowerEntry = tab.add("Power", 1).getEntry();
+            System.out.println("Added Power NT entry");
+        }
+        if (rpowerEntry == null) {
+            rpowerEntry = tab.add("Power", 1).getEntry();
+            System.out.println("Added Power NT entry");
+        }
+        lpowerEntry.setDouble(left);
+        rpowerEntry.setDouble(right);
+    }
+
     @Override
     public void periodic() {
         if (speedEntry == null) {
@@ -166,7 +186,7 @@ public class DriveSubsystem extends SubsystemBase {
             System.out.println("Added Speed Multiplier NT entry");
         }
         if (encoderEntry == null) {
-            encoderEntry = tab.addPersistent("Encoder", 1).getEntry();
+            encoderEntry = tab.add("Encoder", 1).getEntry();
             System.out.println("Added Encoder NT entry");
         }
         encoderEntry.setDouble(getEncoderRight());

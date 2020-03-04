@@ -8,7 +8,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.*;
 
 public class DistancePIDCommand extends ProfiledPIDCommand {
-    // goal in cm
+    /**
+     * @param goal in cm
+     */
     public DistancePIDCommand(DriveSubsystem drive, double goal) {
         super(new ProfiledPIDController(DriveConstants.KpDist, DriveConstants.KiDist, DriveConstants.KdDist,
                 new Constraints(DriveConstants.velLimit, DriveConstants.accelLimit)),

@@ -6,19 +6,22 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.*;
 
 
 public class RotationPIDCommand extends ProfiledPIDCommand {
-    //goal is in degrees, clockwise
+    /**
+     * @param goal in degrees, clockwise
+     */
     public RotationPIDCommand(DriveSubsystem drive, double goal) {
-        super(new ProfiledPIDController(DriveConstants.KpRot, DriveConstants.KiRot,
-                DriveConstants.KdRot, new TrapezoidProfile.Constraints(10, 20)),
+        super(new ProfiledPIDController(DriveConstants.KpRot, DriveConstants.KiRot, DriveConstants.KdRot,
+                new Constraints(DriveConstants.velLimit, DriveConstants.accelLimit)),
                 // Close loop on heading
                 drive::getEncoderLeft,
                 // Set reference to target
-                (goal/360 * Constants.PhysicalMeasurements.driveBaseWidth * Math.PI) / (Constants.PhysicalMeasurements.wheelDiam * Math.PI) * 4096,
+                drive.getEncoderLeft() + goal,
                 // Pipe output to turn robot
-                (output, setpoint) -> drive.arcadeDrive(0, output),
+                (output, setpoint) -> drive.arcadeDrive(0, -output),//TODO: make sure the direction is correct
                 // Require the drive
                 drive);
 
