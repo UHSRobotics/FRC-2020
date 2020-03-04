@@ -1,33 +1,36 @@
 package frc.robot.commands.pidcommand;
 
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.DrivePIDConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.*;
+
 
 public class DistancePIDCommand extends ProfiledPIDCommand {
     //goal in cm
     public DistancePIDCommand(DriveSubsystem drive, double goal) {
-        super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD,
-                new TrapezoidProfile.Constraints(10, 20)),
-                // Close loop on heading
-                drive::getEncoderLeft,
-                // Set reference to target
-                goal/(Constants.PhysicalMeasurements.wheelDiam * Math.PI) * 4096,
-                // Pipe output to turn robot
-                (output, setpoint) -> drive.arcadeDrive(output, 0),
-                // Require the drive
-                drive);
+        
+        super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD, new Constraints(800,2000)),
+        // Close loop on heading
+        drive::getEncoderRight,
+        // Set reference to target
+        goal,
+        // Pipe output to turn robot
+        (output, setpoint) -> drive.arcadeDriveAuton(output,0),
+        // Require the drive
+        drive);
+        
+        getController().setTolerance(1);
+
+        System.out.println("goal is " + goal/(Constants.PhysicalMeasurements.wheelDiam * Math.PI) * 4096);
 
         // Set the controller to be continuous (because it is an angle controller)
-        getController().enableContinuousInput(-180, 180);
+        // getController().enableContinuousInput(-180, 180);
         // Set the controller tolerance - the delta tolerance ensures the robot is
         // stationary at the
         // setpoint before it is considered as having reached the reference
-        // getController().setTolerance(DriveConstants.kTurnToleranceDeg,
-        // DriveConstants.kTurnRateToleranceDegPerS);
     }
 
     @Override
