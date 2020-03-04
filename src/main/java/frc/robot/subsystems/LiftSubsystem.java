@@ -76,7 +76,7 @@ public class LiftSubsystem extends SubsystemBase {
   }
 
 
-  public void initialized() {
+  public void initialize() {
     init = true;
   }
 

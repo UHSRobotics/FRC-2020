@@ -48,15 +48,13 @@ public class LiftCommand extends CommandBase {
                 Timer.delay(0.1);
             }
             m_lift.setSpeed(1);
-            m_lift.initialized();
-
+            m_lift.initialize();
         } else if(m_down.getAsBoolean() && m_lift.getInit()){
             if(m_servo.getToggle()){
                 m_servo.toggle();
                 Timer.delay(0.1);
             }
             m_lift.setSpeed(-1);
-            
         } else{
             m_lift.setSpeed(0);
         }
@@ -89,7 +87,6 @@ public class LiftCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
     }
 
     @Override

@@ -33,13 +33,14 @@ public class ServoSubsystem extends SubsystemBase {
         if(servoEntry == null)
             servoEntry = servoTab.addPersistent("Servo", false).getEntry();
         servoEntry.setBoolean(toggleOn);
-        if(toggleOn){
-            m_switch.setAngle(200);
-        } else {
-            m_switch.setAngle(130);
-        }
-        // This method will be called once per scheduler run
+        if(toggleOn)
+            m_switch.setAngle(200); //ratchet engaged
+        else
+            m_switch.setAngle(130); //ratchet disengaged
     }
+    /**
+     * @return true = ratchet engaged
+     */
     public boolean getToggle(){
         return toggleOn;
     }
