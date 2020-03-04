@@ -78,11 +78,13 @@ public class RobotContainer {
     // .whileHeld(new IntakeCommand(m_IntakeSubsystem, () ->
     // m_driverController.getTrigButton()));
 
-// new JoystickButton(m_subsystemController, Button.kRect.value)
-//     .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
-//sketch delete this
+    // new JoystickButton(m_subsystemController, Button.kRect.value)
+    // .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
+    // sketch delete this
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
-    .whenPressed(new DistancePIDCommand(m_driveSubsystem, 2000));
+        .whileHeld(new DistancePIDCommand(m_driveSubsystem, 500));
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+        .whileHeld(new RotationPIDCommand(m_driveSubsystem, 180));
 
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
@@ -97,17 +99,18 @@ public class RobotContainer {
 
     new JoystickButton(m_subsystemController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1));
-    new JoystickButton(m_driverController, Button.kRect.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 0));
-    new JoystickButton(m_driverController, Button.kCross.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 1));
-    new JoystickButton(m_driverController, Button.kDisk.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 2));
-    new JoystickButton(m_driverController, Button.kTrig.value)
-        .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
-
+    /*
+     * new JoystickButton(m_driverController, Button.kBumperRight.value)
+     * .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1)); new
+     * JoystickButton(m_driverController, Button.kRect.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 0)); new
+     * JoystickButton(m_driverController, Button.kCross.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 1)); new
+     * JoystickButton(m_driverController, Button.kDisk.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 2)); new
+     * JoystickButton(m_driverController, Button.kTrig.value) .whenPressed(new
+     * SpinCommand(m_colorSubsystem, m_spinSubsystem, 3));
+     */
   }
 
   /**
