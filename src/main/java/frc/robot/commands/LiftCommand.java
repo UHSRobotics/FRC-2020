@@ -10,8 +10,8 @@ import frc.robot.subsystems.ServoSubsystem;
 public class LiftCommand extends CommandBase {
     private final LiftSubsystem m_lift;
     // private final ServoSubsystem m_winch;
-    private final BooleanSupplier m_left;
-    private final BooleanSupplier m_right;
+    private final BooleanSupplier m_up;
+    private final BooleanSupplier m_down;
     private final ServoSubsystem m_servo;
 
     // private final BooleanSupplier m_pidToggle;
@@ -31,8 +31,8 @@ public class LiftCommand extends CommandBase {
     public LiftCommand(LiftSubsystem lift, BooleanSupplier left, BooleanSupplier right, ServoSubsystem servo) {
         m_lift = lift;
         // m_winch = winch;
-        m_left = left;
-        m_right = right;
+        m_up = left;
+        m_down = right;
         m_servo = servo;
 
         // m_sensor = magSensor;
@@ -42,7 +42,7 @@ public class LiftCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_left.getAsBoolean()) {
+        if (m_up.getAsBoolean()) {
             if (!m_servo.getToggle()) {
                 m_servo.toggle();
                 Timer.delay(0.1);
@@ -50,7 +50,7 @@ public class LiftCommand extends CommandBase {
             m_lift.setSpeed(1);
             m_lift.initialized();
 
-        } else if(m_right.getAsBoolean() && m_lift.getInit()){
+        } else if(m_down.getAsBoolean() && m_lift.getInit()){
             if(m_servo.getToggle()){
                 m_servo.toggle();
                 Timer.delay(0.1);
@@ -95,6 +95,5 @@ public class LiftCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
-
     }
 }
