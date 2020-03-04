@@ -16,11 +16,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class ServoSubsystem extends SubsystemBase {
     private final Servo m_switch = new Servo(Ports.servo);
-    private static boolean toggleOn = false;
-    private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");
+    public static boolean toggleOn = false;
+    private ShuffleboardTab servoTab = Shuffleboard.getTab("Lift");
     private NetworkTableEntry servoEntry;
-    private static double angle  = 0;
-
+    private static double angle = 0;
 
     public void toggle() {
         toggleOn = !toggleOn;
@@ -30,18 +29,23 @@ public class ServoSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(servoEntry == null)
+        if (servoEntry == null)
             servoEntry = servoTab.addPersistent("Servo", false).getEntry();
-        servoEntry.setBoolean(toggleOn);
-        if(toggleOn)
-            m_switch.setAngle(200); //ratchet engaged
-        else
-            m_switch.setAngle(130); //ratchet disengaged
+        if (toggleOn) {
+            servoEntry.setString("Climb OK");
+            m_switch.setAngle(200); // ratchet engaged
+
+        } else {
+            servoEntry.setString("Climb not OK");
+            m_switch.setAngle(130); // ratchet disengaged
+
+        }
     }
+
     /**
      * @return true = ratchet engaged
      */
-    public boolean getToggle(){
+    public boolean getToggle() {
         return toggleOn;
     }
 

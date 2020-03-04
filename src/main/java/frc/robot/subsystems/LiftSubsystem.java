@@ -13,10 +13,14 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.LiftConstants;
+import frc.robot.Constants.Ports;
 
 public class LiftSubsystem extends SubsystemBase {
   private final TalonSRX m_liftMotor = new TalonSRX(Constants.Ports.lift);
@@ -24,10 +28,12 @@ public class LiftSubsystem extends SubsystemBase {
   // private final
   private double speedMultiplier = 1;
   private NetworkTableEntry speedEntry, encoderEntry;
-  private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Lift");
   private static boolean init = false;
+  private final Encoder m_encoder;
 
   public LiftSubsystem() {
+    m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false, EncodingType.k4X);
     m_liftMotor.setNeutralMode(NeutralMode.Brake);
     m_follow.setNeutralMode(NeutralMode.Brake);
     m_follow.follow(m_liftMotor);
@@ -35,13 +41,12 @@ public class LiftSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double s) {
-    s *= speedMultiplier;
-    m_liftMotor.set(ControlMode.PercentOutput, s);
-    // System.out.println(m_liftMotor.getSelectedSensorPosition());
-  }
+    if (!(s > 0 && m_encoder.getDistance() > LiftConstants.liftUpperBound)
+        || !(s < 0 && m_encoder.getDistance() > LiftConstants.liftLowerBound)) {
+      s *= speedMultiplier;
+      m_liftMotor.set(ControlMode.PercentOutput, s);
+    }
 
-  public double getEncoder(){
-    return m_liftMotor.getSelectedSensorPosition();
   }
 
   public void setSpeedMultiplier(double speed) {
@@ -52,11 +57,11 @@ public class LiftSubsystem extends SubsystemBase {
     if (0 <= speed && speed <= 2) {
       speedMultiplier = speed;
       if (updateNT) {
-        System.out.println("Putted Lift Speed Multiplier NT entry");
+        System.out.println("Lift Speed Multiplier update");
         speedEntry.setDouble(speedMultiplier);
       }
     } else {
-      System.out.println("Putted Lift Speed Multiplier NT entry");
+      System.out.println("Lift Speed Multiplier update");
       speedEntry.setDouble(speedMultiplier);
     }
   }
@@ -72,9 +77,8 @@ public class LiftSubsystem extends SubsystemBase {
       System.out.println("Added Lift Encoder NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
-    encoderEntry.setDouble(getEncoder());
+    encoderEntry.setDouble(m_encoder.getDistance());
   }
-
 
   public void initialize() {
     init = true;

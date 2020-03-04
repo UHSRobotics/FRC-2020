@@ -31,6 +31,8 @@ public final class Constants {
         public static final int intake = 12;
         public static final int servo = 0;
         public static final int hopper = 20;
+        public static final int liftEncoderA = 6;
+        public static final int liftEncoderB = 4;
 
     }
 
@@ -45,7 +47,6 @@ public final class Constants {
                 { 80, 145, 30 } };
     }
 
-    
     public static final class OIConstants {
         public static final int controllerPrecision = 1000;
         public static final double joystickDeadzone = 0.05;
@@ -60,8 +61,8 @@ public final class Constants {
         public static final double KpDist = 0.001;
         public static final double KiDist = 0.0001;
         public static final double KdDist = 0.00002;
-        public static final double velLimit = 400; //cm per second?
-        public static final double accelLimit = 1000; //cm per second?
+        public static final double velLimit = 400; // cm per second?
+        public static final double accelLimit = 1000; // cm per second?
         public static final double ticksPerRev = 2048;
     }
 
@@ -97,12 +98,14 @@ public final class Constants {
         public static final double Kp = 1;
         public static final double Kd = 0;
         public static final double Ki = 0;
+        public static final double liftUpperBound = 10000;
+        public static final double liftLowerBound = 100;
     }
 
-    public static final class FlywheelCons {
-        public static final int flySingle = 2;
-        public static final int leftMotor = 1;
-        public static final int rightMotor = 0;
+    public static final class FlywheelConstants {
+        public static final double Kp = 0.1;
+        public static final double Kd = 0;
+        public static final double Ki = 0;
     }
 
     public static final class SpinCons {
@@ -167,12 +170,5 @@ public final class Constants {
         public final static int kSlot_Turning = SLOT_1;
         public final static int kSlot_Velocit = SLOT_2;
         public final static int kSlot_MotProf = SLOT_3;
-    }
-
-    public static final class FlyWheelPIDConstants {
-        public static final double kP = -1;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kF = 0;
     }
 }

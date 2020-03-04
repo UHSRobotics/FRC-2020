@@ -49,28 +49,28 @@ public class LiftCommand extends CommandBase {
             }
             m_lift.setSpeed(1);
             m_lift.initialize();
-        } else if(m_down.getAsBoolean() && m_lift.getInit()){
-            if(m_servo.getToggle()){
+        } else if (m_down.getAsBoolean() && m_lift.getInit()) {
+            if (m_servo.getToggle()) {
                 m_servo.toggle();
                 Timer.delay(0.1);
             }
             m_lift.setSpeed(-1);
-        } else{
+        } else {
             m_lift.setSpeed(0);
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
-        //     if (!ServoSubsystem.toggleOn) {
-        //         m_winch.toggle();
-        //         Timer.delay(0.5);
-        //     }
-        //     m_lift.setSpeed(-1);
+        // if (!ServoSubsystem.toggleOn) {
+        // m_winch.toggle();
+        // Timer.delay(0.5);
+        // }
+        // m_lift.setSpeed(-1);
         // } else {
-        //     if (ServoSubsystem.toggleOn) {
-        //         m_lift.setSpeed(0);
-        //         Timer.delay(0.5);
-        //         m_winch.toggle();
-        
-        //     }
+        // if (ServoSubsystem.toggleOn) {
+        // m_lift.setSpeed(0);
+        // Timer.delay(0.5);
+        // m_winch.toggle();
+
+        // }
         // }
         // if (m_data.getAsBoolean()) {
         // m_lift.setSpeed(1);
