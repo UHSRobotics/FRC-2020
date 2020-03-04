@@ -82,7 +82,6 @@ public class DriveSubsystem extends SubsystemBase {
         }
         pow0 = pow;
         
-        printEncoder();
         if (velEntry == null) {
             velEntry = tab.addPersistent("Velocity", 1).getEntry();
             System.out.println("Added Velocity NT entry");
@@ -93,7 +92,6 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void arcadeDriveAuton(double pow, double turn) {
-        printEncoder();
         if (velEntry == null) {
             velEntry = tab.addPersistent("Velocity", 1).getEntry();
             System.out.println("Added Velocity NT entry");
@@ -121,14 +119,6 @@ public class DriveSubsystem extends SubsystemBase {
     public void disable() {
         m_rightMotor.set(ControlMode.PercentOutput, 0);
         m_leftMotor.set(ControlMode.PercentOutput, 0);
-    }
-
-    public void printEncoder() {
-        if (encoderEntry == null) {
-            encoderEntry = tab.addPersistent("Encoder", 1).getEntry();
-            System.out.println("Added Encoder NT entry");
-        }
-        encoderEntry.setDouble(getEncoderRight());
     }
 
     public double getAvgEncCM() {
@@ -168,6 +158,11 @@ public class DriveSubsystem extends SubsystemBase {
             speedEntry = tab.addPersistent("Speed Multiplier", 1).getEntry();
             System.out.println("Added Speed Multiplier NT entry");
         }
+        if (encoderEntry == null) {
+            encoderEntry = tab.addPersistent("Encoder", 1).getEntry();
+            System.out.println("Added Encoder NT entry");
+        }
+        encoderEntry.setDouble(getEncoderRight());
         setSpeedMultiplier(speedEntry.getDouble(1.0), false);
     }
 }
