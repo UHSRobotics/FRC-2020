@@ -28,7 +28,7 @@ public class LiftSubsystem extends SubsystemBase {
   // private final
   private double speedMultiplier = 1;
   private NetworkTableEntry speedEntry, encoderEntry;
-  private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Lift");
   private static boolean init = false;
   private final Encoder m_encoder;
 
@@ -57,11 +57,11 @@ public class LiftSubsystem extends SubsystemBase {
     if (0 <= speed && speed <= 2) {
       speedMultiplier = speed;
       if (updateNT) {
-        System.out.println("Putted Lift Speed Multiplier NT entry");
+        System.out.println("Lift Speed Multiplier update");
         speedEntry.setDouble(speedMultiplier);
       }
     } else {
-      System.out.println("Putted Lift Speed Multiplier NT entry");
+      System.out.println("Lift Speed Multiplier update");
       speedEntry.setDouble(speedMultiplier);
     }
   }
