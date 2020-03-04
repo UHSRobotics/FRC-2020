@@ -18,7 +18,7 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
         // Set reference to target
         goal,
         // Pipe output to turn robot
-        (output, setpoint) -> drive.arcadeDriveAuton(output * 0.5, 0),
+        (output, setpoint) -> drive.arcadeDriveAuton(output, 0),
         // Require the drive
         drive);
         
@@ -29,8 +29,7 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
         // Set the controller tolerance - the delta tolerance ensures the robot is
         // stationary at the
         // setpoint before it is considered as having reached the reference
-        getController().setTolerance(3,
-            5);
+        getController().setTolerance(3);
     }
 
     @Override

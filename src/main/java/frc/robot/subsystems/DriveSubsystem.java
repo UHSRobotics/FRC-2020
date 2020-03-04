@@ -28,9 +28,8 @@ public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_rightFollowMotor = new TalonFX(Ports.driveRightFollow);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
-    private NetworkTableEntry encoderEntry;
     private double speedMultiplier = 1;
-    private NetworkTableEntry speedEntry;
+    private NetworkTableEntry speedEntry, encoderEntry, velEntry;
 
     private double aLimit = 0.07;
     private double pow0;
@@ -82,12 +81,22 @@ public class DriveSubsystem extends SubsystemBase {
 
         pow0 = pow;
         printEncoder();
+        if (velEntry == null) {
+            velEntry = tab.addPersistent("Velocity", 1).getEntry();
+            System.out.println("Added Velocity NT entry");
+        }
+        velEntry.setDouble(pow);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
 
     public void arcadeDriveAuton(double pow, double turn) {
         printEncoder();
+        if (velEntry == null) {
+            velEntry = tab.addPersistent("Velocity", 1).getEntry();
+            System.out.println("Added Velocity NT entry");
+        }
+        velEntry.setDouble(pow);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
