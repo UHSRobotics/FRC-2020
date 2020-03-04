@@ -167,3 +167,5 @@ Make sure your computer and the raspberrypi are under the same network.
 ### Setting up pixy cam
 
 #### [Guide for setting up pixy cam](https://docs.pixycam.com/wiki/doku.php?id=wiki:v2:hooking_up_pixy_to_a_raspberry_pi)
+
+=w=
