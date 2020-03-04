@@ -34,9 +34,9 @@ public class ServoSubsystem extends SubsystemBase {
             servoEntry = servoTab.addPersistent("Servo", false).getEntry();
         servoEntry.setBoolean(toggleOn);
         if(toggleOn){
-            m_switch.setAngle(215);
+            m_switch.setAngle(200);
         } else {
-            m_switch.setAngle(105);
+            m_switch.setAngle(130);
         }
         // This method will be called once per scheduler run
     }

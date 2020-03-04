@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.Ports;
+import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_leftMotor = new TalonFX(Ports.driveLeft);
@@ -27,9 +28,8 @@ public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_rightFollowMotor = new TalonFX(Ports.driveRightFollow);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
-    private NetworkTableEntry encoderEntry;
     private double speedMultiplier = 1;
-    private NetworkTableEntry speedEntry;
+    private NetworkTableEntry speedEntry, encoderEntry, velEntry;
 
     private double aLimit = 0.07;
     private double pow0;
@@ -75,16 +75,28 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void arcadeDrive(double pow, double turn) {
         pow *= speedMultiplier;
-        if (pow - pow0 >= aLimit) {
-            pow = pow0 + aLimit;
+        if (Math.abs(pow - pow0)>= aLimit) {
+            pow = pow0 + Math.signum(pow-pow0) * aLimit;
         }
-
         pow0 = pow;
+        
+        printEncoder();
+        if (velEntry == null) {
+            velEntry = tab.addPersistent("Velocity", 1).getEntry();
+            System.out.println("Added Velocity NT entry");
+        }
+        velEntry.setDouble(pow);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
 
     public void arcadeDriveAuton(double pow, double turn) {
+        printEncoder();
+        if (velEntry == null) {
+            velEntry = tab.addPersistent("Velocity", 1).getEntry();
+            System.out.println("Added Velocity NT entry");
+        }
+        velEntry.setDouble(pow);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -109,16 +121,22 @@ public class DriveSubsystem extends SubsystemBase {
         m_leftMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    public void encoderTest() {
-        encoderEntry.setDouble(m_rightMotor.getSensorCollection().getIntegratedSensorPosition());
+    public void printEncoder() {
+        if (encoderEntry == null) {
+            encoderEntry = tab.addPersistent("Encoder", 1).getEntry();
+            System.out.println("Added Encoder NT entry");
+        }
+        encoderEntry.setDouble(getEncoderRight());
     }
 
+    //in centimeters
     public double getEncoderLeft() {
-        return m_leftMotor.getSelectedSensorPosition();
+        return m_leftMotor.getSelectedSensorPosition() / 4096.0 * (Constants.PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
+    //in centimeters
     public double getEncoderRight() {
-        return m_rightMotor.getSelectedSensorPosition();
+        return m_rightMotor.getSelectedSensorPosition() / 4096.0 * (Constants.PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {

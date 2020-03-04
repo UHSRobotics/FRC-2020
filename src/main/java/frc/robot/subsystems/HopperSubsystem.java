@@ -24,7 +24,7 @@ public class HopperSubsystem extends SubsystemBase {
   }
 
   public void switchON(double s){
-    m_motor.set(0.5*s);
+    m_motor.set(s);
   }
 
   public void switchOFF(){
