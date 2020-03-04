@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class ServoSubsystem extends SubsystemBase {
     private final Servo m_switch = new Servo(Ports.servo);
-    public static boolean toggleOn = false;
+    private static boolean toggleOn = false;
     private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");
     private NetworkTableEntry servoEntry;
     private static double angle  = 0;

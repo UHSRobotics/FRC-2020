@@ -86,6 +86,13 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperRight.value)
         .whileHeld(new RotationPIDCommand(m_driveSubsystem, 180));
 
+    //TODO: enable this after making sure rotation PID works
+    /*new JoystickButton(m_driverController, Button.kDisk.value)
+        .whenPressed(()->{
+          ((ArcadeDrive)m_driveSubsystem.getDefaultCommand()).toggleInvert();
+          new RotationPIDCommand(m_driveSubsystem, 180);
+        });*/
+
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
     // m_visionSubsystem));

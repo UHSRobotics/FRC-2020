@@ -11,7 +11,8 @@ public class ArcadeDrive extends CommandBase {
   private final DriveSubsystem m_drive;
   private final DoubleSupplier m_pow;
   private final DoubleSupplier m_turn;
-  // private final BooleanSupplier m_reverse;
+  private boolean invert = false;
+  
   // private final DriveRotationPID m_turnPID = new DriveRotationPID();
 
   public ArcadeDrive(DriveSubsystem subsystem, DoubleSupplier powerSupplier, DoubleSupplier turnSupplier) {
@@ -26,24 +27,14 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (m_reverse.getAsBoolean()) {
-    // m_isReverse = !m_isReverse;
-    // // m_turnPID.enable();
-    // // m_turnPID.setSetpoint(180);
-    // }
-    // if (m_pow.getAsDouble() > OIConstants.joystickDeadzone ||
-    // m_turn.getAsDouble()
-    // > OIConstants.joystickDeadzone) {
-    // // m_turnPID.disable();
-    // }
-    // if (!m_isReverse) {
-    m_drive.arcadeDrive(m_pow.getAsDouble(), m_turn.getAsDouble());
-    // } else {
-    // m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) >
-    // OIConstants.joystickDeadzone ? m_pow.getAsDouble() : 0,
-    // Math.abs(m_turn.getAsDouble()) > OIConstants.joystickDeadzone ? -1 *
-    // m_turn.getAsDouble() : 0);
-    // }
+    if(!invert)
+      m_drive.arcadeDrive(m_pow.getAsDouble(), m_turn.getAsDouble());
+    else
+      m_drive.arcadeDrive(-m_pow.getAsDouble(), m_turn.getAsDouble());
+  }
+
+  public void toggleInvert(){
+    invert= !invert;
   }
 
   // Called once the command ends or is interrupted.
