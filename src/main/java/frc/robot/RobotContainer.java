@@ -14,7 +14,6 @@ import frc.robot.DualShockController.Button;
 import frc.robot.commands.*;
 import frc.robot.commands.pidcommand.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.pidcontroller.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -44,8 +43,6 @@ public class RobotContainer {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   DualShockController m_driverController = new DualShockController(0);
   DualShockController m_subsystemController = new DualShockController(1);
-
-  DistancePID m_distancePID = new DistancePID(m_driveSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -87,7 +84,7 @@ public class RobotContainer {
     .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
 //sketch delete this
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
-    .whenPressed(()-> m_distancePID.setGoal(200), m_driveSubsystem);
+    .whenPressed(new DistancePIDCommand(m_driveSubsystem, 200));
 
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
