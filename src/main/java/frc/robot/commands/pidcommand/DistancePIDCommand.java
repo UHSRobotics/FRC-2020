@@ -1,24 +1,24 @@
 package frc.robot.commands.pidcommand;
 
-import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.DrivePIDConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.State;
 
-public class DistancePIDCommand extends ProfiledPIDCommand {
+
+public class DistancePIDCommand extends PIDCommand {
     //goal in cm
     public DistancePIDCommand(DriveSubsystem drive, double goal) {
         
-        super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD,
-        new TrapezoidProfile.Constraints(1, 1)),
+        super(new PIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD),
         // Close loop on heading
         drive::getEncoderRight,
         // Set reference to target
         goal,
         // Pipe output to turn robot
-        (output, setpoint) -> drive.arcadeDriveAuton(output, 0),
+        (output) -> drive.arcadeDriveAuton(output, 0),
         // Require the drive
         drive);
         
@@ -35,6 +35,6 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
     @Override
     public boolean isFinished() {
         // End when the controller is at the reference.
-        return getController().atGoal();
+        return getController().atSetpoint();
     }
 }
