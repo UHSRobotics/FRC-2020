@@ -75,11 +75,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void arcadeDrive(double pow, double turn) {
         pow *= speedMultiplier;
-        if (pow - pow0 >= aLimit) {
-            pow = pow0 + aLimit;
+        if (Math.abs(pow - pow0)>= aLimit) {
+            pow = pow0 + Math.signum(pow-pow0) * aLimit;
         }
-
         pow0 = pow;
+        
         printEncoder();
         if (velEntry == null) {
             velEntry = tab.addPersistent("Velocity", 1).getEntry();

@@ -18,10 +18,12 @@ public class DistancePIDCommand extends PIDCommand {
         // Set reference to target
         goal,
         // Pipe output to turn robot
-        (output) -> drive.arcadeDriveAuton(output, 0),
+        (output) -> drive.arcadeDrive(Math.signum(output) * (Math.abs(output) > DrivePIDConstants.speedLimit?DrivePIDConstants.speedLimit:Math.abs(output)), 0),
         // Require the drive
         drive);
         
+        getController().setTolerance(1);
+
         System.out.println("goal is " + goal/(Constants.PhysicalMeasurements.wheelDiam * Math.PI) * 4096);
 
         // Set the controller to be continuous (because it is an angle controller)
@@ -29,7 +31,6 @@ public class DistancePIDCommand extends PIDCommand {
         // Set the controller tolerance - the delta tolerance ensures the robot is
         // stationary at the
         // setpoint before it is considered as having reached the reference
-        getController().setTolerance(3);
     }
 
     @Override
