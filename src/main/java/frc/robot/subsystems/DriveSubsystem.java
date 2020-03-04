@@ -125,6 +125,13 @@ public class DriveSubsystem extends SubsystemBase {
         return encToCm((getEncoderLeft() + getEncoderRight())/2.0);
     }
 
+    /**
+     * @return positive = clockwise
+     */
+    public double getAngleDegrees() {
+        return (encToCm((getEncoderLeft() - getEncoderRight())/2.0) / (PhysicalMeasurements.driveBaseWidth * Math.PI))*360;
+    }
+
     //in centimeters
     public double getEncoderLeft() {
         return m_leftMotor.getSelectedSensorPosition();
