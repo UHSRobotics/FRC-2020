@@ -19,8 +19,7 @@ public class ServoSubsystem extends SubsystemBase {
     public static boolean toggleOn = false;
     private ShuffleboardTab servoTab = Shuffleboard.getTab("Servo Status");
     private NetworkTableEntry servoEntry;
-    private static double angle  = 0;
-
+    private static double angle = 0;
 
     public void toggle() {
         toggleOn = !toggleOn;
@@ -30,18 +29,19 @@ public class ServoSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(servoEntry == null)
+        if (servoEntry == null)
             servoEntry = servoTab.addPersistent("Servo", false).getEntry();
         servoEntry.setBoolean(toggleOn);
-        if(toggleOn)
-            m_switch.setAngle(200); //ratchet engaged
+        if (toggleOn)
+            m_switch.setAngle(200); // ratchet engaged
         else
-            m_switch.setAngle(130); //ratchet disengaged
+            m_switch.setAngle(130); // ratchet disengaged
     }
+
     /**
      * @return true = ratchet engaged
      */
-    public boolean getToggle(){
+    public boolean getToggle() {
         return toggleOn;
     }
 

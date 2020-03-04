@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.LiftConstants;
+import frc.robot.Constants.Ports;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 
@@ -15,7 +16,7 @@ public class LiftPID extends PIDSubsystem {
     public LiftPID() {
         super(new PIDController(LiftConstants.Kp, LiftConstants.Ki, LiftConstants.Kd), 0);
         m_lift = new LiftSubsystem();
-        m_encoder = new Encoder(0, 1, false, EncodingType.k4X);
+        m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false, EncodingType.k4X);
         m_encoder.setDistancePerPulse(0.001);
 
     }
