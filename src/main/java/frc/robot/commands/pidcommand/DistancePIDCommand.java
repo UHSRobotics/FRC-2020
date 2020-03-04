@@ -12,7 +12,7 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
     public DistancePIDCommand(DriveSubsystem drive, double goal) {
         
         super(new ProfiledPIDController(DrivePIDConstants.kP, DrivePIDConstants.kI, DrivePIDConstants.kD,
-        new TrapezoidProfile.Constraints(0.5, 1)),
+        new TrapezoidProfile.Constraints(1, 1)),
         // Close loop on heading
         drive::getEncoderRight,
         // Set reference to target
@@ -29,8 +29,8 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
         // Set the controller tolerance - the delta tolerance ensures the robot is
         // stationary at the
         // setpoint before it is considered as having reached the reference
-        // getController().setTolerance(DriveConstants.kTurnToleranceDeg,
-        // DriveConstants.kTurnRateToleranceDegPerS);
+        getController().setTolerance(3,
+            5);
     }
 
     @Override
