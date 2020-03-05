@@ -20,7 +20,7 @@ import frc.robot.Constants.Ports;
 public class IntakeSubsystem extends SubsystemBase {
     private final TalonSRX m_motor = new TalonSRX(Ports.intake);
 
-    private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
+    private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
     private NetworkTableEntry speedEntry;
     private double speedMultiplier = 1;
 
@@ -30,7 +30,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void move(double vel) {
-        m_motor.set(ControlMode.PercentOutput, vel);
+        m_motor.set(ControlMode.PercentOutput, vel * speedMultiplier);
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {
@@ -49,7 +49,7 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         if (speedEntry == null) {
-            speedEntry = tab.addPersistent("Intake", 1).getEntry();
+            speedEntry = tab.addPersistent("Intake Speed Multiplier", 1).getEntry();
             System.out.println("NT update (intake)");
         }
         setSpeedMultiplier(speedEntry.getDouble(1.0), false);

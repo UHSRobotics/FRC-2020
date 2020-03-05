@@ -30,7 +30,7 @@ public class ServoSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         if (servoEntry == null)
-            servoEntry = servoTab.addPersistent("Servo", false).getEntry();
+            servoEntry = servoTab.add("Servo Status", "Ratchet not initialized").getEntry();
         if (toggleOn) {
             servoEntry.setString("Climb OK");
             m_switch.setAngle(200); // ratchet engaged
