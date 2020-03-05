@@ -168,11 +168,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void putPowerEntry(double left, double right){
         if (lpowerEntry == null) {
-            lpowerEntry = tab.add("Power", 1).getEntry();
+            lpowerEntry = tab.add("Left Power", 1).getEntry();
             System.out.println("Added Power NT entry");
         }
         if (rpowerEntry == null) {
-            rpowerEntry = tab.add("Power", 1).getEntry();
+            rpowerEntry = tab.add("Right Power", 1).getEntry();
             System.out.println("Added Power NT entry");
         }
         lpowerEntry.setDouble(left);
