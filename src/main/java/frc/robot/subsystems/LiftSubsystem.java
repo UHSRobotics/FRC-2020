@@ -41,11 +41,11 @@ public class LiftSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double s) {
-    if (!(s > 0 && m_encoder.getDistance() > LiftConstants.liftUpperBound)
-        || !(s < 0 && m_encoder.getDistance() > LiftConstants.liftLowerBound)) {
+    // if (!(s > 0 && m_encoder.getDistance() > LiftConstants.liftUpperBound)
+    //     || !(s < 0 && m_encoder.getDistance() < LiftConstants.liftLowerBound)) {
       s *= speedMultiplier;
       m_liftMotor.set(ControlMode.PercentOutput, s);
-    }
+    // }
 
   }
 

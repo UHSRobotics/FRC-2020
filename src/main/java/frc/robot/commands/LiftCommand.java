@@ -43,14 +43,16 @@ public class LiftCommand extends CommandBase {
     @Override
     public void execute() {
         if (m_up.getAsBoolean()) {
-            if (!m_servo.getToggle()) {
+            //if ratchet engaged, disengage it
+            if (m_servo.getToggle()) {
                 m_servo.toggle();
                 Timer.delay(0.1);
             }
             m_lift.setSpeed(1);
             m_lift.initialize();
         } else if (m_down.getAsBoolean() && m_lift.getInit()) {
-            if (m_servo.getToggle()) {
+            //if ratchet disengage, engage it
+            if (!m_servo.getToggle()) {
                 m_servo.toggle();
                 Timer.delay(0.1);
             }
