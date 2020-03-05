@@ -19,7 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class DropIntakeSubsystem extends SubsystemBase {
   private final TalonSRX m_motor;
 
-  private final ShuffleboardTab tab = Shuffleboard.getTab("Intake");
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
   private final double speedMultiplier = 0.5;
   
@@ -46,7 +46,7 @@ public class DropIntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.addPersistent("Drop Intake", 1).getEntry();
+      speedEntry = tab.add("Drop Intake Speed", 1).getEntry();
       System.out.println("Added Single Speed Multiplier NT entry");
   }
   // dropIntake(); 
