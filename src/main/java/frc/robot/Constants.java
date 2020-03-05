@@ -28,7 +28,7 @@ public final class Constants {
         public static final int flywheelInvert = 2;
         public static final int lift = 4;
         public static final int liftFollow = 9;
-        public static final int intake = 12;
+        public static final int intake = 11;
         public static final int servo = 0;
         public static final int hopper = 20;
         public static final int liftEncoderA = 6;
