@@ -48,11 +48,11 @@ public class LiftSubsystem extends SubsystemBase {
   }
 
   public int getEncoder(){
-    return -1*m_liftMotor.getSelectedSensorPosition();
+    return -1 * m_liftMotor.getSelectedSensorPosition();
   }
 
   public void setSpeed(double s) {
-    if(getEncoder()<0&&s<0){
+    if(getEncoder()<0 && s<0){
       m_liftMotor.set(ControlMode.PercentOutput, 0);
       return;
     }
@@ -100,7 +100,7 @@ public class LiftSubsystem extends SubsystemBase {
     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
     encoderEntry.setDouble(m_liftMotor.getSelectedSensorPosition());
     
-    if(getEncoder()<0&&curSpeed<0){
+    if(getEncoder() < 0 && curSpeed < 0){
       curSpeed = targetSpeed = 0;
     }
     curSpeed+=Math.min(0.04,Math.abs(targetSpeed - curSpeed)) * Math.signum(targetSpeed - curSpeed);
