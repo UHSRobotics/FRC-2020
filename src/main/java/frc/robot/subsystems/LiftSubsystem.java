@@ -31,6 +31,7 @@ public class LiftSubsystem extends SubsystemBase {
   private NetworkTableEntry speedEntry, encoderEntry;
   private final ShuffleboardTab tab = Shuffleboard.getTab("Lift");
   private static boolean init = false;
+  private static int initialEncoder=0;
   // private final Encoder m_encoder;
 
   private double targetSpeed, curSpeed; //TODO: lastSpeed needs a better name
@@ -44,11 +45,12 @@ public class LiftSubsystem extends SubsystemBase {
     m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     m_liftMotor.configClearPositionOnLimitF(true, 10);
     m_liftMotor.configClearPositionOnLimitR(true, 10);
+    initialEncoder = getEncoder();
 
   }
 
   public int getEncoder(){
-    return -1 * m_liftMotor.getSelectedSensorPosition();
+    return -1 * m_liftMotor.getSelectedSensorPosition() - initialEncoder;
   }
 
   public void setSpeed(double s) {
@@ -98,7 +100,7 @@ public class LiftSubsystem extends SubsystemBase {
     }
 
     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
-    encoderEntry.setDouble(m_liftMotor.getSelectedSensorPosition());
+    encoderEntry.setDouble(getEncoder());
     
     if(getEncoder() < 0 && curSpeed < 0){
       curSpeed = targetSpeed = 0;

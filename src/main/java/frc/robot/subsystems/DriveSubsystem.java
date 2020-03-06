@@ -31,18 +31,20 @@ public class DriveSubsystem extends SubsystemBase {
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
     private double speedMultiplier = 1;
-    private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry,rpowerEntry;
+    private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry, rpowerEntry;
 
-    private double aLimit = 0.07;
+    private double accelLimit = 0.075;
+    private double deccelLimit = 0.125;
+
     private double pow0;
 
     public DriveSubsystem() {
         pow0 = 0;
-        // set motors to coast
-        m_leftMotor.setNeutralMode(NeutralMode.Coast);
-        m_rightMotor.setNeutralMode(NeutralMode.Coast);
-        m_leftFollowMotor.setNeutralMode(NeutralMode.Coast);
-        m_rightFollowMotor.setNeutralMode(NeutralMode.Coast);
+        // set motors to Brake
+        m_leftMotor.setNeutralMode(NeutralMode.Brake);
+        m_rightMotor.setNeutralMode(NeutralMode.Brake);
+        m_leftFollowMotor.setNeutralMode(NeutralMode.Brake);
+        m_rightFollowMotor.setNeutralMode(NeutralMode.Brake);
         // establish master
         m_leftFollowMotor.follow(m_leftMotor);
         m_rightFollowMotor.follow(m_rightMotor);
@@ -76,30 +78,32 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     /**
-     * @param pow -1 to 1;
+     * @param pow  -1 to 1;
      * @param turn positive -> counter-clockwise
      */
-    //TODO: make sure positive is actually counter clockwise
+    // TODO: make sure positive is actually counter clockwise
     public void arcadeDrive(double pow, double turn) {
-        //jank acceleration control
+        // jank acceleration control
         pow *= speedMultiplier;
-        if (Math.abs(pow - pow0)>= aLimit) {
-            pow = pow0 + Math.signum(pow-pow0) * aLimit;
+        turn *= speedMultiplier;
+        if (Math.abs(pow - pow0) >= ((Math.abs(pow) > Math.abs(pow0)) ? accelLimit : deccelLimit)) {
+            pow = pow0 + Math.signum(pow - pow0) * ((Math.abs(pow) > Math.abs(pow0)) ? accelLimit : deccelLimit);
         }
         pow0 = pow;
-        
-        putPowerEntry(pow - turn,pow + turn);
+
+        putPowerEntry(pow - turn, pow + turn);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
 
     /**
      * Doesn't go through acceleration limit or speed multiplier
-     * @param pow -1 to 1;
+     * 
+     * @param pow  -1 to 1;
      * @param turn positive -> counter-clockwise
      */
     public void arcadeDriveAuton(double pow, double turn) {
-        putPowerEntry(pow - turn,pow + turn);
+        putPowerEntry(pow - turn, pow + turn);
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -125,31 +129,32 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public double getAvgEncCM() {
-        return encToCm((getEncoderLeft() + getEncoderRight())/2.0);
+        return encToCm((getEncoderLeft() + getEncoderRight()) / 2.0);
     }
 
     /**
      * @return positive = clockwise
      */
     public double getAngleDegrees() {
-        return (encToCm((getEncoderLeft() - getEncoderRight())/2.0) / (PhysicalMeasurements.driveBaseWidth * Math.PI))*360;
+        return (encToCm((getEncoderLeft() - getEncoderRight()) / 2.0) / (PhysicalMeasurements.driveBaseWidth * Math.PI))
+                * 360;
     }
 
-    //in centimeters
+    // in centimeters
     public double getEncoderLeft() {
         return m_leftMotor.getSelectedSensorPosition();
     }
 
-    //in centimeters
+    // in centimeters
     public double getEncoderRight() {
         return m_rightMotor.getSelectedSensorPosition();
     }
 
-    public static double encToCm(double encoderTicks){
+    public static double encToCm(double encoderTicks) {
         return encoderTicks / DriveConstants.ticksPerRev * (PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
-    public void setSpeedMultiplier(double speed){
+    public void setSpeedMultiplier(double speed) {
         setSpeedMultiplier(speed, true);
     }
 
@@ -166,7 +171,7 @@ public class DriveSubsystem extends SubsystemBase {
         }
     }
 
-    public void putPowerEntry(double left, double right){
+    public void putPowerEntry(double left, double right) {
         if (lpowerEntry == null) {
             lpowerEntry = tab.add("Left Power", 1).getEntry();
             System.out.println("Added Power NT entry");
