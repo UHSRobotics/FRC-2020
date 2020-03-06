@@ -41,18 +41,22 @@ public class LiftSubsystem extends SubsystemBase {
     m_liftMotor.setNeutralMode(NeutralMode.Brake);
     m_follow.setNeutralMode(NeutralMode.Brake);
     m_follow.follow(m_liftMotor);
-    m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     m_liftMotor.configClearPositionOnLimitF(true, 10);
     m_liftMotor.configClearPositionOnLimitR(true, 10);
-    // m_liftMotor.configClearPositionOnLimitF(true, 10);
 
   }
 
   public int getEncoder(){
-    return m_liftMotor.getSelectedSensorPosition();
+    return -1*m_liftMotor.getSelectedSensorPosition();
   }
 
   public void setSpeed(double s) {
+    if(getEncoder()<0&&s<0){
+      m_liftMotor.set(ControlMode.PercentOutput, 0);
+      return;
+    }
+
     // if (!(s > 0 && m_encoder.getDistance() > LiftConstants.liftUpperBound)
     // || !(s < 0 && m_encoder.getDistance() < LiftConstants.liftLowerBound)) {
       targetSpeed = curSpeed = s;
@@ -90,11 +94,15 @@ public class LiftSubsystem extends SubsystemBase {
     }
     if (encoderEntry == null) {
       encoderEntry = tab.addPersistent("Encoder Reading", 1).getEntry();
-      System.out.println("Added Lift Encoder NT entry");
+
     }
+
     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
     encoderEntry.setDouble(m_liftMotor.getSelectedSensorPosition());
-
+    
+    if(getEncoder()<0&&curSpeed<0){
+      curSpeed = targetSpeed = 0;
+    }
     curSpeed+=Math.min(0.04,Math.abs(targetSpeed - curSpeed)) * Math.signum(targetSpeed - curSpeed);
     m_liftMotor.set(ControlMode.PercentOutput, curSpeed * speedMultiplier);
   }
