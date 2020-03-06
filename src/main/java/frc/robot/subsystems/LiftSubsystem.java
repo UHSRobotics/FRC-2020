@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -26,18 +27,27 @@ public class LiftSubsystem extends SubsystemBase {
   private final TalonSRX m_liftMotor = new TalonSRX(Constants.Ports.lift);
   private final TalonSRX m_follow = new TalonSRX(Constants.Ports.liftFollow);
   // private final
-  private double speedMultiplier = 1;
+  private double speedMultiplier = 0.05;
   private NetworkTableEntry speedEntry, encoderEntry;
   private final ShuffleboardTab tab = Shuffleboard.getTab("Lift");
   private static boolean init = false;
-  private final Encoder m_encoder;
+  // private final Encoder m_encoder;
 
   public LiftSubsystem() {
-    m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false, EncodingType.k4X);
+    // m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+    // m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false, EncodingType.k4X);
     m_liftMotor.setNeutralMode(NeutralMode.Brake);
     m_follow.setNeutralMode(NeutralMode.Brake);
     m_follow.follow(m_liftMotor);
-    m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+    m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    m_liftMotor.configClearPositionOnLimitF(true, 10);
+    m_liftMotor.configClearPositionOnLimitR(true, 10);
+    // m_liftMotor.configClearPositionOnLimitF(true, 10);
+
+  }
+
+  public int getEncoder(){
+    return m_liftMotor.getSelectedSensorPosition();
   }
 
   public void setSpeed(double s) {
@@ -69,7 +79,7 @@ public class LiftSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.addPersistent("Lift Speed Multiplier", 1).getEntry();
+      speedEntry = tab.addPersistent("Lift Speed Multiplier", 0.05).getEntry();
       System.out.println("Added Lift Speed Multiplier NT entry");
     }
     if (encoderEntry == null) {
@@ -77,7 +87,7 @@ public class LiftSubsystem extends SubsystemBase {
       System.out.println("Added Lift Encoder NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
-    encoderEntry.setDouble(m_encoder.getDistance());
+    // encoderEntry.setDouble(m_encoder.getDistance());
   }
 
   public void initialize() {
