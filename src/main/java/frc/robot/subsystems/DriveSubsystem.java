@@ -38,11 +38,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     public DriveSubsystem() {
         pow0 = 0;
-        // set motors to coast
-        m_leftMotor.setNeutralMode(NeutralMode.Coast);
-        m_rightMotor.setNeutralMode(NeutralMode.Coast);
-        m_leftFollowMotor.setNeutralMode(NeutralMode.Coast);
-        m_rightFollowMotor.setNeutralMode(NeutralMode.Coast);
+        // set motors to Brake
+        m_leftMotor.setNeutralMode(NeutralMode.Brake);
+        m_rightMotor.setNeutralMode(NeutralMode.Brake);
+        m_leftFollowMotor.setNeutralMode(NeutralMode.Brake);
+        m_rightFollowMotor.setNeutralMode(NeutralMode.Brake);
         // establish master
         m_leftFollowMotor.follow(m_leftMotor);
         m_rightFollowMotor.follow(m_rightMotor);
