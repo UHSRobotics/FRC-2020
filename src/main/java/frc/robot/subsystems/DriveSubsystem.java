@@ -83,6 +83,7 @@ public class DriveSubsystem extends SubsystemBase {
     public void arcadeDrive(double pow, double turn) {
         //jank acceleration control
         pow *= speedMultiplier;
+        turn *= speedMultiplier;
         if (Math.abs(pow - pow0)>= aLimit) {
             pow = pow0 + Math.signum(pow-pow0) * aLimit;
         }

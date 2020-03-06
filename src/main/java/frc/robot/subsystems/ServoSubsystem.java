@@ -32,12 +32,12 @@ public class ServoSubsystem extends SubsystemBase {
         if (servoEntry == null)
             servoEntry = servoTab.add("Servo Status", "Climb Init").getEntry();
         if (toggleOn) {
-            servoEntry.setString("Climb OK");
+            servoEntry.setString("Climb not OK");
             m_switch.setAngle(200); // ratchet engaged
 
         } else {
-            servoEntry.setString("Climb not OK");
-            m_switch.setAngle(130); // ratchet disengaged
+            servoEntry.setString("Climb OK");
+            m_switch.setAngle(100); // ratchet disengaged
         }
     }
 
