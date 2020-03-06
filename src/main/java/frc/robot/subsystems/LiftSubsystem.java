@@ -33,6 +33,8 @@ public class LiftSubsystem extends SubsystemBase {
   private static boolean init = false;
   // private final Encoder m_encoder;
 
+  private double targetSpeed, curSpeed; //TODO: lastSpeed needs a better name
+
   public LiftSubsystem() {
     // m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     // m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false, EncodingType.k4X);
@@ -52,11 +54,15 @@ public class LiftSubsystem extends SubsystemBase {
 
   public void setSpeed(double s) {
     // if (!(s > 0 && m_encoder.getDistance() > LiftConstants.liftUpperBound)
-    //     || !(s < 0 && m_encoder.getDistance() < LiftConstants.liftLowerBound)) {
-      s *= speedMultiplier;
-      m_liftMotor.set(ControlMode.PercentOutput, s);
+    // || !(s < 0 && m_encoder.getDistance() < LiftConstants.liftLowerBound)) {
+      targetSpeed = curSpeed = s;
+    s *= speedMultiplier;
+    m_liftMotor.set(ControlMode.PercentOutput, s);
     // }
+  }
 
+  public void setTarget(double s) {
+    targetSpeed = s;
   }
 
   public void setSpeedMultiplier(double speed) {
@@ -87,7 +93,10 @@ public class LiftSubsystem extends SubsystemBase {
       System.out.println("Added Lift Encoder NT entry");
     }
     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
-    // encoderEntry.setDouble(m_encoder.getDistance());
+    encoderEntry.setDouble(m_liftMotor.getSelectedSensorPosition());
+
+    curSpeed+=Math.min(0.04,Math.abs(targetSpeed - curSpeed)) * Math.signum(targetSpeed - curSpeed);
+    m_liftMotor.set(ControlMode.PercentOutput, curSpeed * speedMultiplier);
   }
 
   public void initialize() {

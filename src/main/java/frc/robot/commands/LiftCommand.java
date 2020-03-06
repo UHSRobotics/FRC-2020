@@ -27,6 +27,7 @@ public class LiftCommand extends CommandBase {
     // addRequirements(m_lift);
     // addRequirements(m_liftPID);
     // }
+    private int servoDelay = 0; //1 = 20ms
 
     public LiftCommand(LiftSubsystem lift, BooleanSupplier left, BooleanSupplier right, ServoSubsystem servo) {
         m_lift = lift;
@@ -42,23 +43,31 @@ public class LiftCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_up.getAsBoolean()) {
+        if(servoDelay>0)servoDelay--;
+        if(servoDelay<0)servoDelay++;
+        else if (m_up.getAsBoolean()) {
             //if ratchet engaged, disengage it
             if (m_servo.getToggle()) {
                 m_servo.toggle();
-                Timer.delay(0.1);
+                servoDelay = 50;
             }
-            m_lift.setSpeed(1);
-            m_lift.initialize();
+            if(servoDelay==0){
+                m_lift.setTarget(1);
+                m_lift.initialize();
+            }
         } else if (m_down.getAsBoolean() && m_lift.getInit()) {
             //if ratchet disengage, engage it
             if (!m_servo.getToggle()) {
                 m_servo.toggle();
-                Timer.delay(0.1);
+                servoDelay = -20;
             }
-            m_lift.setSpeed(-1);
+            if(servoDelay == 0)
+                m_lift.setTarget(-1);
         } else {
-            m_lift.setSpeed(0);
+            m_lift.setTarget(0);
+        }
+        if(servoDelay > 1){
+            m_lift.setSpeed(0);  
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
         // if (!ServoSubsystem.toggleOn) {
