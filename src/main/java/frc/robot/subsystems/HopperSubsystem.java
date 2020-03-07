@@ -19,11 +19,15 @@ public class HopperSubsystem extends SubsystemBase {
    * Creates a new HopperSubsystem.
    */
   private final CANSparkMax m_motor = new CANSparkMax(Ports.hopper, MotorType.kBrushless);
+  private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
+  private NetworkTableEntry speedEntry;
+  private double speedMultiplier = 1;
 
   public HopperSubsystem() {
   }
 
   public void switchON(double s){
+    s *= speedMultiplier;
     m_motor.set(s);
   }
 
@@ -31,8 +35,25 @@ public class HopperSubsystem extends SubsystemBase {
    m_motor.set(0.0);
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void setSpeedMultiplier(double speed, boolean updateNT) {
+    if (0 <= speed && speed <= 2) {
+        speedMultiplier = speed;
+        if (updateNT) {
+            System.out.println("NT update (hopper)");
+            speedEntry.setDouble(speedMultiplier);
+        }
+    } else {
+        System.out.println("NT update (hopper)");
+        speedEntry.setDouble(speedMultiplier);
+    }
+}
+
+@Override
+public void periodic() {
+  if (speedEntry == null) {
+    speedEntry = tab.addPersistent("Hopper Speed Multiplier", 1).getEntry();
+    System.out.println("NT update (hopper)");
+    }
+  setSpeedMultiplier(speedEntry.getDouble(0.3), false);
   }
 }

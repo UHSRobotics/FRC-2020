@@ -52,6 +52,6 @@ public class IntakeSubsystem extends SubsystemBase {
             speedEntry = tab.addPersistent("Intake Speed Multiplier", 1).getEntry();
             System.out.println("NT update (intake)");
         }
-        setSpeedMultiplier(speedEntry.getDouble(1.0), false);
+        setSpeedMultiplier(speedEntry.getDouble(0.3), false);
     }
 }
