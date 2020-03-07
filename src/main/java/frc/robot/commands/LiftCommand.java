@@ -49,22 +49,22 @@ public class LiftCommand extends CommandBase {
             //if ratchet engaged, disengage it
             if (m_servo.getToggle()) {
                 m_servo.toggle();
-                servoDelay = 50;
+                servoDelay = 25;
             }
             if(servoDelay==0){
-                m_lift.setTarget(1);
+                m_lift.setVelTarget(1);
                 m_lift.initialize();
             }
         } else if (m_down.getAsBoolean() && m_lift.getInit()) {
-            //if ratchet disengage, engage it
+            //if ratchet disengage, engage it, since we'll be pulling ourselves up
             if (!m_servo.getToggle()) {
                 m_servo.toggle();
-                servoDelay = -20;
+                servoDelay = -10;
             }
             if(servoDelay == 0)
-                m_lift.setTarget(-1);
+                m_lift.setVelTarget(-1);
         } else {
-            m_lift.setTarget(0);
+            m_lift.setVelTarget(0);
         }
         if(servoDelay > 1){
             m_lift.setSpeed(0);  

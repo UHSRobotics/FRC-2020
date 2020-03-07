@@ -94,12 +94,13 @@ public final class Constants {
     }
 
     public static final class LiftConstants {
-        // todo
         public static final double Kp = 1;
         public static final double Kd = 0;
         public static final double Ki = 0;
+        //TODO: find the physical lift upperbound
         public static final double liftUpperBound = 10000;
         public static final double liftLowerBound = 100;
+        public static final double liftAccelLimit = 0.08;
     }
 
     public static final class FlywheelConstants {
