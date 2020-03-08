@@ -18,13 +18,13 @@ public class HopperCommand extends CommandBase {
    */
 
   private final HopperSubsystem m_hopper;
-  private final DoubleSupplier m_actionvate; 
+  private final DoubleSupplier m_activate; 
   // double m_delay = 0.5;
   boolean finished = false;
 
-  public HopperCommand(HopperSubsystem subsystem, DoubleSupplier hopperActivition) {
+  public HopperCommand(HopperSubsystem subsystem, DoubleSupplier hopperActivation) {
     m_hopper = subsystem;
-    m_actionvate = hopperActivition;
+    m_activate = hopperActivation;
     addRequirements(m_hopper);
 
   }
@@ -32,8 +32,8 @@ public class HopperCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_actionvate.getAsDouble() != 0){
-      m_hopper.switchON(m_actionvate.getAsDouble());
+    if(m_activate.getAsDouble() != 0){
+      m_hopper.switchON(m_activate.getAsDouble());
     }else{
       m_hopper.switchOFF();
 
