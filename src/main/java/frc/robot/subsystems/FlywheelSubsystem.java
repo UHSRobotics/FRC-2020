@@ -32,7 +32,7 @@ public class FlywheelSubsystem extends SubsystemBase {
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
   private NetworkTableEntry speedEntry;
   private NetworkTableEntry velocityEntry;
-  private double speedMultiplier = 1, targetVelocity = 0.0;
+  private double speedMultiplier = 1, targetVelocity = 1.0;
 
   public FlywheelSubsystem() {
     m_motor.setIdleMode(IdleMode.kCoast);
@@ -89,7 +89,7 @@ public class FlywheelSubsystem extends SubsystemBase {
     }
     setSpeedMultiplier(speedEntry.getDouble(1.0), false);
     if (velocityEntry == null) {
-      velocityEntry = tab.addPersistent("Velocity (RPM)", 0).getEntry();
+      velocityEntry = tab.add("Velocity (RPM)", 1).getEntry();
       System.out.println("added velocity entry");
     }
     velocityEntry.setDouble(getRate());
