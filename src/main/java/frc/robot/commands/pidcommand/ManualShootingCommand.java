@@ -5,51 +5,55 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.pidcommand;
 
-import java.util.function.DoubleSupplier;
+import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.Constants.FlywheelConstants;
+import frc.robot.subsystems.*;
 
-public class HopperCommand extends CommandBase {
+public class ManualShootingCommand extends CommandBase {
   /**
-   * Creates a new HopperCommand.
+   * Creates a new ManualShootingCommand.
    */
+  FlywheelSubsystem m_flywheel;
+  HopperSubsystem m_hopper;
+  BooleanSupplier m_fullPow;
 
-  private final HopperSubsystem m_hopper;
-  private final DoubleSupplier m_activate; 
-  // double m_delay = 0.5;
-  boolean finished = false;
-
-  public HopperCommand(HopperSubsystem subsystem, DoubleSupplier hopperActivation) {
-    m_hopper = subsystem;
-    m_activate = hopperActivation;
+  /**
+   * should be put into a "whileHeld"
+   */
+  public ManualShootingCommand(FlywheelSubsystem flywheel, HopperSubsystem hopper) {
+    m_flywheel = flywheel;
+    m_hopper = hopper;
+    addRequirements(m_flywheel);
     addRequirements(m_hopper);
+  }
 
+  @Override
+  public void initialize() {
+    m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_activate.getAsDouble() != 0){
-      m_hopper.switchON(m_activate.getAsDouble() * -1);
+    if(m_flywheel.atSetPoint()){
+      m_hopper.switchON(1);
     }else{
       m_hopper.switchOFF();
-
     }
   }
-
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_hopper.switchOFF();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return false;
   }
 }

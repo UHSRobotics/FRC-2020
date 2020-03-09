@@ -42,7 +42,7 @@ public class FlywheelCommand extends CommandBase {
     if (m_fullPow.getAsBoolean()) {
       // m_neoFw.setSpeed(1);
       // m_hopper.switchON(0.8);
-      m_neoFw.setPIDTarget(500);
+      m_neoFw.setPIDTarget(2000);
     } else {
       // m_neoFw.setSpeed(0);
       // m_hopper.switchOFF();

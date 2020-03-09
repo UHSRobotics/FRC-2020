@@ -76,7 +76,7 @@ public class LiftSubsystem extends SubsystemBase {
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
-    if (0 <= speed && speed <= 2) {
+    if (0 <= speed && speed <= 0.5) {
       speedMultiplier = speed;
       if (updateNT) {
         System.out.println("Lift Speed Multiplier update");

@@ -112,8 +112,8 @@ public final class Constants {
         public static final double slowK = 0.25;
 
         
-        public static final double targetRPM = 1000;
-        public static final double tolRPM = 200;
+        public static final double targetRPM = 1500;
+        public static final double tolRPM = 100;
 
     }
 
