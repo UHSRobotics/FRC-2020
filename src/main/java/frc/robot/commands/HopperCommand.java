@@ -10,6 +10,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.HopperConstants;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class HopperCommand extends CommandBase {
@@ -21,6 +22,7 @@ public class HopperCommand extends CommandBase {
   private final DoubleSupplier m_activate; 
   // double m_delay = 0.5;
   boolean finished = false;
+  
 
   public HopperCommand(HopperSubsystem subsystem, DoubleSupplier hopperActivation) {
     m_hopper = subsystem;
@@ -32,11 +34,13 @@ public class HopperCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_activate.getAsDouble() != 0){
-      m_hopper.switchON(m_activate.getAsDouble() * -1);
-    }else{
-      m_hopper.switchOFF();
-
+    if(m_activate.getAsDouble() >= 0.5){
+      m_hopper.setPIDTarget(-1 * HopperConstants.targetRPM);
+    }else if(m_activate.getAsDouble() <= -0.5){
+      m_hopper.setPIDTarget(HopperConstants.targetRPM);
+    }
+    else{
+      m_hopper.setPIDTarget(0);
     }
   }
 
@@ -44,6 +48,7 @@ public class HopperCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_hopper.setPIDTarget(0);
     m_hopper.switchOFF();
   }
 

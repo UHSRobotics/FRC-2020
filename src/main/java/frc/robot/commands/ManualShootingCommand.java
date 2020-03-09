@@ -11,6 +11,7 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.FlywheelConstants;
+import frc.robot.Constants.HopperConstants;
 import frc.robot.subsystems.*;
 
 public class ManualShootingCommand extends CommandBase {
@@ -40,9 +41,9 @@ public class ManualShootingCommand extends CommandBase {
   @Override
   public void execute() {
     if(m_flywheel.atSetPoint()){
-      m_hopper.switchON(1);
+      m_hopper.setPIDTarget(HopperConstants.targetRPM);
     }else{
-      m_hopper.switchOFF();
+      m_hopper.setPIDTarget(0);
     }
   }
 

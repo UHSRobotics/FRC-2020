@@ -117,6 +117,15 @@ public final class Constants {
 
     }
 
+    public static final class HopperConstants{
+        public static final double Kp = 0.0004;
+        public static final double Kd = 0;
+        public static final double Ki = 0.000001;
+        public static final double Kff = 0.0003;
+        public static final double targetRPM = 140;
+
+    }
+
     public static final class SpinCons {
         public static final int spinner = 2;
     }

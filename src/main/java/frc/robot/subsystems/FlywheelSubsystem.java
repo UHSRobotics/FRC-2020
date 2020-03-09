@@ -36,8 +36,6 @@ public class FlywheelSubsystem extends SubsystemBase {
   private NetworkTableEntry speedEntry, velocityEntry, pidStatusEntry;
   private double speedMultiplier = 1, targetVelocity = 1.0;
 
-  private double kP = FlywheelConstants.Kp, kI = 0, kD = 0;
-
   public FlywheelSubsystem() {
     m_motor.setIdleMode(IdleMode.kCoast);
     m_motor2.setIdleMode(IdleMode.kCoast);
@@ -54,10 +52,6 @@ public class FlywheelSubsystem extends SubsystemBase {
     c2.setD(FlywheelConstants.Kd);
     c2.setFF(FlywheelConstants.Kff);
     c2.setOutputRange(-1, 1);
-
-    SmartDashboard.putNumber("P Gain", kP);
-    SmartDashboard.putNumber("I Gain", kI);
-    SmartDashboard.putNumber("D Gain", kD);
   }
 
   public void setSpeed(double p) {
@@ -138,26 +132,5 @@ public class FlywheelSubsystem extends SubsystemBase {
       System.out.println("added flywheel pid status entry");
     }
     pidStatusEntry.setBoolean(atSetPoint());
-
-
-    double p = SmartDashboard.getNumber("P Gain", 0);
-    double i = SmartDashboard.getNumber("I Gain", 0);
-    double d = SmartDashboard.getNumber("D Gain", 0);
-    if ((p != kP)) {
-      c.setP(p);
-      c2.setP(p);
-      kP = p;
-    }
-    if ((i != kI)) {
-      c.setI(i);
-      c2.setI(i);
-      kI = i;
-    }
-    if ((d != kD)) {
-      c.setD(d);
-      c2.setD(d);
-      kD = d;
-    }
-
   }
 }
