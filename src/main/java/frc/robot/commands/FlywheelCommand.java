@@ -28,14 +28,6 @@ public class FlywheelCommand extends CommandBase {
   // private final HopperSubsystem m_hopper;
   private final BooleanSupplier m_fullPow;// , m_mag;
 
-  /**
-   * Creates a new DefaultDrive.
-   *
-   * @param subsystem The drive subsystem this command wil run on.
-   * @param forward   The control input for driving forwards/backwards
-   * @param rotation  The control input for turning
-   */
-
   public FlywheelCommand(FlywheelSubsystem subsystem, BooleanSupplier fullPow) {
     m_neoFw = subsystem;
     // m_flywheelPID = pid;
