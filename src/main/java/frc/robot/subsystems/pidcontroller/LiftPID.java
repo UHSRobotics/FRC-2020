@@ -11,13 +11,10 @@ import frc.robot.subsystems.LiftSubsystem;
 
 public class LiftPID extends PIDSubsystem {
     private final LiftSubsystem m_lift;
-    private final Encoder m_encoder;
 
     public LiftPID() {
         super(new PIDController(LiftConstants.Kp, LiftConstants.Ki, LiftConstants.Kd), 0);
         m_lift = new LiftSubsystem();
-        m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false, EncodingType.k4X);
-        m_encoder.setDistancePerPulse(0.001);
 
     }
 
@@ -28,7 +25,7 @@ public class LiftPID extends PIDSubsystem {
 
     @Override
     protected double getMeasurement() {
-        return m_encoder.getDistance();
+        return m_lift.getEncoderVelocity();
     }
 
 }

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.ServoSubsystem;
+import frc.robot.subsystems.pidcontroller.LiftPID;
 
 public class LiftCommand extends CommandBase {
     private final LiftSubsystem m_lift;
@@ -13,6 +14,7 @@ public class LiftCommand extends CommandBase {
     private final BooleanSupplier m_up;
     private final BooleanSupplier m_down;
     private final ServoSubsystem m_servo;
+    private final LiftPID m_liftPID;
 
     // private final BooleanSupplier m_pidToggle;
     // private final LiftPID m_liftPID;
@@ -27,47 +29,65 @@ public class LiftCommand extends CommandBase {
     // addRequirements(m_lift);
     // addRequirements(m_liftPID);
     // }
-    private int servoDelay = 0; //1 = 20ms
+    private int servoDelay = 0; // 1 = 20ms
 
-    public LiftCommand(LiftSubsystem lift, BooleanSupplier left, BooleanSupplier right, ServoSubsystem servo) {
+    public LiftCommand(LiftSubsystem lift, LiftPID liftPID, BooleanSupplier left, BooleanSupplier right,
+            ServoSubsystem servo) {
         m_lift = lift;
         // m_winch = winch;
         m_up = left;
         m_down = right;
         m_servo = servo;
+        m_liftPID = liftPID;
 
         // m_sensor = magSensor;
         addRequirements(m_lift);
+        addRequirements(m_liftPID);
         // addRequirements(m_winch);
     }
 
     @Override
     public void execute() {
-        if(servoDelay>0)servoDelay--;
-        if(servoDelay<0)servoDelay++;
+        if (servoDelay > 0)
+            servoDelay--;
+        if (servoDelay < 0)
+            servoDelay++;
         else if (m_up.getAsBoolean()) {
-            //if ratchet engaged, disengage it
+            // if ratchet engaged, disengage it
             if (m_servo.getToggle()) {
                 m_servo.toggle();
                 servoDelay = 25;
             }
-            if(servoDelay==0){
-                m_lift.setVelTarget(1);
+            if (servoDelay == 0) {
+                // m_lift.setVelTarget(1);
+                m_liftPID.setSetpoint(2);
+                if (!m_liftPID.isEnabled()) {
+                    m_liftPID.enable();
+                }
                 m_lift.initialize();
             }
         } else if (m_down.getAsBoolean() && m_lift.getInit()) {
-            //if ratchet disengage, engage it, since we'll be pulling ourselves up
+            // if ratchet disengage, engage it, since we'll be pulling ourselves up
             if (!m_servo.getToggle()) {
                 m_servo.toggle();
                 servoDelay = -10;
             }
-            if(servoDelay == 0)
-                m_lift.setVelTarget(-1);
-        } else {
-            m_lift.setVelTarget(0);
+            if (servoDelay == 0) {
+                // m_lift.setVelTarget(-1);
+                m_liftPID.setSetpoint(-2);
+                if (!m_liftPID.isEnabled()) {
+                    m_liftPID.enable();
+                }
+            } else {
+                // m_lift.setVelTarget(0);
+                m_liftPID.setSetpoint(0);
+                if (!m_liftPID.isEnabled()) {
+                    m_liftPID.enable();
+                }
+            }
         }
-        if(servoDelay > 1){
-            m_lift.setSpeed(0);  
+        if (servoDelay > 1) {
+            m_lift.setSpeed(0);
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
         // if (!ServoSubsystem.toggleOn) {
@@ -98,6 +118,7 @@ public class LiftCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        m_liftPID.disable();
     }
 
     @Override

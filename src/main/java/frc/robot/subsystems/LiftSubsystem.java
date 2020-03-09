@@ -54,6 +54,10 @@ public class LiftSubsystem extends SubsystemBase {
     return -1 * m_liftMotor.getSelectedSensorPosition() - initialEncoder;
   }
 
+  public int getEncoderVelocity() {
+    return m_liftMotor.getSelectedSensorVelocity() * 4096 / 10;
+  }
+
   public void setSpeed(double s) {
     if ((getEncoder() < LiftConstants.liftLowerBound && s < 0)
         || (getEncoder() > LiftConstants.liftUpperBound && s > 0)) {
@@ -104,11 +108,12 @@ public class LiftSubsystem extends SubsystemBase {
     if (getEncoder() < LiftConstants.liftLowerBound) {
       targetSpeed = targetSpeed < 0 ? 0 : targetSpeed;
       curSpeed = curSpeed < 0 ? 0 : curSpeed;
-    }else if(getEncoder() > LiftConstants.liftUpperBound){
+    } else if (getEncoder() > LiftConstants.liftUpperBound) {
       targetSpeed = targetSpeed > 0 ? 0 : targetSpeed;
       curSpeed = curSpeed > 0 ? 0 : curSpeed;
     }
-    curSpeed += Math.min(LiftConstants.liftAccelLimit, Math.abs(targetSpeed - curSpeed)) * Math.signum(targetSpeed - curSpeed);
+    curSpeed += Math.min(LiftConstants.liftAccelLimit, Math.abs(targetSpeed - curSpeed))
+        * Math.signum(targetSpeed - curSpeed);
     m_liftMotor.set(ControlMode.PercentOutput, curSpeed * speedMultiplier);
   }
 
