@@ -110,7 +110,6 @@ public final class Constants {
         public static final double Kff = 0.00018;
 
         public static final double slowK = 0.25;
-
         
         public static final double targetRPM = 4000;
         public static final double tolRPM = 100;
