@@ -28,14 +28,6 @@ public class FlywheelCommand extends CommandBase {
   // private final HopperSubsystem m_hopper;
   private final BooleanSupplier m_fullPow;// , m_mag;
 
-  /**
-   * Creates a new DefaultDrive.
-   *
-   * @param subsystem The drive subsystem this command wil run on.
-   * @param forward   The control input for driving forwards/backwards
-   * @param rotation  The control input for turning
-   */
-
   public FlywheelCommand(FlywheelSubsystem subsystem, BooleanSupplier fullPow) {
     m_neoFw = subsystem;
     // m_flywheelPID = pid;
@@ -48,13 +40,13 @@ public class FlywheelCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_fullPow.getAsBoolean()) {
-      m_neoFw.setSpeed(1);
+      // m_neoFw.setSpeed(1);
       // m_hopper.switchON(0.8);
-      // m_neoFw.setPIDTarget(1);
+      m_neoFw.setPIDTarget(2000);
     } else {
-      m_neoFw.setSpeed(0);
+      // m_neoFw.setSpeed(0);
       // m_hopper.switchOFF();
-      // m_neoFw.setPIDTarget(0);
+      m_neoFw.setPIDTarget(0);
     }
 
     // pid test

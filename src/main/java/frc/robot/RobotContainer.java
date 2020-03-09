@@ -78,20 +78,18 @@ public class RobotContainer {
     // .whileHeld(new IntakeCommand(m_IntakeSubsystem, () ->
     // m_driverController.getTrigButton()));
 
-    // new JoystickButton(m_subsystemController, Button.kRect.value)
-    // .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
-    // sketch delete this
+    // For debugging only, delete before competition
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
-    //     .whileHeld(new DistancePIDCommand(m_driveSubsystem, 500));
+    // .whileHeld(new DistancePIDCommand(m_driveSubsystem, 500));
     // new JoystickButton(m_driverController, Button.kBumperRight.value)
-    //     .whileHeld(new RotationPIDCommand(m_driveSubsystem, 180));
+    // .whileHeld(new RotationPIDCommand(m_driveSubsystem, 180));
 
-    //TODO: enable this after making sure rotation PID works
-    /*new JoystickButton(m_driverController, Button.kDisk.value)
-        .whenPressed(()->{
-          ((ArcadeDrive)m_driveSubsystem.getDefaultCommand()).toggleInvert();
-          new RotationPIDCommand(m_driveSubsystem, 180);
-        });*/
+    // TODO: enable this after making sure rotation PID works
+    /*
+     * new JoystickButton(m_driverController, Button.kDisk.value) .whenPressed(()->{
+     * ((ArcadeDrive)m_driveSubsystem.getDefaultCommand()).toggleInvert(); new
+     * RotationPIDCommand(m_driveSubsystem, 180); });
+     */
 
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
@@ -106,6 +104,9 @@ public class RobotContainer {
 
     new JoystickButton(m_subsystemController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
+
+    new JoystickButton(m_subsystemController, Button.kRect.value)
+        .whileHeld(new ManualShootingCommand(m_flywheelSubsystem, m_hopper));
     /*
      * new JoystickButton(m_driverController, Button.kBumperRight.value)
      * .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1)); new

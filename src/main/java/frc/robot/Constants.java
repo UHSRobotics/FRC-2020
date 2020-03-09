@@ -94,18 +94,35 @@ public final class Constants {
     }
 
     public static final class LiftConstants {
-        // todo
         public static final double Kp = 1;
         public static final double Kd = 0;
         public static final double Ki = 0;
-        public static final double liftUpperBound = 10000;
-        public static final double liftLowerBound = 100;
+        //TODO: find the physical lift upperbound is 14500
+        public static final double liftUpperBound = 14200;
+        public static final double liftLowerBound = 500;
+        public static final double liftAccelLimit = 0.08;
     }
 
     public static final class FlywheelConstants {
-        public static final double Kp = 0.1;
+        public static final double Kp = 0.00013;
         public static final double Kd = 0;
         public static final double Ki = 0;
+        public static final double Kff = 0.00018;
+
+        public static final double slowK = 0.25;
+        
+        public static final double targetRPM = 4000;
+        public static final double tolRPM = 100;
+
+    }
+
+    public static final class HopperConstants{
+        public static final double Kp = 0.0004;
+        public static final double Kd = 0;
+        public static final double Ki = 0.000001;
+        public static final double Kff = 0.0003;
+        public static final double targetRPM = 280;
+
     }
 
     public static final class SpinCons {

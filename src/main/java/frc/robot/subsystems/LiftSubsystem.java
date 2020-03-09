@@ -27,18 +27,19 @@ public class LiftSubsystem extends SubsystemBase {
   private final TalonSRX m_liftMotor = new TalonSRX(Constants.Ports.lift);
   private final TalonSRX m_follow = new TalonSRX(Constants.Ports.liftFollow);
   // private final
-  private double speedMultiplier = 0.05;
+  private double speedMultiplier = 0.25;
   private NetworkTableEntry speedEntry, encoderEntry;
   private final ShuffleboardTab tab = Shuffleboard.getTab("Lift");
   private static boolean init = false;
-  private static int initialEncoder=0;
+  private static int initialEncoder = 0;
   // private final Encoder m_encoder;
 
-  private double targetSpeed, curSpeed; //TODO: lastSpeed needs a better name
+  private double targetSpeed, curSpeed;
 
   public LiftSubsystem() {
     // m_liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-    // m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false, EncodingType.k4X);
+    // m_encoder = new Encoder(Ports.liftEncoderA, Ports.liftEncoderB, false,
+    // EncodingType.k4X);
     m_liftMotor.setNeutralMode(NeutralMode.Brake);
     m_follow.setNeutralMode(NeutralMode.Brake);
     m_follow.follow(m_liftMotor);
@@ -49,25 +50,24 @@ public class LiftSubsystem extends SubsystemBase {
 
   }
 
-  public int getEncoder(){
+  public int getEncoder() {
     return -1 * m_liftMotor.getSelectedSensorPosition() - initialEncoder;
   }
 
   public void setSpeed(double s) {
-    if(getEncoder()<0 && s<0){
+    if ((getEncoder() < LiftConstants.liftLowerBound && s < 0)
+        || (getEncoder() > LiftConstants.liftUpperBound && s > 0)) {
+      curSpeed = targetSpeed = 0;
       m_liftMotor.set(ControlMode.PercentOutput, 0);
       return;
     }
 
-    // if (!(s > 0 && m_encoder.getDistance() > LiftConstants.liftUpperBound)
-    // || !(s < 0 && m_encoder.getDistance() < LiftConstants.liftLowerBound)) {
-      targetSpeed = curSpeed = s;
+    targetSpeed = curSpeed = s;
     s *= speedMultiplier;
     m_liftMotor.set(ControlMode.PercentOutput, s);
-    // }
   }
 
-  public void setTarget(double s) {
+  public void setVelTarget(double s) {
     targetSpeed = s;
   }
 
@@ -76,7 +76,7 @@ public class LiftSubsystem extends SubsystemBase {
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
-    if (0 <= speed && speed <= 2) {
+    if (0 <= speed && speed <= 0.5) {
       speedMultiplier = speed;
       if (updateNT) {
         System.out.println("Lift Speed Multiplier update");
@@ -91,21 +91,24 @@ public class LiftSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (speedEntry == null) {
-      speedEntry = tab.addPersistent("Lift Speed Multiplier", 0.05).getEntry();
+      speedEntry = tab.addPersistent("Lift Speed Multiplier", 0.25).getEntry();
       System.out.println("Added Lift Speed Multiplier NT entry");
     }
     if (encoderEntry == null) {
-      encoderEntry = tab.addPersistent("Encoder Reading", 1).getEntry();
-
+      encoderEntry = tab.add("Encoder Reading", 1).getEntry();
+      System.out.println("Added Lift Encoder Reading NT entry");
     }
-
     setSpeedMultiplier(speedEntry.getDouble(0.25), false);
     encoderEntry.setDouble(getEncoder());
-    
-    if(getEncoder() < 0 && curSpeed < 0){
-      curSpeed = targetSpeed = 0;
+
+    if (getEncoder() < LiftConstants.liftLowerBound) {
+      targetSpeed = targetSpeed < 0 ? 0 : targetSpeed;
+      curSpeed = curSpeed < 0 ? 0 : curSpeed;
+    }else if(getEncoder() > LiftConstants.liftUpperBound){
+      targetSpeed = targetSpeed > 0 ? 0 : targetSpeed;
+      curSpeed = curSpeed > 0 ? 0 : curSpeed;
     }
-    curSpeed+=Math.min(0.04,Math.abs(targetSpeed - curSpeed)) * Math.signum(targetSpeed - curSpeed);
+    curSpeed += Math.min(LiftConstants.liftAccelLimit, Math.abs(targetSpeed - curSpeed)) * Math.signum(targetSpeed - curSpeed);
     m_liftMotor.set(ControlMode.PercentOutput, curSpeed * speedMultiplier);
   }
 
