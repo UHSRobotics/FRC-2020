@@ -12,10 +12,9 @@ import frc.robot.subsystems.LiftSubsystem;
 public class LiftPID extends PIDSubsystem {
     private final LiftSubsystem m_lift;
 
-    public LiftPID() {
+    public LiftPID(LiftSubsystem lift) {
         super(new PIDController(LiftConstants.Kp, LiftConstants.Ki, LiftConstants.Kd), 0);
-        m_lift = new LiftSubsystem();
-
+        m_lift = lift;
     }
 
     @Override

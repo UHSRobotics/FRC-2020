@@ -38,7 +38,7 @@ public class RobotContainer {
   private final HopperSubsystem m_hopper = new HopperSubsystem();
   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
-  private final LiftPID m_liftPID = new LiftPID();
+  private final LiftPID m_liftPID = new LiftPID(m_liftSubsystem);
 
   // Autonomous setup
   private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_flywheelSubsystem, m_hopper);

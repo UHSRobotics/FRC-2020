@@ -52,7 +52,10 @@ public class LiftCommand extends CommandBase {
             servoDelay--;
         if (servoDelay < 0)
             servoDelay++;
-        else if (m_up.getAsBoolean()) {
+        if (!m_liftPID.isEnabled())
+            m_liftPID.enable();
+        
+        if (m_up.getAsBoolean()){
             // if ratchet engaged, disengage it
             if (m_servo.getToggle()) {
                 m_servo.toggle();
@@ -61,10 +64,9 @@ public class LiftCommand extends CommandBase {
             if (servoDelay == 0) {
                 // m_lift.setVelTarget(1);
                 m_liftPID.setSetpoint(2);
-                if (!m_liftPID.isEnabled()) {
-                    m_liftPID.enable();
-                }
                 m_lift.initialize();
+            } else {
+                m_liftPID.setSetpoint(0);
             }
         } else if (m_down.getAsBoolean() && m_lift.getInit()) {
             // if ratchet disengage, engage it, since we'll be pulling ourselves up
@@ -75,19 +77,11 @@ public class LiftCommand extends CommandBase {
             if (servoDelay == 0) {
                 // m_lift.setVelTarget(-1);
                 m_liftPID.setSetpoint(-2);
-                if (!m_liftPID.isEnabled()) {
-                    m_liftPID.enable();
-                }
             } else {
-                // m_lift.setVelTarget(0);
                 m_liftPID.setSetpoint(0);
-                if (!m_liftPID.isEnabled()) {
-                    m_liftPID.enable();
-                }
             }
-        }
-        if (servoDelay > 1) {
-            m_lift.setSpeed(0);
+        } else {
+            m_liftPID.setSetpoint(0);
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
         // if (!ServoSubsystem.toggleOn) {

@@ -54,8 +54,9 @@ public class LiftSubsystem extends SubsystemBase {
     return -1 * m_liftMotor.getSelectedSensorPosition() - initialEncoder;
   }
 
+  //in RPS revolution per second
   public int getEncoderVelocity() {
-    return m_liftMotor.getSelectedSensorVelocity() * 4096 / 10;
+    return (int)(m_liftMotor.getSelectedSensorVelocity() * 10.0 / 1440.0);
   }
 
   public void setSpeed(double s) {
