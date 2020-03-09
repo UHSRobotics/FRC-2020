@@ -97,7 +97,7 @@ public final class Constants {
         public static final double Kp = 1;
         public static final double Kd = 0;
         public static final double Ki = 0;
-        //TODO: find the physical lift upperbound
+        //TODO: find the physical lift upperbound is 14500
         public static final double liftUpperBound = 14200;
         public static final double liftLowerBound = 500;
         public static final double liftAccelLimit = 0.08;
@@ -112,7 +112,7 @@ public final class Constants {
         public static final double slowK = 0.25;
 
         
-        public static final double targetRPM = 200;
+        public static final double targetRPM = 4000;
         public static final double tolRPM = 100;
 
     }
