@@ -52,10 +52,8 @@ public class LiftCommand extends CommandBase {
             servoDelay--;
         if (servoDelay < 0)
             servoDelay++;
-        if (!m_liftPID.isEnabled())
-            m_liftPID.enable();
-        
-        if (m_up.getAsBoolean()){
+
+        if (m_up.getAsBoolean()) {
             // if ratchet engaged, disengage it
             if (m_servo.getToggle()) {
                 m_servo.toggle();
@@ -63,10 +61,14 @@ public class LiftCommand extends CommandBase {
             }
             if (servoDelay == 0) {
                 // m_lift.setVelTarget(1);
-                m_liftPID.setSetpoint(2);
+                if (!m_liftPID.isEnabled())
+                    m_liftPID.enable();
+                m_liftPID.setTarget(3);
                 m_lift.initialize();
             } else {
-                m_liftPID.setSetpoint(0);
+                if (m_liftPID.isEnabled())
+                    m_liftPID.disable();
+                m_lift.setSpeed(0);
             }
         } else if (m_down.getAsBoolean() && m_lift.getInit()) {
             // if ratchet disengage, engage it, since we'll be pulling ourselves up
@@ -76,12 +78,16 @@ public class LiftCommand extends CommandBase {
             }
             if (servoDelay == 0) {
                 // m_lift.setVelTarget(-1);
-                m_liftPID.setSetpoint(-2);
+                if (!m_liftPID.isEnabled())
+                    m_liftPID.enable();
+                m_liftPID.setTarget(-3);
             } else {
-                m_liftPID.setSetpoint(0);
+                if (m_liftPID.isEnabled())
+                    m_liftPID.disable();
+                m_lift.setVelTarget(0);
             }
         } else {
-            m_liftPID.setSetpoint(0);
+            m_lift.setVelTarget(0);
         }
         // else if (!m_left.getAsBoolean() && m_right.getAsBoolean()) {
         // if (!ServoSubsystem.toggleOn) {
@@ -101,7 +107,7 @@ public class LiftCommand extends CommandBase {
         // m_lift.setSpeed(1);
         // } else {F
         // if (m_pidToggle.getAsBoolean() && !m_liftPID.isEnabled()) {
-        // m_liftPID.setSetpoint(1);
+        // m_liftPID.setTarget(1);
         // m_liftPID.enable();
         // } else if (!m_pidToggle.getAsBoolean()) {
         // m_liftPID.disable();
