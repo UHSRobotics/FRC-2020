@@ -27,6 +27,7 @@ public class HopperSubsystem extends SubsystemBase {
   private double speedMultiplier = 1;
 
   public HopperSubsystem() {
+    m_motor.setInverted(true);
   }
 
   public void switchON(double s){

@@ -27,6 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
         // set motors to coast
         m_motor.setNeutralMode(NeutralMode.Coast);
+        m_motor.setInverted(true);
     }
 
     public void move(double vel) {

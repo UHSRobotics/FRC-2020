@@ -48,13 +48,13 @@ public class FlywheelCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_fullPow.getAsBoolean()) {
-      m_neoFw.setSpeed(1);
+      // m_neoFw.setSpeed(1);
       // m_hopper.switchON(0.8);
-      // m_neoFw.setPIDTarget(1);
+      m_neoFw.setPIDTarget(500);
     } else {
-      m_neoFw.setSpeed(0);
+      // m_neoFw.setSpeed(0);
       // m_hopper.switchOFF();
-      // m_neoFw.setPIDTarget(0);
+      m_neoFw.setPIDTarget(0);
     }
 
     // pid test

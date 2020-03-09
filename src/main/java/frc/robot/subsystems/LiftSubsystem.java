@@ -27,7 +27,7 @@ public class LiftSubsystem extends SubsystemBase {
   private final TalonSRX m_liftMotor = new TalonSRX(Constants.Ports.lift);
   private final TalonSRX m_follow = new TalonSRX(Constants.Ports.liftFollow);
   // private final
-  private double speedMultiplier = 0.05;
+  private double speedMultiplier = 0.25;
   private NetworkTableEntry speedEntry, encoderEntry;
   private final ShuffleboardTab tab = Shuffleboard.getTab("Lift");
   private static boolean init = false;

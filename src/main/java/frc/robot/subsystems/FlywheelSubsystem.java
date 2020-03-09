@@ -17,8 +17,9 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.FlywheelConstants;
 import frc.robot.Constants.Ports;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 public class FlywheelSubsystem extends SubsystemBase {
   /**
@@ -27,21 +28,36 @@ public class FlywheelSubsystem extends SubsystemBase {
   private final CANSparkMax m_motor = new CANSparkMax(Ports.flywheel, MotorType.kBrushless);
   private final CANSparkMax m_motor2 = new CANSparkMax(Ports.flywheelInvert, MotorType.kBrushless);
   private final CANPIDController c = m_motor.getPIDController();
+  private final CANPIDController c2 = m_motor2.getPIDController();
+
   // private final CANSparkMax m_motorInverted = new CANSparkMax(1,
   // MotorType.kBrushless);
   private final ShuffleboardTab tab = Shuffleboard.getTab("Scoring");
-  private NetworkTableEntry speedEntry;
-  private NetworkTableEntry velocityEntry;
+  private NetworkTableEntry speedEntry, velocityEntry, pidStatusEntry;
   private double speedMultiplier = 1, targetVelocity = 1.0;
+
+  private double kP = FlywheelConstants.Kp, kI = 0, kD = 0;
 
   public FlywheelSubsystem() {
     m_motor.setIdleMode(IdleMode.kCoast);
     m_motor2.setIdleMode(IdleMode.kCoast);
     m_motor2.setInverted(true);
     // m_motorInverted.setInverted(true);
-    c.setP(Constants.FlywheelConstants.Kp);
-    c.setI(Constants.FlywheelConstants.Ki);
-    c.setD(Constants.FlywheelConstants.Kd);
+    c.setP(FlywheelConstants.Kp);
+    c.setI(FlywheelConstants.Ki);
+    c.setD(FlywheelConstants.Kd);
+    c.setFF(FlywheelConstants.Kff);
+    c.setOutputRange(-1, 1);
+
+    c2.setP(FlywheelConstants.Kp);
+    c2.setI(FlywheelConstants.Ki);
+    c2.setD(FlywheelConstants.Kd);
+    c2.setFF(FlywheelConstants.Kff);
+    c2.setOutputRange(-1, 1);
+
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
   }
 
   public void setSpeed(double p) {
@@ -73,12 +89,34 @@ public class FlywheelSubsystem extends SubsystemBase {
   }
 
   public void setPIDTarget(double t) {
+    if (targetVelocity == 0 && t != 0) {
+      c.setP(FlywheelConstants.Kp);
+      c.setI(FlywheelConstants.Ki);
+      c.setD(FlywheelConstants.Kd);
+      c.setFF(FlywheelConstants.Kff);
+
+      c2.setP(FlywheelConstants.Kp);
+      c2.setI(FlywheelConstants.Ki);
+      c2.setD(FlywheelConstants.Kd);
+      c2.setFF(FlywheelConstants.Kff);
+    }else if(targetVelocity!=0 && t==0){
+      c.setP(FlywheelConstants.Kp*FlywheelConstants.slowK);
+      c.setI(FlywheelConstants.Ki *FlywheelConstants.slowK);
+      c.setD(FlywheelConstants.Kd *FlywheelConstants.slowK);
+      c.setFF(FlywheelConstants.Kff *FlywheelConstants.slowK);
+
+      c2.setP(FlywheelConstants.Kp *FlywheelConstants.slowK);
+      c2.setI(FlywheelConstants.Ki *FlywheelConstants.slowK);
+      c2.setD(FlywheelConstants.Kd *FlywheelConstants.slowK);
+      c2.setFF(FlywheelConstants.Kff *FlywheelConstants.slowK);
+    }
     targetVelocity = t;
     c.setReference(targetVelocity, ControlType.kVelocity);
+    c2.setReference(targetVelocity, ControlType.kVelocity);
   }
 
   public boolean atSetPoint() {
-    return m_motor.getEncoder().getVelocity() >= targetVelocity;
+    return Math.abs(getRate() - targetVelocity) < FlywheelConstants.tolRPM;
   }
 
   @Override
@@ -93,6 +131,32 @@ public class FlywheelSubsystem extends SubsystemBase {
       System.out.println("added velocity entry");
     }
     velocityEntry.setDouble(getRate());
+
+    if (pidStatusEntry == null) {
+      pidStatusEntry = tab.add("PID At Setpoint", false).getEntry();
+      System.out.println("added flywheel pid status entry");
+    }
+    pidStatusEntry.setBoolean(atSetPoint());
+
+
+    double p = SmartDashboard.getNumber("P Gain", 0);
+    double i = SmartDashboard.getNumber("I Gain", 0);
+    double d = SmartDashboard.getNumber("D Gain", 0);
+    if ((p != kP)) {
+      c.setP(p);
+      c2.setP(p);
+      kP = p;
+    }
+    if ((i != kI)) {
+      c.setI(i);
+      c2.setI(i);
+      kI = i;
+    }
+    if ((d != kD)) {
+      c.setD(d);
+      c2.setD(d);
+      kD = d;
+    }
 
   }
 }
