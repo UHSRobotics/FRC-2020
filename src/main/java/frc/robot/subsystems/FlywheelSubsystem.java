@@ -89,6 +89,7 @@ public class FlywheelSubsystem extends SubsystemBase {
   }
 
   public void setPIDTarget(double t) {
+    t*=speedMultiplier;
     if (targetVelocity == 0 && t != 0) {
       c.setP(FlywheelConstants.Kp);
       c.setI(FlywheelConstants.Ki);
