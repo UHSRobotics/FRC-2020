@@ -55,16 +55,18 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final double KpRot = 0.001;
-        public static final double KiRot = 0;
-        public static final double KdRot = 0;
-        //
+        public static final double KpRot = 0.0035;
+        public static final double KiRot = 0.003;
+        public static final double KdRot = 0.0005;
+        public static final double velLimitRot = 90; // cm per second?
+        public static final double accelLimitRot = 180; // cm per second?
+
         public static final double KpDist = 0.001;
         public static final double KiDist = 0.0001;
         public static final double KdDist = 0.00002;
         public static final double velLimit = 400; // cm per second?
         public static final double accelLimit = 1000; // cm per second?
-        public static final double ticksPerRev = 2048;
+        public static final double ticksPerRev = 16410.2564102;
     }
 
     public static final class PhysicalMeasurements {
