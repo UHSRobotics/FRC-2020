@@ -60,7 +60,10 @@ public class VisionSubsystem extends SubsystemBase {
   public double getYaw(){
     return yaw.getDouble(0.0);
   }
-  //in meters
+  /**
+   * 
+   * @return in meters
+   */
   public double getDistanceFromTarget(){
     double x = getX(), y = getY(), dis = Math.sqrt(x*x*m_scale + y*y*m_scale);
     double mi = Constants.VisionControlConstants.comfortMin, mx = Constants.VisionControlConstants.comfortMax;
@@ -73,7 +76,9 @@ public class VisionSubsystem extends SubsystemBase {
     }
   }
 
-  //angle to test if possible to shoot, in radian
+  /**
+   * @return angle to test if possible to shoot, in radian
+   */
   public double getHorizontalAngle(){
     double y = getY(), x = getX();
     return Math.atan(y/x);
@@ -106,11 +111,11 @@ public class VisionSubsystem extends SubsystemBase {
     setScale(scaleEntry.getDouble(1.0), true);
     if(error>10){
       error = 0; 
-      // System.out.println("Target not detected");
+      System.out.println("Target not detected");
     }
     if(getY()==0.0) error++;
     if(cnt>50){
-      // System.out.println(getHorizontalAngle()+" " + getAngle());
+      System.out.println(getHorizontalAngle()+" " + getAngle());
       cnt=0;
     }
     cnt++;
