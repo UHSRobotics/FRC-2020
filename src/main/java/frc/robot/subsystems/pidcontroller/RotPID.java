@@ -33,10 +33,9 @@ public class RotPID extends ProfiledPIDSubsystem {
   }
 
   public void setGoalRelative(double goal) {
-    goal+=getMeasurement();
     if(goal0!=goal)m_controller.reset(getMeasurement()); 
-    setGoal(goal);
     goal0 = goal;
+    setGoal(goal+getMeasurement());
   }
 
   public double getGoal(){
