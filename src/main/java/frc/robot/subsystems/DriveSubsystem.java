@@ -16,6 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.PhysicalMeasurements;
@@ -33,8 +34,8 @@ public class DriveSubsystem extends SubsystemBase {
     private double speedMultiplier = 1;
     private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry, rpowerEntry;
 
-    private double accelLimit = 0.075;
-    private double deccelLimit = 0.125;
+    private double accelLimit = 0.04;
+    private double deccelLimit = 0.1;
 
     private double pow0;
 
@@ -91,11 +92,14 @@ public class DriveSubsystem extends SubsystemBase {
         double diff = pow - pow0;
 
         if (Math.abs(diff) >= accel) {
-            pow = pow0 + Math.signum(diff) * accel;
+            pow = pow0 + (diff>0?1:-1) * accel;
         }
         pow0 = pow;
 
         putPowerEntry(pow - turn, pow + turn);
+        SmartDashboard.putNumber("debug",pow);
+        SmartDashboard.putNumber("debug turn",turn);
+
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }

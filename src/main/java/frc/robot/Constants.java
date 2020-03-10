@@ -96,7 +96,7 @@ public final class Constants {
 
     public static final class LiftConstants {
         public static final double Kp = 0.2;
-        public static final double Ki = 0.05;
+        public static final double Ki = 0.1;
         public static final double Kd = 0.005;
         // TODO: find the physical lift upperbound is 14500
         public static final double liftUpperBound = 14200;

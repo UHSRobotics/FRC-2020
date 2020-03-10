@@ -37,7 +37,7 @@ public class ServoSubsystem extends SubsystemBase {
 
         } else {
             servoEntry.setString("Climb OK");
-            m_switch.setAngle(60); // ratchet disengaged
+            m_switch.setAngle(40); // ratchet disengaged
         }
     }
 
