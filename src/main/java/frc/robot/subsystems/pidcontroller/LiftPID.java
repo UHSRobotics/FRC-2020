@@ -47,6 +47,7 @@ public class LiftPID extends PIDSubsystem {
     public void setTarget(double setpoint){
         if(setpoint!=lastSetpoint)getController().reset();
         setSetpoint(setpoint);
+        lastSetpoint = setpoint;
     }
 
 }
