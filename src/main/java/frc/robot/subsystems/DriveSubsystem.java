@@ -31,7 +31,7 @@ public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_rightFollowMotor = new TalonFX(Ports.driveRightFollow);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
-    private double speedMultiplier = 1;
+    private double speedMultiplier = 0.6, turnMultiplier = 0.8;
     private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry, rpowerEntry;
 
     private double accelLimit = 0.04;
@@ -86,7 +86,7 @@ public class DriveSubsystem extends SubsystemBase {
     public void arcadeDrive(double pow, double turn) {
         // jank acceleration control
         pow *= speedMultiplier;
-        turn *= speedMultiplier;
+        turn *= turnMultiplier * speedMultiplier;
 
         double accel = (Math.abs(pow) > Math.abs(pow0)) ? accelLimit : deccelLimit;
         double diff = pow - pow0;
@@ -167,7 +167,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {
-        if (0 <= speed && speed <= 2) {
+        if (0 <= speed && speed <= 0.8) {
             speedMultiplier = speed;
             if (updateNT) {
                 System.out.println("Putted Speed Multiplier NT entry");
