@@ -86,8 +86,12 @@ public class DriveSubsystem extends SubsystemBase {
         // jank acceleration control
         pow *= speedMultiplier;
         turn *= speedMultiplier;
-        if (Math.abs(pow - pow0) >= ((Math.abs(pow) > Math.abs(pow0)) ? accelLimit : deccelLimit)) {
-            pow = pow0 + Math.signum(pow - pow0) * ((Math.abs(pow) > Math.abs(pow0)) ? accelLimit : deccelLimit);
+
+        double accel = (Math.abs(pow) > Math.abs(pow0)) ? accelLimit : deccelLimit;
+        double diff = pow - pow0;
+
+        if (Math.abs(diff) >= accel) {
+            pow = pow0 + Math.signum(diff) * accel;
         }
         pow0 = pow;
 

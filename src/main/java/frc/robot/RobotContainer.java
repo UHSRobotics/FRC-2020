@@ -14,6 +14,7 @@ import frc.robot.DualShockController.Button;
 import frc.robot.commands.*;
 import frc.robot.commands.pidcommand.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.pidcontroller.LiftPID;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final HopperSubsystem m_hopper = new HopperSubsystem();
   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
+  private final LiftPID m_liftPID = new LiftPID(m_liftSubsystem);
 
   // Autonomous setup
   private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_flywheelSubsystem, m_hopper);
@@ -52,8 +54,8 @@ public class RobotContainer {
     configureButtonBindings();
     m_flywheelSubsystem
         .setDefaultCommand(new FlywheelCommand(m_flywheelSubsystem, () -> m_subsystemController.getCrossButton()));
-    m_liftSubsystem
-        .setDefaultCommand(new LiftCommand(m_liftSubsystem, () -> m_subsystemController.getBumper(Hand.kLeft),
+    m_liftSubsystem.setDefaultCommand(
+        new LiftCommand(m_liftSubsystem, m_liftPID, () -> m_subsystemController.getBumper(Hand.kLeft),
             () -> m_subsystemController.getBumper(Hand.kRight), m_servoSubsystem));
     m_IntakeSubsystem
         .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> m_subsystemController.getYMapped(Hand.kLeft)));

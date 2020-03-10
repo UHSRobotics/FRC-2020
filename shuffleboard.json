@@ -111,8 +111,8 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/D Gain",
-              "_title": "D Gain"
+              "_source0": "network_table:///SmartDashboard/kp",
+              "_title": "kp"
             }
           },
           "7,0": {
@@ -122,8 +122,8 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/I Gain",
-              "_title": "I Gain"
+              "_source0": "network_table:///SmartDashboard/ki",
+              "_title": "ki"
             }
           },
           "8,0": {
@@ -133,8 +133,8 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/P Gain",
-              "_title": "P Gain"
+              "_source0": "network_table:///SmartDashboard/kd",
+              "_title": "kd"
             }
           }
         }
