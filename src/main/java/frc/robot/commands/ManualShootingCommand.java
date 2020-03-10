@@ -49,6 +49,8 @@ public class ManualShootingCommand extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putNumber("rot pid target", m_rotPID.getGoal());
+    SmartDashboard.putBoolean("manual shooting enabled", started);
+
     if (!started) {
       m_rotPID.setGoalRelative(90);
       if (!m_rotPID.isEnabled())
@@ -79,6 +81,7 @@ public class ManualShootingCommand extends CommandBase {
     if (m_rotPID.isEnabled())
       m_rotPID.disable();
     started = false;
+    SmartDashboard.putBoolean("manual shooting enabled", started);
   }
 
   // Returns true when the command should end.
