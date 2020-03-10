@@ -16,6 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.PhysicalMeasurements;
@@ -30,11 +31,11 @@ public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_rightFollowMotor = new TalonFX(Ports.driveRightFollow);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
-    private double speedMultiplier = 1;
+    private double speedMultiplier = 0.6, turnMultiplier = 0.8;
     private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry, rpowerEntry;
 
-    private double accelLimit = 0.075;
-    private double deccelLimit = 0.125;
+    private double accelLimit = 0.04;
+    private double deccelLimit = 0.1;
 
     private double pow0;
 
@@ -85,17 +86,20 @@ public class DriveSubsystem extends SubsystemBase {
     public void arcadeDrive(double pow, double turn) {
         // jank acceleration control
         pow *= speedMultiplier;
-        turn *= speedMultiplier;
+        turn *= turnMultiplier * speedMultiplier;
 
         double accel = (Math.abs(pow) > Math.abs(pow0)) ? accelLimit : deccelLimit;
         double diff = pow - pow0;
 
         if (Math.abs(diff) >= accel) {
-            pow = pow0 + Math.signum(diff) * accel;
+            pow = pow0 + (diff>0?1:-1) * accel;
         }
         pow0 = pow;
 
         putPowerEntry(pow - turn, pow + turn);
+        SmartDashboard.putNumber("debug",pow);
+        SmartDashboard.putNumber("debug turn",turn);
+
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -163,7 +167,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {
-        if (0 <= speed && speed <= 2) {
+        if (0 <= speed && speed <= 0.8) {
             speedMultiplier = speed;
             if (updateNT) {
                 System.out.println("Putted Speed Multiplier NT entry");

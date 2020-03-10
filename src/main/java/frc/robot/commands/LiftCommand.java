@@ -62,7 +62,7 @@ public class LiftCommand extends CommandBase {
             }
             if (servoDelay == 0) {
                 // m_lift.setVelTarget(1);
-                m_liftPID.setTarget(1.5);
+                m_liftPID.setTarget(2);
                 m_lift.initialize();
             } else {
                 m_liftPID.setTarget(0);
@@ -74,8 +74,8 @@ public class LiftCommand extends CommandBase {
                 servoDelay = -10;
             }
             if (servoDelay == 0) {
-                // m_lift.setVelTarget(-1);
-                m_liftPID.setTarget(-1.5);
+                // m_lift.setVelTarget(-1s);
+                m_liftPID.setTarget(-2);
             } else {
                 m_liftPID.setTarget(0);
             }
