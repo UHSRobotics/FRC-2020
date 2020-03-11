@@ -19,6 +19,23 @@ package frc.robot;
  */
 public final class Constants {
 
+    public static final class Ports {
+        public static final int driveRight = 5;
+        public static final int driveLeft = 7;
+        public static final int driveRightFollow = 6;
+        public static final int driveLeftFollow = 8;
+        public static final int flywheel = 10;
+        public static final int flywheelInvert = 2;
+        public static final int lift = 9;
+        public static final int liftFollow = 4;
+        public static final int intake = 11;
+        public static final int servo = 0;
+        public static final int hopper = 20;
+        public static final int liftEncoderA = 6;
+        public static final int liftEncoderB = 4;
+
+    }
+
     public static final class ColorConstants {
         public static final int waitCycle = 5;
         public static final int colorRange = 30;
@@ -30,28 +47,29 @@ public final class Constants {
                 { 80, 145, 30 } };
     }
 
-    public static final int controllerPrecision = 1000;
-    public static final double joystickDeadzone = 0.05;
-
     public static final class OIConstants {
+        public static final int controllerPrecision = 1000;
+        public static final double joystickDeadzone = 0.05;
         public static final int kDriverControllerPort = 0;
         public static final double kDriverControllerCurvature = 3;
     }
 
-    public static final class DrivePIDConstants {
-        public static final double KpRot = 0.02;
-        public static final double KiRot = .0001;
-        public static final double KdRot = 0.001;
-        public static final double KpDist = 0.1;
-        public static final double KiDist = .0001;
-        public static final double KdDist = 2.5;
-        public static final double kP = 0.1;
-        public static final double kI = 0;
-        public static final double kD = 0;
+    public static final class DriveConstants {
+        public static final double KpRot = 0.0;
+        public static final double KiRot = 0.02;
+        public static final double KdRot = 0.0005;
+        public static final double velLimitRot = 100;
+        public static final double accelLimitRot = 200;
 
+        public static final double KpDist = 0.01;
+        public static final double KiDist = 0.005;
+        public static final double KdDist = 0.00002;
+        public static final double velLimit = 200; // cm per second?
+        public static final double accelLimit = 400; // cm per second?
+        public static final double ticksPerRev = 16410.2564102;
     }
 
-    public static final class PhysicalMeasurements{
+    public static final class PhysicalMeasurements {
         public static final double wheelDiam = 15.24;
         public static final double driveBaseWidth = 69.85;
 
@@ -73,31 +91,42 @@ public final class Constants {
         // angle limits in degrees
         public static final double innerPortAngleLimit = 33;
         public static final double mToInch = 39.3701;
-        //to-do
+        // to-do
         public static final double cameraHeight = 0;
         public static final double comfortMin = 0, comfortMax = 0;
     }
 
     public static final class LiftConstants {
-        // todo
-        public static final int liftMotor = 4;
-        public static final int liftFollow = 9;
-        public static final double Kp = 1;
+        public static final double Kp = 0.2;
+        public static final double Ki = 0.1;
+        public static final double Kd = 0.005;
+        // TODO: find the physical lift upperbound is 14500
+        public static final double liftUpperBound = 14500;
+        public static final double liftLowerBound = 500;
+        public static final double liftAccelLimit = 0.08;
+    }
+
+    public static final class FlywheelConstants {
+        public static final double Kp = 0.00013;
         public static final double Kd = 0;
         public static final double Ki = 0;
+        public static final double Kff = 0.00018;
+
+        public static final double slowK = 0.25;
+
+        public static final double targetRPM = 4000;//4800 fastest stable speed
+
+        public static final double tolRPM = 100;
+
     }
 
-    public static final class DriveConstants {
-        public static final int leftMotor = 1;
-        public static final int rightMotor = 3;
-        public static final int leftFollowMotor = 2;
-        public static final int rightFollowMotor = 0;
-    }
+    public static final class HopperConstants {
+        public static final double Kp = 0.0004;
+        public static final double Kd = 0;
+        public static final double Ki = 0.000001;
+        public static final double Kff = 0.0003;
+        public static final double targetRPM = 280;
 
-    public static final class FlywheelCons {
-        public static final int flySingle = 2;
-        public static final int leftMotor = 1;
-        public static final int rightMotor = 0;
     }
 
     public static final class SpinCons {
@@ -162,12 +191,5 @@ public final class Constants {
         public final static int kSlot_Turning = SLOT_1;
         public final static int kSlot_Velocit = SLOT_2;
         public final static int kSlot_MotProf = SLOT_3;
-    }
-
-    public static final class FlyWheelPIDConstants {
-        public static final double kP = -1;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kF = 0;
     }
 }

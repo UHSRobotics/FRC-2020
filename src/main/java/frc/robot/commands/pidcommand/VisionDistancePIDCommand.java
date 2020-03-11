@@ -3,14 +3,14 @@ package frc.robot.commands.pidcommand;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
-import frc.robot.Constants.DrivePIDConstants;
-import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class VisionDistancePIDCommand extends ProfiledPIDCommand {
-    public VisionDistancePIDCommand( TalonFXDriveSubsystem drive, VisionSubsystem data) {
-        super(new ProfiledPIDController(DrivePIDConstants.KpDist, DrivePIDConstants.KpDist,
-                DrivePIDConstants.KpDist, new TrapezoidProfile.Constraints(10, 20)),
+    public VisionDistancePIDCommand( DriveSubsystem drive, VisionSubsystem data) {
+        super(new ProfiledPIDController(DriveConstants.KpDist, DriveConstants.KpDist,
+                DriveConstants.KpDist, new TrapezoidProfile.Constraints(10, 20)),
                 // Close loop on heading
                 drive::getEncoderLeft,
                 // Set reference to target

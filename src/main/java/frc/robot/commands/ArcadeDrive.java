@@ -1,23 +1,22 @@
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 // import frc.robot.subsystems.pidcontroller.DriveRotationPID;
 // import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.TalonFXDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class ArcadeDrive extends CommandBase {
-  private final TalonFXDriveSubsystem m_drive;
+  private final DriveSubsystem m_drive;
   private final DoubleSupplier m_pow;
   private final DoubleSupplier m_turn;
-  // private final BooleanSupplier m_reverse;
-  private static boolean m_isReverse = false;
+  private boolean invert = false;
+  
   // private final DriveRotationPID m_turnPID = new DriveRotationPID();
 
-  public ArcadeDrive(TalonFXDriveSubsystem subsystem, DoubleSupplier powerSupplier, DoubleSupplier turnSupplier) {
+  public ArcadeDrive(DriveSubsystem subsystem, DoubleSupplier powerSupplier, DoubleSupplier turnSupplier) {
     m_drive = subsystem;
     m_pow = powerSupplier;
     m_turn = turnSupplier;
@@ -29,24 +28,14 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (m_reverse.getAsBoolean()) {
-    // m_isReverse = !m_isReverse;
-    // // m_turnPID.enable();
-    // // m_turnPID.setSetpoint(180);
-    // }
-    // if (m_pow.getAsDouble() > Constants.joystickDeadzone || m_turn.getAsDouble()
-    // > Constants.joystickDeadzone) {
-    // // m_turnPID.disable();
-    // }
-    // if (!m_isReverse) {
-    m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) > Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
-        Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? m_turn.getAsDouble() : 0);
-    // } else {
-    // m_drive.arcadeDrive(Math.abs(m_pow.getAsDouble()) >
-    // Constants.joystickDeadzone ? m_pow.getAsDouble() : 0,
-    // Math.abs(m_turn.getAsDouble()) > Constants.joystickDeadzone ? -1 *
-    // m_turn.getAsDouble() : 0);
-    // }
+    if(!invert)
+      m_drive.arcadeDrive(m_pow.getAsDouble(), m_turn.getAsDouble());
+    else
+      m_drive.arcadeDrive(-m_pow.getAsDouble(), m_turn.getAsDouble());
+  }
+
+  public void toggleInvert(){
+    invert= !invert;
   }
 
   // Called once the command ends or is interrupted.
