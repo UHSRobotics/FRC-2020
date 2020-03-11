@@ -97,9 +97,6 @@ public class DriveSubsystem extends SubsystemBase {
         pow0 = pow;
 
         putPowerEntry(pow - turn, pow + turn);
-        SmartDashboard.putNumber("debug",pow);
-        SmartDashboard.putNumber("debug turn",turn);
-
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -112,6 +109,9 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public void arcadeDriveAuton(double pow, double turn) {
         putPowerEntry(pow - turn, pow + turn);
+        pow = Math.abs(pow)>0.7?0.7 * Math.signum(pow) : pow;
+        turn = Math.abs(turn)>0.7?0.7 * Math.signum(turn) : turn;
+
         m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
         m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
@@ -145,21 +145,21 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public double getAngleDegrees() {
         return (encToCm((getEncoderLeft() - getEncoderRight()) / 2.0) / (PhysicalMeasurements.driveBaseWidth * Math.PI))
-                * 360;
+        * 360;
     }
 
     // in centimeters
     public double getEncoderLeft() {
-        return m_leftMotor.getSelectedSensorPosition();
+        return -1.0*m_leftMotor.getSelectedSensorPosition();
     }
 
     // in centimeters
     public double getEncoderRight() {
-        return m_rightMotor.getSelectedSensorPosition();
+        return -1.0*m_rightMotor.getSelectedSensorPosition();
     }
 
     public static double encToCm(double encoderTicks) {
-        return encoderTicks / DriveConstants.ticksPerRev * (PhysicalMeasurements.wheelDiam * Math.PI);
+        return (encoderTicks / DriveConstants.ticksPerRev) * (PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
     public void setSpeedMultiplier(double speed) {
@@ -167,7 +167,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {
-        if (0 <= speed && speed <= 0.8) {
+        if (0 <= speed && speed <= 1) {
             speedMultiplier = speed;
             if (updateNT) {
                 System.out.println("Putted Speed Multiplier NT entry");
@@ -204,5 +204,13 @@ public class DriveSubsystem extends SubsystemBase {
         }
         encoderEntry.setDouble(getEncoderRight());
         setSpeedMultiplier(speedEntry.getDouble(1.0), false);
+        SmartDashboard.putNumber("angle",getAngleDegrees());
+        SmartDashboard.putNumber("encoder",encToCm((getEncoderLeft())));
+        SmartDashboard.putNumber("raw encoder l",getEncoderLeft());
+        SmartDashboard.putNumber("raw encoder r",getEncoderRight());
+
+
+        //TODO: DELETE ME
+
     }
 }

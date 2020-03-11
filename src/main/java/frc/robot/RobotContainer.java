@@ -45,7 +45,6 @@ public class RobotContainer {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   DualShockController m_driverController = new DualShockController(0);
   DualShockController m_subsystemController = new DualShockController(1);
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -83,8 +82,8 @@ public class RobotContainer {
     // For debugging only, delete before competition
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
     // .whileHeld(new DistancePIDCommand(m_driveSubsystem, 500));
-    // new JoystickButton(m_driverController, Button.kBumperRight.value)
-    // .whileHeld(new RotationPIDCommand(m_driveSubsystem, 180));
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+    .whenPressed(new RotationPIDCommand(m_driveSubsystem, 180));
 
     // TODO: enable this after making sure rotation PID works
     /*
