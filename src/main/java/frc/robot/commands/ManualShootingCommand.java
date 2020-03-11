@@ -70,8 +70,10 @@ public class ManualShootingCommand extends CommandBase {
         SmartDashboard.putBoolean("rot pid settled", true);
 
         if (m_flywheel.atSetPoint()) {
+          SmartDashboard.putBoolean("moving hopper", true);
           m_hopper.setPIDTarget(HopperConstants.targetRPM);
         } else {
+          SmartDashboard.putBoolean("moving hopper", false);
           m_hopper.setPIDTarget(0);
         }
       } else {
