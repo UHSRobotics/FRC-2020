@@ -151,6 +151,30 @@
               "_source0": "network_table:///SmartDashboard/cm",
               "_title": "cm"
             }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/spinner rpm",
+              "_title": "spinner rpm"
+            }
+          },
+          "1,3": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Inverted",
+              "_title": "Inverted",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
           }
         }
       }
