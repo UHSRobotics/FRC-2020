@@ -42,7 +42,7 @@ public class RobotContainer {
   private final RotPID m_rotPID = new RotPID(m_driveSubsystem);
 
   private final ManualShootingCommand m_manualShooting = new ManualShootingCommand(m_flywheelSubsystem, m_hopper,
-      m_rotPID, m_driveSubsystem);
+      m_rotPID, m_driveSubsystem, m_visionSubsystem);
 
   // Autonomous setup
   private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_flywheelSubsystem, m_hopper);

@@ -31,16 +31,22 @@ public class VisionSubsystem extends SubsystemBase {
   private double m_scale=1;
   private int error=0;
   private int cnt = 0;
+
+  NetworkTable cameraTable;
+
   public VisionSubsystem() {
     defaultArray = new double[3];
     defaultArray[0] = 0.0;
     defaultArray[1] = 0.0;
     defaultArray[2] = 0.0;
     NetworkTableInstance table  = NetworkTableInstance.getDefault();
-    NetworkTable cameraTable  = table.getTable("chameleon-vision").getSubTable("USB Camera-B4.09.24.1");
+    cameraTable  = table.getTable("chameleon-vision").getSubTable("USB Camera-B4.09.24.1");
     targetPose = cameraTable.getEntry("targetPose");
     yaw = cameraTable.getEntry("yaw");
+  }
 
+  public boolean working(){
+    return cameraTable.containsKey("targetPose");
   }
 
   public double getX(){
@@ -50,6 +56,7 @@ public class VisionSubsystem extends SubsystemBase {
   public double getY(){
     return targetPose.getDoubleArray(defaultArray)[1];
   }
+  
   //in radians
   public double getAngle(){
     return targetPose.getDoubleArray(defaultArray)[2];
@@ -108,19 +115,21 @@ public class VisionSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("vision x",getX());
+    SmartDashboard.putNumber("vision horizontal",(getHorizontalAngle()/Math.PI)*180.0);
+
     if(scaleEntry == null)
       scaleEntry = tab.addPersistent("scale", 1).getEntry();
     setScale(scaleEntry.getDouble(1.0), true);
-    if(error>10){
+    if(error>25){
       error = 0; 
       System.out.println("Target not detected");
     }
     if(getY()==0.0) error++;
-    if(cnt>50){
-      System.out.println(getHorizontalAngle()+" " + getAngle());
-      cnt=0;
-    }
-    cnt++;
+    // if(cnt>50){
+    //   System.out.println(getHorizontalAngle()+" " + getAngle());
+    //   cnt=0;
+    // }
+    // cnt++;
 
 
   }

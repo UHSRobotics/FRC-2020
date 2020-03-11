@@ -24,16 +24,18 @@ public class ManualShootingCommand extends CommandBase {
   HopperSubsystem m_hopper;
   BooleanSupplier m_fullPow;
   RotPID m_rotPID;
+  VisionSubsystem m_vision;
   private boolean started = false;
 
   /**
    * should be put into a "whileHeld"
    */
-  public ManualShootingCommand(FlywheelSubsystem flywheel, HopperSubsystem hopper, RotPID rotPID,
-      DriveSubsystem drive) {
+  public ManualShootingCommand(FlywheelSubsystem flywheel, HopperSubsystem hopper, RotPID rotPID, DriveSubsystem drive,
+      VisionSubsystem vision) {
     m_flywheel = flywheel;
     m_hopper = hopper;
     m_rotPID = rotPID;
+    m_vision = vision;
     addRequirements(m_flywheel);
     addRequirements(m_hopper);
     addRequirements(drive);
@@ -51,25 +53,27 @@ public class ManualShootingCommand extends CommandBase {
     SmartDashboard.putNumber("rot pid target", m_rotPID.getGoal());
     SmartDashboard.putBoolean("manual shooting enabled", started);
 
-    if (!started) {
-      m_rotPID.setGoalRelative(45);
-      if (!m_rotPID.isEnabled())
-        m_rotPID.enable();
-      // m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
-      started = true;
-    }
-    if (m_rotPID.getController().atSetpoint()) {
-      SmartDashboard.putBoolean("rot pid settled", true);
+    if (m_vision.working()) {
+      if (!started) {
+        m_rotPID.setGoalRelative((m_vision.getHorizontalAngle()/Math.PI)*180.0);
+        if (!m_rotPID.isEnabled())
+          m_rotPID.enable();
+        // m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+        started = true;
+      }
+      if (m_rotPID.getController().atSetpoint()) {
+        SmartDashboard.putBoolean("rot pid settled", true);
 
-      // if (m_flywheel.atSetPoint()) {
-      // m_hopper.setPIDTarget(HopperConstants.targetRPM);
-      // } else {
-      // m_hopper.setPIDTarget(0);
-      // }
-    } else {
-      SmartDashboard.putBoolean("rot pid settled", false);
-      if (!m_rotPID.isEnabled())
-        m_rotPID.enable();
+        // if (m_flywheel.atSetPoint()) {
+        // m_hopper.setPIDTarget(HopperConstants.targetRPM);
+        // } else {
+        // m_hopper.setPIDTarget(0);
+        // }
+      } else {
+        SmartDashboard.putBoolean("rot pid settled", false);
+        if (!m_rotPID.isEnabled())
+          m_rotPID.enable();
+      }
     }
   }
 
