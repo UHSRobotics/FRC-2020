@@ -30,6 +30,7 @@ public final class Constants {
         public static final int liftFollow = 4;
         public static final int intake = 11;
         public static final int servo = 0;
+        public static final int rgb = 1;
         public static final int hopper = 20;
         public static final int liftEncoderA = 6;
         public static final int liftEncoderB = 4;
@@ -191,5 +192,11 @@ public final class Constants {
         public final static int kSlot_Turning = SLOT_1;
         public final static int kSlot_Velocit = SLOT_2;
         public final static int kSlot_MotProf = SLOT_3;
+    }
+
+    public static final class RGBConstants{
+        public static final double red = -0.35;
+        public static final double blue = 0.87;
+        public static final double violet = 0.91;
     }
 }
