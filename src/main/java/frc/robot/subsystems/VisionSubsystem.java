@@ -31,6 +31,8 @@ public class VisionSubsystem extends SubsystemBase {
   private double m_scale=1;
   private int error=0;
   private int cnt = 0;
+  
+  private boolean working = false;
 
   NetworkTable cameraTable;
 
@@ -46,7 +48,7 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public boolean working(){
-    return cameraTable.containsKey("targetPose");
+    return working;
   }
 
   public double getX(){
@@ -116,15 +118,15 @@ public class VisionSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("vision x",getX());
     SmartDashboard.putNumber("vision horizontal",(getHorizontalAngle()/Math.PI)*180.0);
-
+    SmartDashboard.putBoolean("Vision Working",working);
+    
     if(scaleEntry == null)
       scaleEntry = tab.addPersistent("scale", 1).getEntry();
     setScale(scaleEntry.getDouble(1.0), true);
-    if(error>25){
-      error = 0; 
-      System.out.println("Target not detected");
-    }
+    if(error>5)
+      working = false;
     if(getY()==0.0) error++;
+    else error = 0;
     // if(cnt>50){
     //   System.out.println(getHorizontalAngle()+" " + getAngle());
     //   cnt=0;
