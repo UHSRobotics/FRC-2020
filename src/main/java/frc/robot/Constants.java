@@ -55,8 +55,8 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final double KpRot = 0.0;
-        public static final double KiRot = 0.02;
+        public static final double KpRot = 0.01;
+        public static final double KiRot = 0.015;
         public static final double KdRot = 0.0005;
         public static final double velLimitRot = 100;
         public static final double accelLimitRot = 200;
@@ -125,7 +125,7 @@ public final class Constants {
         public static final double Kd = 0;
         public static final double Ki = 0.000001;
         public static final double Kff = 0.0003;
-        public static final double targetRPM = 280;
+        public static final double targetRPM = 300;
 
     }
 

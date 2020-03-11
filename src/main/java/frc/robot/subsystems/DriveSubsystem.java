@@ -38,6 +38,7 @@ public class DriveSubsystem extends SubsystemBase {
     private double deccelLimit = 0.1;
 
     private double pow0;
+    private boolean manualEnabled = true;
 
     public DriveSubsystem() {
         pow0 = 0;
@@ -78,12 +79,22 @@ public class DriveSubsystem extends SubsystemBase {
 
     }
 
+    public void disableManual(){
+        manualEnabled = false;
+    }
+
+    public void enableManual(){
+        manualEnabled = true;
+    }
+
     /**
      * @param pow  -1 to 1;
      * @param turn positive -> counter-clockwise
      */
     // TODO: make sure positive is actually counter clockwise
     public void arcadeDrive(double pow, double turn) {
+        if(!manualEnabled)return;
+        
         // jank acceleration control
         pow *= speedMultiplier;
         turn *= turnMultiplier * speedMultiplier;

@@ -29,7 +29,7 @@ public class RotPID extends ProfiledPIDSubsystem {
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
-    m_drive.arcadeDrive(0, output);
+    m_drive.arcadeDriveAuton(0, output);
   }
 
   public void setGoalRelative(double goal) {

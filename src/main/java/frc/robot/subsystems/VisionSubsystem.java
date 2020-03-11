@@ -119,24 +119,24 @@ public class VisionSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("vision x",getX());
     SmartDashboard.putNumber("vision horizontal",(getHorizontalAngle()/Math.PI)*180.0);
-    SmartDashboard.putBoolean("Vision Working",working);
     
     if(scaleEntry == null)
-      scaleEntry = tab.addPersistent("scale", 1).getEntry();
+    scaleEntry = tab.addPersistent("scale", 1).getEntry();
     setScale(scaleEntry.getDouble(1.0), true);
-    if(error>5)
+
+    if(getY()==0.0)
+      error++;
+    else
+      error--;
+    
+    if(error>5){
+      error = 5;
       working = false;
-    if(getY()==0.0) error++;
-    else{
+    }else if(error < -5){
+      error = -5;
       working = true;
-      error = 0;
     } 
-    // if(cnt>50){
-    //   System.out.println(getHorizontalAngle()+" " + getAngle());
-    //   cnt=0;
-    // }
-    // cnt++;
 
-
+    SmartDashboard.putBoolean("Vision Working",working);
   }
 }
