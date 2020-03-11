@@ -9,10 +9,12 @@ package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.FlywheelConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.pidcontroller.RotPID;
 
 public class ManualShootingCommand extends CommandBase {
   /**
@@ -21,35 +23,65 @@ public class ManualShootingCommand extends CommandBase {
   FlywheelSubsystem m_flywheel;
   HopperSubsystem m_hopper;
   BooleanSupplier m_fullPow;
+  RotPID m_rotPID;
+  private boolean started = false;
 
   /**
    * should be put into a "whileHeld"
    */
-  public ManualShootingCommand(FlywheelSubsystem flywheel, HopperSubsystem hopper) {
+  public ManualShootingCommand(FlywheelSubsystem flywheel, HopperSubsystem hopper, RotPID rotPID,
+      DriveSubsystem drive) {
     m_flywheel = flywheel;
     m_hopper = hopper;
+    m_rotPID = rotPID;
     addRequirements(m_flywheel);
     addRequirements(m_hopper);
+    addRequirements(drive);
+    addRequirements(rotPID);
+    started = false;
   }
 
   @Override
   public void initialize() {
-    m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_flywheel.atSetPoint()){
-      m_hopper.setPIDTarget(HopperConstants.targetRPM);
-    }else{
-      m_hopper.setPIDTarget(0);
+    SmartDashboard.putNumber("rot pid target", m_rotPID.getGoal());
+    SmartDashboard.putBoolean("manual shooting enabled", started);
+
+    if (!started) {
+      m_rotPID.setGoalRelative(90);
+      if (!m_rotPID.isEnabled())
+        m_rotPID.enable();
+      // m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+      started = true;
+    }
+    if (m_rotPID.getController().atSetpoint()) {
+      // if (m_flywheel.atSetPoint()) {
+      // m_hopper.setPIDTarget(HopperConstants.targetRPM);
+      // } else {
+      // m_hopper.setPIDTarget(0);
+      // }
+    } else {
+      if (!m_rotPID.isEnabled())
+        m_rotPID.enable();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    stop();
+  }
+
+  public void stop() {
+    m_flywheel.setPIDTarget(0);
+    if (m_rotPID.isEnabled())
+      m_rotPID.disable();
+    started = false;
+    SmartDashboard.putBoolean("manual shooting enabled", started);
   }
 
   // Returns true when the command should end.

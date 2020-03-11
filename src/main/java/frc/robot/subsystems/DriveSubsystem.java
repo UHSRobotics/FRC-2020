@@ -205,10 +205,6 @@ public class DriveSubsystem extends SubsystemBase {
         encoderEntry.setDouble(getEncoderRight());
         setSpeedMultiplier(speedEntry.getDouble(1.0), false);
         SmartDashboard.putNumber("angle",getAngleDegrees());
-        SmartDashboard.putNumber("encoder",encToCm((getEncoderLeft())));
-        SmartDashboard.putNumber("raw encoder l",getEncoderLeft());
-        SmartDashboard.putNumber("raw encoder r",getEncoderRight());
-
 
         //TODO: DELETE ME
 

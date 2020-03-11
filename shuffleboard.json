@@ -93,51 +93,7 @@
               "_title": "Spinner Color Change"
             }
           },
-          "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Controller axis ",
-              "_title": "Controller axis "
-            }
-          },
-          "6,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/kp",
-              "_title": "kp"
-            }
-          },
-          "7,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/ki",
-              "_title": "ki"
-            }
-          },
-          "8,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/kd",
-              "_title": "kd"
-            }
-          },
-          "9,0": {
+          "7,1": {
             "size": [
               1,
               1
@@ -146,39 +102,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/angle",
               "_title": "angle"
-            }
-          },
-          "10,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/raw encoder l",
-              "_title": "raw encoder l"
-            }
-          },
-          "11,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/raw encoder r",
-              "_title": "raw encoder r"
-            }
-          },
-          "12,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/encoder",
-              "_title": "encoder"
             }
           }
         }
@@ -275,6 +198,11 @@
                   "_title": "LiveWindow/Ungrouped/DigitalInput[3]/Value",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[3]",
+                  "_title": "PIDController[3]"
                 }
               ]
             }

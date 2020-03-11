@@ -14,7 +14,7 @@ import frc.robot.DualShockController.Button;
 import frc.robot.commands.*;
 import frc.robot.commands.pidcommand.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.pidcontroller.LiftPID;
+import frc.robot.subsystems.pidcontroller.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -39,12 +39,17 @@ public class RobotContainer {
   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
   private final SpinSubsystem m_spinSubsystem = new SpinSubsystem();
   private final LiftPID m_liftPID = new LiftPID(m_liftSubsystem);
+  private final RotPID m_rotPID = new RotPID(m_driveSubsystem);
+
+  private final ManualShootingCommand m_manualShooting = new ManualShootingCommand(m_flywheelSubsystem, m_hopper,
+      m_rotPID, m_driveSubsystem);
 
   // Autonomous setup
   private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_flywheelSubsystem, m_hopper);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   DualShockController m_driverController = new DualShockController(0);
   DualShockController m_subsystemController = new DualShockController(1);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -106,8 +111,10 @@ public class RobotContainer {
     new JoystickButton(m_subsystemController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
 
-    new JoystickButton(m_subsystemController, Button.kRect.value)
-        .whileHeld(new ManualShootingCommand(m_flywheelSubsystem, m_hopper));
+    new JoystickButton(m_driverController, Button.kRect.value)
+        .whileHeld(m_manualShooting).whenReleased(()->{m_manualShooting.stop();});
+
+    
     /*
      * new JoystickButton(m_driverController, Button.kBumperRight.value)
      * .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1)); new
