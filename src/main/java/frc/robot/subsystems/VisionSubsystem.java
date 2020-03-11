@@ -90,7 +90,7 @@ public class VisionSubsystem extends SubsystemBase {
    * @return angle to test if possible to shoot, in radian
    */
   public double getHorizontalAngle(){
-    double y = getY() - 0.4, x = getX();
+    double y = getY() + 0.35, x = getX();
     // - 0.4 to get the center of the goal, instead of the corner
     return Math.atan(y/x);
   }
