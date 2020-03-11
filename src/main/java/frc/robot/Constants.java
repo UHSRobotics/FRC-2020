@@ -33,7 +33,7 @@ public final class Constants {
         public static final int hopper = 20;
         public static final int liftEncoderA = 6;
         public static final int liftEncoderB = 4;
-
+        public static final int ultrasonicSensor = 0;
     }
 
     public static final class ColorConstants {
@@ -126,7 +126,7 @@ public final class Constants {
         public static final double Ki = 0.000001;
         public static final double Kff = 0.0003;
         public static final double targetRPM = 300;
-
+        public static final double detectionRange=4;
     }
 
     public static final class SpinCons {

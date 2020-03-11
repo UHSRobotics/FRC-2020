@@ -67,7 +67,7 @@ public class RobotContainer {
     m_IntakeSubsystem
         .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> m_subsystemController.getYMapped(Hand.kLeft)));
     m_driveSubsystem.setDefaultCommand(m_defaultDrive);
-    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight)));
+    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight),() -> m_subsystemController.getRawButton(Button.kStickRight.value)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
