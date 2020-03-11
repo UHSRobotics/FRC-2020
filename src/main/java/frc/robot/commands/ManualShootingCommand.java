@@ -59,12 +59,14 @@ public class ManualShootingCommand extends CommandBase {
         if (!m_rotPID.isEnabled())
           m_rotPID.enable();
 
-        if(m_vision.getX()<6){
+        if(m_vision.getX()<5){
+            m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+        }else if(m_vision.getX()<6){
           m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
         }else if(m_vision.getX()<7){
           m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 200);
         }else{
-          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 600);
+          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 700);
         }
         started = true;
       }
