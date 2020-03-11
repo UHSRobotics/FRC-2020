@@ -25,6 +25,7 @@ public class ManualShootingCommand extends CommandBase {
   BooleanSupplier m_fullPow;
   RotPID m_rotPID;
   VisionSubsystem m_vision;
+  DriveSubsystem m_drive;
   private boolean started = false, firstTime = false;
 
   /**
@@ -32,13 +33,13 @@ public class ManualShootingCommand extends CommandBase {
    */
   public ManualShootingCommand(FlywheelSubsystem flywheel, HopperSubsystem hopper, RotPID rotPID, DriveSubsystem drive,
       VisionSubsystem vision) {
+    m_drive = drive;
     m_flywheel = flywheel;
     m_hopper = hopper;
     m_rotPID = rotPID;
     m_vision = vision;
     addRequirements(m_flywheel);
     addRequirements(m_hopper);
-    addRequirements(drive);
     addRequirements(rotPID);
     started = false;
   }
@@ -50,12 +51,12 @@ public class ManualShootingCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("rot pid target", m_rotPID.getGoal());
     SmartDashboard.putBoolean("manual shooting enabled", started);
 
     if (m_vision.working()) {
       if (!started) {
         firstTime = true;
+        m_drive.disableManual();
         m_rotPID.setGoalRelative((m_vision.getHorizontalAngle() / Math.PI) * -180.0);
         if (!m_rotPID.isEnabled())
           m_rotPID.enable();
@@ -70,10 +71,8 @@ public class ManualShootingCommand extends CommandBase {
         SmartDashboard.putBoolean("rot pid settled", true);
 
         if (m_flywheel.atSetPoint()) {
-          SmartDashboard.putBoolean("moving hopper", true);
           m_hopper.setPIDTarget(HopperConstants.targetRPM);
         } else {
-          SmartDashboard.putBoolean("moving hopper", false);
           m_hopper.setPIDTarget(0);
         }
       } else {
@@ -81,6 +80,16 @@ public class ManualShootingCommand extends CommandBase {
         if (!m_rotPID.isEnabled())
           m_rotPID.enable();
         firstTime = true;
+      }
+    } else {
+      m_drive.enableManual();
+      if (m_rotPID.isEnabled())
+        m_rotPID.disable();
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+      if (m_flywheel.atSetPoint()) {
+        m_hopper.setPIDTarget(HopperConstants.targetRPM);
+      } else {
+        m_hopper.setPIDTarget(0);
       }
     }
   }
@@ -104,6 +113,7 @@ public class ManualShootingCommand extends CommandBase {
   }
 
   public void stop() {
+    m_drive.enableManual();
     m_flywheel.setPIDTarget(0);
     if (m_rotPID.isEnabled())
       m_rotPID.disable();
