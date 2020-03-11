@@ -55,20 +55,27 @@ public class ManualShootingCommand extends CommandBase {
 
     if (m_vision.working()) {
       if (!started) {
-        m_rotPID.setGoalRelative((m_vision.getHorizontalAngle()/Math.PI)*180.0);
+        m_rotPID.setGoalRelative((m_vision.getHorizontalAngle()/Math.PI)* -180.0);
         if (!m_rotPID.isEnabled())
           m_rotPID.enable();
-        // m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+
+        if(m_vision.getX()<6){
+          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+        }else if(m_vision.getX()<7){
+          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 200);
+        }else{
+          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 600);
+        }
         started = true;
       }
       if (m_rotPID.getController().atSetpoint()) {
         SmartDashboard.putBoolean("rot pid settled", true);
 
-        // if (m_flywheel.atSetPoint()) {
-        // m_hopper.setPIDTarget(HopperConstants.targetRPM);
-        // } else {
-        // m_hopper.setPIDTarget(0);
-        // }
+        if (m_flywheel.atSetPoint()) {
+        m_hopper.setPIDTarget(HopperConstants.targetRPM);
+        } else {
+        m_hopper.setPIDTarget(0);
+        }
       } else {
         SmartDashboard.putBoolean("rot pid settled", false);
         if (!m_rotPID.isEnabled())
