@@ -25,7 +25,7 @@ public class HopperCommand extends CommandBase {
   private final HopperSubsystem m_hopper;
   private final DoubleSupplier m_activate;
   private final BooleanSupplier m_isManual;
-  private final AnalogInput m_sensor = new AnalogInput(Ports.ultrasonicSensor);
+  // private final AnalogInput m_sensor = new AnalogInput(Ports.ultrasonicSensor);
   // double m_delay = 0.5;
   boolean finished = false;
   double hopperLag = 15;
@@ -41,18 +41,18 @@ public class HopperCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("hopper sensor value",m_sensor.getValue());
-    if (!m_isManual.getAsBoolean()) {
-      if (m_sensor.getValue() * 0.125 / 2.54 < HopperConstants.detectionRange) {
-        hopperLag = 15;
-        m_hopper.setPIDTarget(HopperConstants.targetRPM);
-      } else {
-        hopperLag--;
-        if (hopperLag < 1) {
-          m_hopper.setPIDTarget(0);
-        }
-      }
-    } else {
+    // SmartDashboard.putNumber("hopper sensor value",m_sensor.getValue());
+    // if (!m_isManual.getAsBoolean()) {
+      // if (m_sensor.getValue() * 0.125 / 2.54 < HopperConstants.detectionRange) {
+      //   hopperLag = 15;
+      //   m_hopper.setPIDTarget(HopperConstants.targetRPM);
+      // } else {
+      //   hopperLag--;
+      //   if (hopperLag < 1) {
+      //     m_hopper.setPIDTarget(0);
+      //   }
+      // }
+    // } else {
       if (m_activate.getAsDouble() >= 0.5) {
         m_hopper.setPIDTarget(-1 * HopperConstants.targetRPM);
       } else if (m_activate.getAsDouble() <= -0.5) {
@@ -60,8 +60,7 @@ public class HopperCommand extends CommandBase {
       } else {
         m_hopper.setPIDTarget(0);
       }
-    }
-
+    // }
   }
 
   // Called once the command ends or is interrupted.

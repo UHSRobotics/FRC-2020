@@ -127,6 +127,8 @@ public class VisionSubsystem extends SubsystemBase {
 
     if(getY()==0.0 && error<=5)
       error++;
+    else if(Math.abs(lastX-getX())<0.1 && error<8)
+      error+=2;
     else if(Math.abs(lastX-getX())>5)
       error+=Math.abs(lastX-getX())/5 + 6;
     else

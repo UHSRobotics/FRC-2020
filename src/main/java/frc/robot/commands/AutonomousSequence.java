@@ -19,7 +19,6 @@ public class AutonomousSequence extends CommandBase {
         addRequirements(m_drive);
         addRequirements(m_fw);
         addRequirements(m_hop);
-
     }
 
     @Override

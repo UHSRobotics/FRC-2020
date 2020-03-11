@@ -62,10 +62,10 @@ public final class Constants {
         public static final double accelLimitRot = 260;
 
         public static final double KpDist = 0.01;
-        public static final double KiDist = 0.005;
-        public static final double KdDist = 0.00002;
-        public static final double velLimit = 200; // cm per second?
-        public static final double accelLimit = 400; // cm per second?
+        public static final double KiDist = 0.001;
+        public static final double KdDist = 0;
+        public static final double velLimit = 150; // cm per second?
+        public static final double accelLimit = 200; // cm per second?
         public static final double ticksPerRev = 16410.2564102;
     }
 

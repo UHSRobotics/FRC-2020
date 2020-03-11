@@ -19,10 +19,11 @@ public class DistancePIDCommand extends ProfiledPIDCommand {
                 // Set reference to target
                 drive.getAvgEncCM() + goal,
                 // Pipe output to turn robot
-                (output, setpoint) -> drive.arcadeDriveAuton(output, 0),
+                (output, setpoint) -> drive.arcadeDriveAuton(-output, 0),
                 // Require the drive
                 drive);
-        getController().setTolerance(1);
+        m_controller.setTolerance(10);
+
         System.out.println("goal is " + goal / (PhysicalMeasurements.wheelDiam * Math.PI) * 4096);
 
         // Set the controller to be continuous (because it is an angle controller)

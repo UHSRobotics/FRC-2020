@@ -218,6 +218,6 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("angle",getAngleDegrees());
 
         //TODO: DELETE ME
-
+        SmartDashboard.putNumber("cm",getAvgEncCM());
     }
 }

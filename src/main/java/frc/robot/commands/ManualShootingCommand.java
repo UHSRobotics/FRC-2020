@@ -28,11 +28,12 @@ public class ManualShootingCommand extends CommandBase {
   DriveSubsystem m_drive;
   private boolean started = false, firstTime = false;
   private double flywheelRPM = FlywheelConstants.targetRPM;
+  double timeoutCounter= -10000;
   /**
    * should be put into a "whileHeld"
    */
   public ManualShootingCommand(FlywheelSubsystem flywheel, HopperSubsystem hopper, RotPID rotPID, DriveSubsystem drive,
-      VisionSubsystem vision) {
+      VisionSubsystem vision, double timeout) {
     m_drive = drive;
     m_flywheel = flywheel;
     m_hopper = hopper;
@@ -41,6 +42,9 @@ public class ManualShootingCommand extends CommandBase {
     addRequirements(m_flywheel);
     addRequirements(m_hopper);
     addRequirements(rotPID);
+    if(timeout>0){
+      timeoutCounter = timeout/20;
+    }
     started = false;
   }
 
@@ -51,6 +55,7 @@ public class ManualShootingCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(timeoutCounter>=0) timeoutCounter--;
     SmartDashboard.putBoolean("manual shooting enabled", started);
     if (m_vision.working()) {
       if (!started) {
@@ -118,6 +123,7 @@ public class ManualShootingCommand extends CommandBase {
     m_flywheel.setPIDTarget(0);
     if (m_rotPID.isEnabled())
       m_rotPID.disable();
+    m_hopper.setPIDTarget(0);
     started = false;
     SmartDashboard.putBoolean("manual shooting enabled", started);
   }
@@ -125,6 +131,6 @@ public class ManualShootingCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (timeoutCounter < 0 && timeoutCounter > -5000);
   }
 }

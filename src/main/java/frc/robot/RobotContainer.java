@@ -42,17 +42,19 @@ public class RobotContainer {
   private final RotPID m_rotPID = new RotPID(m_driveSubsystem);
 
   private final ManualShootingCommand m_manualShooting = new ManualShootingCommand(m_flywheelSubsystem, m_hopper,
-      m_rotPID, m_driveSubsystem, m_visionSubsystem);
+      m_rotPID, m_driveSubsystem, m_visionSubsystem, -1);
   private final Turning180Command m_turning180 = new Turning180Command(m_rotPID, m_driveSubsystem);
   
-  // Autonomous setup
-  private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_flywheelSubsystem, m_hopper);
+
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   DualShockController m_driverController = new DualShockController(0);
   DualShockController m_subsystemController = new DualShockController(1);
   
   private final ArcadeDrive m_defaultDrive = new ArcadeDrive(m_driveSubsystem,
   () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight));
+  
+    // Autonomous setup
+    // private final Command m_autoCommand = 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -69,7 +71,7 @@ public class RobotContainer {
     m_driveSubsystem.setDefaultCommand(m_defaultDrive);
     m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight),() -> m_subsystemController.getRawButton(Button.kStickRight.value)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
-    // m_chooser.addOption("simple drive", m_simpleAutoCommand);
+    // m_chooser.addOption("simple drive", m_autoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
 
   }
@@ -88,12 +90,12 @@ public class RobotContainer {
 
     // For debugging only, delete before competition
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
-    // .whileHeld(new DistancePIDCommand(m_driveSubsystem, 500));
+    // .whileHeld(new DistancePIDCommand(m_driveSubsystem, -200));
 
     // TODO: enable this after making sure rotation PID works
-    new JoystickButton(m_driverController, Button.kDisk.value).whenPressed(() -> {
+    new JoystickButton(m_driverController, Button.kBumperLeft.value).whenPressed(() -> {
       m_defaultDrive.toggleInvert();
-    }).whileHeld(m_turning180).whenReleased(()->{m_manualShooting.stop();});
+    }).whileHeld(m_turning180).whenReleased(()->{m_turning180.stop();});
 
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
@@ -133,6 +135,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_simpleAutoCommand;
+    return new Auton(m_flywheelSubsystem, m_hopper, m_rotPID, m_driveSubsystem, m_visionSubsystem);
   }
 }

@@ -42,13 +42,12 @@ public class Turning180Command extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("manual shooting enabled", started);
     if (!started) {
       m_rotPID.setGoalRelative(180.0);
       started = true;
     }
     if (!m_rotPID.isEnabled())
-          m_rotPID.enable();
+      m_rotPID.enable();
     m_drive.disableManual();
   }
 
@@ -63,12 +62,11 @@ public class Turning180Command extends CommandBase {
     if (m_rotPID.isEnabled())
       m_rotPID.disable();
     started = false;
-    SmartDashboard.putBoolean("manual shooting enabled", started);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_rotPID.getController().atSetpoint();
   }
 }
