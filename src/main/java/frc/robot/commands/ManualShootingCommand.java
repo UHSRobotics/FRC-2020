@@ -25,7 +25,7 @@ public class ManualShootingCommand extends CommandBase {
   BooleanSupplier m_fullPow;
   RotPID m_rotPID;
   VisionSubsystem m_vision;
-  private boolean started = false;
+  private boolean started = false, firstTime = false;
 
   /**
    * should be put into a "whileHeld"
@@ -55,34 +55,43 @@ public class ManualShootingCommand extends CommandBase {
 
     if (m_vision.working()) {
       if (!started) {
-        m_rotPID.setGoalRelative((m_vision.getHorizontalAngle()/Math.PI)* -180.0);
+        firstTime = true;
+        m_rotPID.setGoalRelative((m_vision.getHorizontalAngle() / Math.PI) * -180.0);
         if (!m_rotPID.isEnabled())
           m_rotPID.enable();
-
-        if(m_vision.getX()<5){
-            m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
-        }else if(m_vision.getX()<6){
-          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
-        }else if(m_vision.getX()<7){
-          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 200);
-        }else{
-          m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 700);
-        }
+        updateFlywheelSpeed();
         started = true;
       }
       if (m_rotPID.getController().atSetpoint()) {
+        if (firstTime) {
+          firstTime = false;
+          updateFlywheelSpeed();
+        }
         SmartDashboard.putBoolean("rot pid settled", true);
 
         if (m_flywheel.atSetPoint()) {
-        m_hopper.setPIDTarget(HopperConstants.targetRPM);
+          m_hopper.setPIDTarget(HopperConstants.targetRPM);
         } else {
-        m_hopper.setPIDTarget(0);
+          m_hopper.setPIDTarget(0);
         }
       } else {
         SmartDashboard.putBoolean("rot pid settled", false);
         if (!m_rotPID.isEnabled())
           m_rotPID.enable();
+        firstTime = true;
       }
+    }
+  }
+
+  private void updateFlywheelSpeed() {
+    if (m_vision.getX() < 5) {
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+    } else if (m_vision.getX() < 6) {
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+    } else if (m_vision.getX() < 7) {
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 200);
+    } else {
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 700);
     }
   }
 
