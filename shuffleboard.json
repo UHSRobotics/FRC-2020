@@ -10,7 +10,7 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "3,2": {
+          "2,2": {
             "size": [
               1,
               1
@@ -21,7 +21,7 @@
               "_title": "Spinner Speed"
             }
           },
-          "2,2": {
+          "1,2": {
             "size": [
               1,
               1
@@ -68,21 +68,11 @@
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Color Detected",
                   "_title": "Color Detected"
-                },
-                "1,0": {
-                  "_type": "Number Bar",
-                  "_source0": "network_table:///SmartDashboard/Color Green",
-                  "_title": "Color Green",
-                  "Range/Min": 0.0,
-                  "Range/Max": 256.0,
-                  "Range/Center": 0.0,
-                  "Visuals/Num tick marks": 5,
-                  "Visuals/Show text": true
                 }
               }
             }
           },
-          "1,2": {
+          "0,2": {
             "size": [
               1,
               1
@@ -93,7 +83,7 @@
               "_title": "Spinner Color Change"
             }
           },
-          "7,1": {
+          "6,1": {
             "size": [
               1,
               1
@@ -104,7 +94,7 @@
               "_title": "angle"
             }
           },
-          "8,2": {
+          "7,1": {
             "size": [
               1,
               1
@@ -115,7 +105,7 @@
               "_title": "rot pid target"
             }
           },
-          "9,2": {
+          "10,1": {
             "size": [
               2,
               1
@@ -128,7 +118,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "11,0": {
+          "8,1": {
             "size": [
               1,
               1
@@ -141,7 +131,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "10,3": {
+          "4,3": {
             "size": [
               1,
               1
@@ -150,6 +140,49 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/vision x",
               "_title": "vision x"
+            }
+          },
+          "5,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/vision horizontal",
+              "_title": "vision horizontal"
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Vision Working",
+              "_title": "Vision Working",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,2": {
+            "size": [
+              5,
+              4
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera-B4.09.24.1",
+              "_title": "USB Camera-B4.09.24.1",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
             }
           }
         }
