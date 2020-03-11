@@ -24,7 +24,7 @@ public class RotPID extends ProfiledPIDSubsystem {
             new Constraints(DriveConstants.velLimitRot, DriveConstants.accelLimitRot)));
     m_drive = drive;
     m_controller.setTolerance(3);
-    m_controller.enableContinuousInput(-180, 180);
+    // m_controller.enableContinuousInput(-180, 180);
   }
 
   @Override

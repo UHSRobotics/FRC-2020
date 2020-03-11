@@ -52,19 +52,22 @@ public class ManualShootingCommand extends CommandBase {
     SmartDashboard.putBoolean("manual shooting enabled", started);
 
     if (!started) {
-      m_rotPID.setGoalRelative(90);
+      m_rotPID.setGoalRelative(45);
       if (!m_rotPID.isEnabled())
         m_rotPID.enable();
       // m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
       started = true;
     }
     if (m_rotPID.getController().atSetpoint()) {
+      SmartDashboard.putBoolean("rot pid settled", true);
+
       // if (m_flywheel.atSetPoint()) {
       // m_hopper.setPIDTarget(HopperConstants.targetRPM);
       // } else {
       // m_hopper.setPIDTarget(0);
       // }
     } else {
+      SmartDashboard.putBoolean("rot pid settled", false);
       if (!m_rotPID.isEnabled())
         m_rotPID.enable();
     }
