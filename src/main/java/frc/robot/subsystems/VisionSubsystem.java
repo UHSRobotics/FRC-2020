@@ -31,6 +31,7 @@ public class VisionSubsystem extends SubsystemBase {
   private double m_scale=1;
   private int error=0;
   private int cnt = 0;
+  private double lastX = 0;
   
   private boolean working = false;
 
@@ -124,13 +125,20 @@ public class VisionSubsystem extends SubsystemBase {
     scaleEntry = tab.addPersistent("scale", 1).getEntry();
     setScale(scaleEntry.getDouble(1.0), true);
 
-    if(getY()==0.0)
+    if(getY()==0.0 && error<=5)
       error++;
+    else if(Math.abs(lastX-getX())>5)
+      error+=Math.abs(lastX-getX())/5 + 6;
     else
       error--;
-    
-    if(error>5){
-      error = 5;
+
+    lastX = getX();
+
+    if(error>50){
+      error=50;
+      working = false;
+    }
+    else if(error>5){
       working = false;
     }else if(error < -5){
       error = -5;
