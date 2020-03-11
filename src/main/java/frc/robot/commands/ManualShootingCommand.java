@@ -27,7 +27,7 @@ public class ManualShootingCommand extends CommandBase {
   VisionSubsystem m_vision;
   DriveSubsystem m_drive;
   private boolean started = false, firstTime = false;
-
+  private double flywheelRPM = FlywheelConstants.targetRPM;
   /**
    * should be put into a "whileHeld"
    */
@@ -52,7 +52,6 @@ public class ManualShootingCommand extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putBoolean("manual shooting enabled", started);
-  
     if (m_vision.working()) {
       if (!started) {
         firstTime = true;
@@ -85,7 +84,7 @@ public class ManualShootingCommand extends CommandBase {
       m_drive.enableManual();
       if (m_rotPID.isEnabled())
         m_rotPID.disable();
-      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+      m_flywheel.setPIDTarget(flywheelRPM);
       if (m_flywheel.atSetPoint()) {
         m_hopper.setPIDTarget(HopperConstants.targetRPM);
       } else {
@@ -95,14 +94,16 @@ public class ManualShootingCommand extends CommandBase {
   }
 
   private void updateFlywheelSpeed() {
-    if (m_vision.getX() < 5) {
-      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
+    if (m_vision.getX() < 3) {
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 600);
+    } else if (m_vision.getX() < 4.5) {
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 200);
     } else if (m_vision.getX() < 6) {
       m_flywheel.setPIDTarget(FlywheelConstants.targetRPM);
     } else if (m_vision.getX() < 7) {
-      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 200);
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 300);
     } else {
-      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 700);
+      m_flywheel.setPIDTarget(FlywheelConstants.targetRPM + 750);
     }
   }
 
