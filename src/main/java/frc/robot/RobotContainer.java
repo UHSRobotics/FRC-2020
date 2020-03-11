@@ -43,13 +43,16 @@ public class RobotContainer {
 
   private final ManualShootingCommand m_manualShooting = new ManualShootingCommand(m_flywheelSubsystem, m_hopper,
       m_rotPID, m_driveSubsystem, m_visionSubsystem);
-
+  private final Turning180Command m_turning180 = new Turning180Command(m_rotPID, m_driveSubsystem);
+  
   // Autonomous setup
   private final Command m_simpleAutoCommand = new AutonomousSequence(m_driveSubsystem, m_flywheelSubsystem, m_hopper);
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   DualShockController m_driverController = new DualShockController(0);
   DualShockController m_subsystemController = new DualShockController(1);
-
+  
+  private final ArcadeDrive m_defaultDrive = new ArcadeDrive(m_driveSubsystem,
+  () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight));
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -63,8 +66,7 @@ public class RobotContainer {
             () -> m_subsystemController.getBumper(Hand.kRight), m_servoSubsystem));
     m_IntakeSubsystem
         .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> m_subsystemController.getYMapped(Hand.kLeft)));
-    m_driveSubsystem.setDefaultCommand(new ArcadeDrive(m_driveSubsystem,
-        () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight)));
+    m_driveSubsystem.setDefaultCommand(m_defaultDrive);
     m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_simpleAutoCommand);
@@ -87,15 +89,11 @@ public class RobotContainer {
     // For debugging only, delete before competition
     // new JoystickButton(m_driverController, Button.kBumperLeft.value)
     // .whileHeld(new DistancePIDCommand(m_driveSubsystem, 500));
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-    .whenPressed(new RotationPIDCommand(m_driveSubsystem, 180));
 
     // TODO: enable this after making sure rotation PID works
-    /*
-     * new JoystickButton(m_driverController, Button.kDisk.value) .whenPressed(()->{
-     * ((ArcadeDrive)m_driveSubsystem.getDefaultCommand()).toggleInvert(); new
-     * RotationPIDCommand(m_driveSubsystem, 180); });
-     */
+    new JoystickButton(m_driverController, Button.kDisk.value).whenPressed(() -> {
+      m_defaultDrive.toggleInvert();
+    }).whileHeld(m_turning180).whenReleased(()->{m_manualShooting.stop();});
 
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
@@ -111,10 +109,10 @@ public class RobotContainer {
     new JoystickButton(m_subsystemController, Button.kDisk.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
 
-    new JoystickButton(m_driverController, Button.kRect.value)
-        .whileHeld(m_manualShooting).whenReleased(()->{m_manualShooting.stop();});
+    new JoystickButton(m_driverController, Button.kBumperRight.value).whileHeld(m_manualShooting).whenReleased(() -> {
+      m_manualShooting.stop();
+    });
 
-    
     /*
      * new JoystickButton(m_driverController, Button.kBumperRight.value)
      * .whenPressed(new SpinCommand(m_colorSubsystem, m_spinSubsystem, -1)); new

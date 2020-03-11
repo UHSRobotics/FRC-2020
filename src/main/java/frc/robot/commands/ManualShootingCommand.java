@@ -52,7 +52,7 @@ public class ManualShootingCommand extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putBoolean("manual shooting enabled", started);
-
+  
     if (m_vision.working()) {
       if (!started) {
         firstTime = true;
