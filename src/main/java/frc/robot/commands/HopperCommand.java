@@ -12,6 +12,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HopperConstants;
+import frc.robot.Constants.Ports;
 import frc.robot.subsystems.HopperSubsystem;
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -23,7 +24,7 @@ public class HopperCommand extends CommandBase {
   private final HopperSubsystem m_hopper;
   private final DoubleSupplier m_activate;
   private final BooleanSupplier m_isManual;
-  private final AnalogInput m_sensor = new AnalogInput(0);
+  private final AnalogInput m_sensor = new AnalogInput(Ports.ultrasonicSensor);
   // double m_delay = 0.5;
   boolean finished = false;
   double hopperLag = 15;
@@ -40,7 +41,7 @@ public class HopperCommand extends CommandBase {
   @Override
   public void execute() {
     if (!m_isManual.getAsBoolean()) {
-      if (m_sensor.getValue() * 0.125 / 2.54 < 10) {
+      if (m_sensor.getValue() * 0.125 / 2.54 < HopperConstants.detectionRange) {
         hopperLag = 15;
         m_hopper.setPIDTarget(HopperConstants.targetRPM);
       } else {
