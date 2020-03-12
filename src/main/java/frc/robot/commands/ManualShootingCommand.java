@@ -86,10 +86,14 @@ public class ManualShootingCommand extends CommandBase {
         firstTime = true;
       }
     } else {
-      m_drive.enableManual();
-      if (m_rotPID.isEnabled())
-        m_rotPID.disable();
-      m_flywheel.setPIDTarget(flywheelRPM);
+      if (firstTime) {
+        m_drive.enableManual();
+        if (m_rotPID.isEnabled())
+          m_rotPID.disable();
+
+        m_flywheel.setPIDTarget(flywheelRPM);
+        firstTime = false;
+      }
       if (m_flywheel.atSetPoint()) {
         m_hopper.setPIDTarget(HopperConstants.targetRPM);
       } else {
