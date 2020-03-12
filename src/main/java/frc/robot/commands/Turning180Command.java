@@ -30,7 +30,7 @@ public class Turning180Command extends CommandBase {
   public Turning180Command(RotPID rotPID, DriveSubsystem drive) {
     m_drive = drive;
     m_rotPID = rotPID;
-    addRequirements(m_drive);
+    // addRequirements(m_drive);
     addRequirements(rotPID);
     started = false;
   }
