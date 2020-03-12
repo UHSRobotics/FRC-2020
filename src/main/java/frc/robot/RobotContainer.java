@@ -95,7 +95,9 @@ public class RobotContainer {
     // TODO: enable this after making sure rotation PID works
     new JoystickButton(m_driverController, Button.kBumperLeft.value).whenPressed(() -> {
       m_defaultDrive.toggleInvert();
-    }).whileHeld(m_turning180).whenReleased(()->{m_turning180.stop();});
+    }).whileHeld(m_turning180).whenReleased(()->{
+      m_turning180.stop();
+    });
 
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,
