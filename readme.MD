@@ -10,8 +10,8 @@ When in doubt, **Actually** read the guides and this readme.
 
 # Highlights
 - [x] fancy joy joystick curve/deadzone
-- [ ] storing callibrations locally on roborio
-- [ ] fully automatic scoring with vision
+- [x] storing callibrations locally on roborio
+- [x] fully automatic scoring with vision
 
 # Frequently used
 
