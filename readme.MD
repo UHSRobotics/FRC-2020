@@ -49,6 +49,7 @@ Or
       * Needed for java programming
       * Select the newest OpenJDK version and "HotSpot" JVM 
       * Download and install
+      * **Make sure "Set JAVA_HOME variable" is turned on when installing**
    2. Install VSCode: [Download Link](https://code.visualstudio.com/)
       * Needed for programming
    3. Intalling the Java Extension Pack
