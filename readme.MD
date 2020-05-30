@@ -45,13 +45,18 @@ When in doubt, **Actually** read the guides and this readme.
 Or
 
 1. Setting up your environment
-   1. Install JDK: [Download Link](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
+   1. Install JDK: [Download Link](https://adoptopenjdk.net/index.html?variant=openjdk13&jvmVariant=hotspot)
       * Needed for java programming
-      * Remember to "Accept License Agreement"
+      * Select the newest OpenJDK version and "HotSpot" JVM 
+      * Download and install
    2. Install VSCode: [Download Link](https://code.visualstudio.com/)
       * Needed for programming
-   3. Install the WPILib VSCode extension: [Download Link](https://marketplace.visualstudio.com/items?itemName=wpilibsuite.vscode-wpilib)
+   3. Intalling the Java Extension Pack
+      * Needed for java programming in vscode
+      * Press Ctrl + Shift + X in VSCode to open the extension tab, search for "Java Extension Pack" and install it
+   4. Install the WPILib VSCode extension: [Download Link](https://marketplace.visualstudio.com/items?itemName=wpilibsuite.vscode-wpilib)
       * Needed for FRC Robot Programming
+      * Same process as above
 2. Install FRC Game Tools: [Download Link](https://www.ni.com/en-ca/support/downloads/drivers/download.frc-game-tools.html#333285).
    * Needed for connecting to the robot
    * Watch out that the installer will disable windows fast start by default.
