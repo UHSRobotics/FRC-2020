@@ -4,6 +4,12 @@ Team 7721's FRC Code for infinite recharge.
 
 ![Infinite Recharge](https://i.imgur.com/sd8N6p1.jpg)
 
+# Temp notes 2022 to get it running again
+command
+```bash
+cmd.exe /d /c gradlew build   -Dorg.gradle.java.home="C:\Program Files\Eclipse Adoptium\jdk-11.0.17.8-hotspot"
+```
+
 # Read this
 
 When in doubt, **Actually** read the guides and this readme.
