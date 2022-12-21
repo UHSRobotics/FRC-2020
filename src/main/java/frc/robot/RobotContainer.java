@@ -4,13 +4,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.DualShockController.Button;
 import frc.robot.commands.*;
 import frc.robot.commands.pidcommand.*;
 import frc.robot.subsystems.*;
@@ -47,11 +47,10 @@ public class RobotContainer {
   
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  DualShockController m_driverController = new DualShockController(0);
-  DualShockController m_subsystemController = new DualShockController(1);
+  XboxController m_mainController = new XboxController(OIConstants.kDriverControllerPort);
   
   private final ArcadeDrive m_defaultDrive = new ArcadeDrive(m_driveSubsystem,
-  () -> m_driverController.getYMapped(Hand.kLeft), () -> m_driverController.getXMapped(Hand.kRight));
+  () -> m_mainController.getY(Hand.kLeft), () -> m_mainController.getX(Hand.kRight));
   
     // Autonomous setup
     // private final Command m_autoCommand = 
@@ -59,17 +58,20 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_driverController.initMapping(OIConstants.kDriverControllerCurvature);
     configureButtonBindings();
     m_flywheelSubsystem
-        .setDefaultCommand(new FlywheelCommand(m_flywheelSubsystem, () -> m_subsystemController.getCrossButton()));
+        .setDefaultCommand(new FlywheelCommand(m_flywheelSubsystem, () -> m_mainController.getBButton()));
     m_liftSubsystem.setDefaultCommand(
-        new LiftCommand(m_liftSubsystem, m_liftPID, () -> m_subsystemController.getBumper(Hand.kLeft),
-            () -> m_subsystemController.getBumper(Hand.kRight), m_servoSubsystem));
+        new LiftCommand(m_liftSubsystem, m_liftPID, () -> m_mainController.getBumper(Hand.kLeft),
+            () -> m_mainController.getBumper(Hand.kRight), m_servoSubsystem));
     m_IntakeSubsystem
-        .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> m_subsystemController.getYMapped(Hand.kLeft)));
+        .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> {
+          return m_mainController.getTriggerAxis(Hand.kRight) - m_mainController.getTriggerAxis(Hand.kLeft);
+        }));
     m_driveSubsystem.setDefaultCommand(m_defaultDrive);
-    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> m_subsystemController.getYMapped(Hand.kRight),() -> m_subsystemController.getRawButton(Button.kStickRight.value)));
+    m_hopper.setDefaultCommand(new HopperCommand(m_hopper, () -> {
+      return m_mainController.getTriggerAxis(Hand.kRight) - m_mainController.getTriggerAxis(Hand.kLeft);
+    },() -> m_mainController.getRawButton(Button.kStickRight.value)));
     // m_chooser.setDefaultOption("target", m_autonPlaceholder);
     // m_chooser.addOption("simple drive", m_autoCommand);
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
@@ -93,7 +95,7 @@ public class RobotContainer {
     // .whileHeld(new DistancePIDCommand(m_driveSubsystem, -200));
 
     // TODO: enable this after making sure rotation PID works
-    new JoystickButton(m_driverController, Button.kBumperLeft.value).whenPressed(() -> {
+    new JoystickButton(m_mainController, Button.kX.value).whenPressed(() -> {
       m_defaultDrive.toggleInvert();
     }).whileHeld(m_turning180).whenReleased(()->{
       m_turning180.stop();
@@ -110,12 +112,12 @@ public class RobotContainer {
 
     // @return 0-1-2-3=blue-green-red-yellow; -1: match revolution
 
-    new JoystickButton(m_subsystemController, Button.kDisk.value)
+    new JoystickButton(m_mainController, Button.kBack.value)
         .whenPressed(new InstantCommand(m_servoSubsystem::toggle, m_servoSubsystem));
 
-    new JoystickButton(m_driverController, Button.kBumperRight.value).whileHeld(m_manualShooting).whenReleased(() -> {
-      m_manualShooting.stop();
-    });
+    // new JoystickButton(m_mainController, Button.kBumperRight.value).whileHeld(m_manualShooting).whenReleased(() -> {
+    //   m_manualShooting.stop();
+    // });
 
     /*
      * new JoystickButton(m_driverController, Button.kBumperRight.value)
