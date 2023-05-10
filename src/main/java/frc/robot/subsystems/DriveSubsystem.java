@@ -31,7 +31,8 @@ public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_rightFollowMotor = new TalonFX(Ports.driveRightFollow);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
-    private double speedMultiplier = 0.6, turnMultiplier = 0.5;
+    public static double speedMultiplier = 0.6;
+    public static double turnMultiplier = 0.5;
     private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry, rpowerEntry;
 
     private double accelLimit = 0.04;
