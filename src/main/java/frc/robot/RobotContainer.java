@@ -103,10 +103,12 @@ public class RobotContainer {
     new JoystickButton(m_mainController, Button.kY.value).whenPressed(() -> {
       DriveSubsystem.speedMultiplier = 0.6;
       DriveSubsystem.turnMultiplier = 0.5;
+      DriveSubsystem.speed = 0.7;
     });
     new JoystickButton(m_mainController, Button.kA.value).whenPressed(() -> {
-      DriveSubsystem.speedMultiplier = 0.3;
-      DriveSubsystem.turnMultiplier = 0.25;
+      DriveSubsystem.speedMultiplier = 0.05;
+      DriveSubsystem.turnMultiplier = 0.35;
+      DriveSubsystem.speed = 0.3;
     });
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,

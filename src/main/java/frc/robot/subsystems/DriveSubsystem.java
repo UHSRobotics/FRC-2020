@@ -33,6 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
     public static double speedMultiplier = 0.6;
     public static double turnMultiplier = 0.5;
+    public static double speed = 0.7;
     private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry, rpowerEntry;
 
     private double accelLimit = 0.04;
@@ -109,8 +110,8 @@ public class DriveSubsystem extends SubsystemBase {
         pow0 = pow;
 
         putPowerEntry(pow - turn, pow + turn);
-        m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
-        m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
+        m_leftMotor.set(ControlMode.PercentOutput, pow*speed - turn);
+        m_rightMotor.set(ControlMode.PercentOutput, pow*speed + turn);
     }
 
     /**
