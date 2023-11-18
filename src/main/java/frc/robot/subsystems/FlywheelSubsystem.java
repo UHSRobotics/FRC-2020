@@ -59,7 +59,7 @@ public class FlywheelSubsystem extends SubsystemBase {
     // System.out.println(p);
     m_motor.set(p);
     m_motor2.set(p);
-  }
+  } 
 
   /**
    * 
@@ -67,6 +67,11 @@ public class FlywheelSubsystem extends SubsystemBase {
    */
   public double getRate() {
     return m_motor.getEncoder().getVelocity();
+  }
+
+  public void setSpeedMultiplier(double speed) {
+    speedMultiplier = speed;
+    speedEntry.setDouble(speedMultiplier);
   }
 
   public void setSpeedMultiplier(double speed, boolean updateNT) {
@@ -120,7 +125,7 @@ public class FlywheelSubsystem extends SubsystemBase {
       speedEntry = tab.addPersistent("Neo Speed Multiplier", 1).getEntry();
       System.out.println("Added Single Speed Multiplier NT entry");
     }
-    setSpeedMultiplier(speedEntry.getDouble(1.0), false);
+    //setSpeedMultiplier(speedEntry.getDouble(1.0), false);
     if (velocityEntry == null) {
       velocityEntry = tab.add("Velocity (RPM)", 1).getEntry();
       System.out.println("added velocity entry");

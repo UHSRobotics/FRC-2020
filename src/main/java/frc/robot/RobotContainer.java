@@ -45,7 +45,6 @@ public class RobotContainer {
       m_rotPID, m_driveSubsystem, m_visionSubsystem, -1);
   private final Turning180Command m_turning180 = new Turning180Command(m_rotPID, m_driveSubsystem);
   
-
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   XboxController m_mainController = new XboxController(OIConstants.kDriverControllerPort);
   
@@ -64,7 +63,7 @@ public class RobotContainer {
     m_liftSubsystem.setDefaultCommand(
         new LiftCommand(m_liftSubsystem, m_liftPID, () -> m_mainController.getBumper(Hand.kLeft),
             () -> m_mainController.getBumper(Hand.kRight), m_servoSubsystem));
-    m_IntakeSubsystem
+    m_IntakeSubsystem 
         .setDefaultCommand(new IntakeCommand(m_IntakeSubsystem, () -> {
           return m_mainController.getTriggerAxis(Hand.kRight) - m_mainController.getTriggerAxis(Hand.kLeft);
         }));
@@ -95,20 +94,24 @@ public class RobotContainer {
     // .whileHeld(new DistancePIDCommand(m_driveSubsystem, -200));
 
     // TODO: enable this after making sure rotation PID works
-    new JoystickButton(m_mainController, Button.kX.value).whenPressed(() -> {
+    //Commented out cus it confuses people :skull:
+    /*new JoystickButton(m_mainController, Button.kX.value).whenPressed(() -> {
       m_defaultDrive.toggleInvert();
     }).whileHeld(m_turning180).whenReleased(()->{
       m_turning180.stop();
+    });*/
+    new JoystickButton(m_mainController, Button.kX.value).whenPressed(() -> {
+      m_flywheelSubsystem.setSpeedMultiplier(0.6);
     });
     new JoystickButton(m_mainController, Button.kY.value).whenPressed(() -> {
-      DriveSubsystem.speedMultiplier = 0.6;
-      DriveSubsystem.turnMultiplier = 0.5;
-      DriveSubsystem.speed = 0.7;
+      m_driveSubsystem.setSpeedMultiplier(0.1);
+      m_driveSubsystem.setTurnMultiplier(0.4);
+      m_flywheelSubsystem.setSpeedMultiplier(0.4);
     });
     new JoystickButton(m_mainController, Button.kA.value).whenPressed(() -> {
-      DriveSubsystem.speedMultiplier = 0.05;
-      DriveSubsystem.turnMultiplier = 0.35;
-      DriveSubsystem.speed = 0.27;
+      m_driveSubsystem.setSpeedMultiplier(0.05);
+      m_driveSubsystem.setTurnMultiplier(0.2);
+      m_flywheelSubsystem.setSpeedMultiplier(0.3);
     });
     // new JoystickButton(m_subsystemController, Button.kRect.value)
     // .whenPressed(new VisionDistancePIDCommand(m_driveSubsystem,

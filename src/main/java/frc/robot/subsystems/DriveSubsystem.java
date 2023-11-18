@@ -31,10 +31,9 @@ public class DriveSubsystem extends SubsystemBase {
     private final TalonFX m_rightFollowMotor = new TalonFX(Ports.driveRightFollow);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive (Falcon 500)");
-    public static double speedMultiplier = 0.6;
-    public static double turnMultiplier = 0.5;
-    public static double speed = 0.7;
-    private NetworkTableEntry speedEntry, encoderEntry, lpowerEntry, rpowerEntry;
+    public static double speedMultiplier = 0.4;
+    public static double turnMultiplier = 0.4;
+    private NetworkTableEntry speedEntry, turnEntry, encoderEntry, lpowerEntry, rpowerEntry;
 
     private double accelLimit = 0.04;
     private double deccelLimit = 0.1;
@@ -94,6 +93,7 @@ public class DriveSubsystem extends SubsystemBase {
      * @param turn positive -> counter-clockwise
      */
     // TODO: make sure positive is actually counter clockwise
+    // TODO: Fix the acceleration :sob:
     public void arcadeDrive(double pow, double turn) {
         if(!manualEnabled)return;
         
@@ -110,8 +110,8 @@ public class DriveSubsystem extends SubsystemBase {
         pow0 = pow;
 
         putPowerEntry(pow - turn, pow + turn);
-        m_leftMotor.set(ControlMode.PercentOutput, pow*speed - turn);
-        m_rightMotor.set(ControlMode.PercentOutput, pow*speed + turn);
+        m_leftMotor.set(ControlMode.PercentOutput, pow - turn);
+        m_rightMotor.set(ControlMode.PercentOutput, pow + turn);
     }
 
     /**
@@ -175,8 +175,14 @@ public class DriveSubsystem extends SubsystemBase {
         return (encoderTicks / DriveConstants.ticksPerRev) * (PhysicalMeasurements.wheelDiam * Math.PI);
     }
 
+    public void setTurnMultiplier(double speed) {
+        turnMultiplier = speed;
+        turnEntry.setDouble(turnMultiplier);
+    }
+
     public void setSpeedMultiplier(double speed) {
-        setSpeedMultiplier(speed, true);
+        speedMultiplier = speed;
+        speedEntry.setDouble(speedMultiplier);
     }
 
     public void setSpeedMultiplier(double speed, boolean updateNT) {
